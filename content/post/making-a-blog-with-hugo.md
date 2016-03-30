@@ -6,6 +6,13 @@ draft = true
 
 +++
 
+Why do this?
+  cheaper than Ghost/Wordpress/Medium/whatever, as in, free
+  faster
+  looks how you want it to
+  very portable
+  easy to write for (it's on your computer, no internet required)
+
 Things you need to know
 
 /content
