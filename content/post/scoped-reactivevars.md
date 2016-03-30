@@ -1,6 +1,7 @@
 +++
-date = "2015-05-01"
+date = "2015-05-25"
 title = "Using Scoped ReactiveVars to Control Tab Visibility (Meteor.js)"
+slug = "scoped-reactive-var-meteor-js"
 postid = 1
 
 +++
