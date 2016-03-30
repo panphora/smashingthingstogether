@@ -1,0 +1,12 @@
+<a href="{{ .Permalink }}" class="post-link post">
+  <header class="post-header mb1">
+    <h2 class="post-title">{{ .Title }}</h2>
+    <time class="post-date block">posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
+  </header>
+  <section class="post-excerpt">
+  	{{if .IsPage}}
+      <p>{{ .Summary }}...</p>
+    {{end}}
+  </section>
+  <div class="disqus-comment-count mb1" data-disqus-identifier="{{ .Params.postid }}">Comments</div>
+</a>

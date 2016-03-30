@@ -1,0 +1,183 @@
+body {
+  font-family: 'Droid Serif', serif;
+  padding: 2rem;
+  font-size: 18px;
+  color: #222;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1 { font-size: 2.2rem }
+h2 { font-size: 1.7rem }
+h3 { font-size: 1.5rem }
+h4 { font-size: 1.25rem }
+h5 { font-size: 1rem }
+h6 { font-size: .875rem }
+
+a {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 52rem;
+}
+
+
+/* site wrapper */
+.site-wrapper {
+
+}
+
+.site-logo {
+  position: relative;
+  top: 2rem;
+  left: 1rem;
+  display: none;
+  max-width: 147px;
+}
+
+@media (min-width: 900px) {
+  .site-logo {
+    display: inline;
+  }
+}
+
+.site-footer  {
+  margin-top: 3rem;
+  color: #999;
+}
+
+.site-footer a {
+  color: #999;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.clearfix {
+
+}
+
+.poweredby {
+
+}
+
+.copyright {
+
+}
+
+
+/* main header */
+.main-header {
+
+}
+
+.page-title {
+  margin-top: 2rem;
+  font-size: 3rem;
+}
+
+.page-title a {
+  color: #222;
+  text-decoration: none;
+  transition: .1s all;
+}
+
+.post-page .page-title a {
+  opacity: .55;
+}
+
+.post-page .page-description {
+  opacity: .55;
+}
+
+.post-page .page-title:hover a {
+  opacity: 1;
+}
+
+.page-description {
+  margin-bottom: 3rem;
+}
+
+
+/* content */
+#content {
+
+}
+
+/* loop */
+.extra-pagination {
+
+}
+
+.extra-post-info {
+  color: #aaa;
+}
+
+.extra-post-info .comment-link {
+  font-size: 16px;
+  color: #aaa;
+  text-decoration: none;
+}
+
+.extra-post-info .comment-link:hover {
+  text-decoration: underline;
+}
+
+.post-link {
+  display: block;
+  text-decoration: none;
+  color: #222;
+  padding: 1rem 1.5rem .2rem 1.5rem;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  border: 1px solid transparent;
+  margin-bottom: 2rem;
+}
+
+.post-link:hover {
+  text-decoration: none;
+  color: #666;
+  border: 1px solid #ccc;
+}
+
+.post-header {
+
+}
+
+.post-title {
+  margin-bottom: .2rem;
+}
+
+.post-excerpt {
+
+}
+
+.post-content {
+
+}
+
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+  margin-bottom: .5em;
+  padding-top: 1.5em;
+}
+
+.read-more {
+
+}
+
+.post-date {
+  color: #aaa;
+  font-size: 1rem;
+}
+
+/* tag page */
+
+.tag-name {
+
+}

@@ -1,0 +1,29 @@
+{{ partial "head.html" . }}
+<main class="content" role="main">
+  <article class="post mb8">
+    <header class="post-header">
+      <h1 class="post-title">{{ .Title }}</h1>
+      <div class="mb3 extra-post-info">
+        <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time> &middot; <a class="comment-link" href="{{ .Permalink }}#disqus_thread" data-disqus-identifier="{{ .Params.postid }}">Comments</a>
+      </div>
+    </header>
+    <section class="post-content">
+      {{ .Content }}
+    </section>
+  </article>
+</main>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'smashingthings';
+if (disqus_shortname && disqus_shortname !== 'example') {
+  var disqus_identifier = '{{ .Params.postid }}';
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+}
+</script>
+{{ partial "foot.html" . }}

@@ -1,0 +1,7 @@
+baseurl = "http://smashingthingstogether.com/"
+languageCode = "en-us"
+title = "Smashing Things Together"
+
+[Params]
+  author = "David Miranda"
+  description = "Experiments, projects, and random ideas"
