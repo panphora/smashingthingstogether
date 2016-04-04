@@ -8,7 +8,7 @@ postid = 8
 
 Skip this section if you already know that static websites are, in general, faster, less expensive, more customizeable, and more secure than dynamic websites.
 
-**Faster:** Many web servers are automatically tuned to serve static websites. Dynamic website *can* be just as fast, it just requires a lot more maintenance and tuning.
+**Faster:** Many web servers are automatically optimized to serve static websites. Dynamic website *can* be just as fast, it just usually requires a lot more maintenance and tuning.
 
 **Less expensive:** I pay a few cents per month to host a static website on Amazon's S3 service. I pay absolutely nothing to host a couple websites on GitHub pages. In contrast, the 3 simple Ghost blogs I host on Runkite end up costing me $15 a month.
 
@@ -103,31 +103,39 @@ title = "Your Site Title"
 
 This is where we get into the design of the site. We'll to keep things simple for now.
 
-The files you'll need to create in this folder:
+You can skip this section if you'd prefer to install a theme from the [Hugo Themes Directory](http://themes.gohugo.io/). It's as simple as:
+
+{{< highlight console >}}
+mkdir themes && cd themes
+git clone <your_chosen_themes_clone_url>
+{{< /highlight >}}
+
+Otherwise, continue with the instructions here:
+
+The files you'll need to create in this folder are:
 - partials/foot.html
 - partials/head.html
 - post/list.html
 - post/single.html
 - index.html
 
-**Partials** are html snippets that you'll use in multiple places. In this example, we're creating a `foot.html` file for the footer html and a `head.html` file for the header, so we can include each one wherever we want.
+Files in the `partials` directory are html snippets that you can use in any template. In most cases, they will be passed the parent template's context, so they can display post data or data defined in your config file. In this example, we're creating a `foot.html` file for the footer html and a `head.html` file for the header.
 
-Inside the `post` directory are two files, `list.html` and `single.html`. The `list.html` file will be used to render the front page's list of posts. The `single.html` file will be used to render a single blog post.
+Inside the `post` directory are two files, `list.html` and `single.html`. The `list.html` file will be used to render the front page's list of blog posts. The `single.html` file will be used to render a single blog post.
 
-The `index.html` file is they template for your front page. It will include the `list.html` file so it can render the list of blog posts to the home page.
+The `index.html` file is they template used for your front page. It renders the `list.html` template inside itself, so that we end up with a list of blog posts on the home page.
 
-Here's an example of what these files could look like for a simple blog:
+Here's an example of what these files could look like for a *very* simple blog:
 
 **partials/foot.html**
 {{< highlight html >}}
-    <footer class="site-footer clearfix">
-      <section class="poweredby">Proudly published with <a href="http://gohugo.io/">Hugo</a></section>
-    </footer>
+    <footer>Proudly published with <a href="http://gohugo.io/">Hugo</a></section></footer>
   </div>
-  <script type="text/javascript" src="{{ .Site.BaseURL }}js/main.js"></script>
 </body>
 </html>
 {{< /highlight >}}
+
+The `foot.html` partial is included in the `index.html` and `single.html` templates, which means it will show up on every page of our blog. In this example, it adds a link back to Hugo, closes the `.container` div defined in `head.html` and closes the `body` and `html` tags.
 
 **partials/head.html**
 {{< highlight html >}}
@@ -140,19 +148,21 @@ Here's an example of what these files could look like for a simple blog:
   <link rel="stylesheet" href="{{ .Site.BaseURL }}css/main.css">
 </head>
 <body>
-  <div class="site-wrapper container">
-    <div class="main-header">
-      <h1 class="page-title"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}<img class="site-logo" alt="{{ .Title }} Logo" src="{{ .Site.BaseURL }}svgs/logo.svg" /></a></h1>
+  <div class="container">
+    <div class="site-header">
+      <h1 class="site-title"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}<img class="site-logo" alt="{{ .Title }} Logo" src="{{ .Site.BaseURL }}svgs/logo.svg" /></a></h1>
       <h2 class="page-description">{{ .Site.Params.description }}</h2>
     </div>
 {{< /highlight >}}
 
-**partials/list.html**
+The `head.html` partial is included in the `index.html` and `single.html` tempaltes, which means it will show up on every page of our blog. In this example, it sets up a basic, well-formatted html website. It includes a link to a single stylesheet and opens the `body` tag. It also adds a site header, which uses the title and description that we defined in the `config.toml` file. It also includes a reference to an SVG logo, which, according to this example, should be put inside a folder called `svgs` inside of the `static` folder.
+
+**post/list.html**
 {{< highlight html >}}
 <a href="{{ .Permalink }}" class="post">
   <header class="post-header">
     <h2 class="post-title">{{ .Title }}</h2>
-    <time class="post-date">posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
+    <time class="post-date" datetime="{{ .Date.Format '2006-01-02' }}">posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
   </header>
   <section class="post-excerpt">
     {{if .IsPage}}
@@ -162,16 +172,16 @@ Here's an example of what these files could look like for a simple blog:
 </a>
 {{< /highlight >}}
 
-**partials/single.html**
+This template is responsible for rendering a single blog post on the home page. It includes a reference to a template variable called `Permalink` and another one called `Summary`. These variables are automically generated for you by Hugo. The `Permalink` variable will automatically be converted into a link to your full post. And the `Summary` variable will, by default, automatically be set to the first 70 words of your content.
+
+**post/single.html**
 {{< highlight html >}}
 {{ partial "head.html" . }}
 <main class="content" role="main">
   <article class="post">
     <header class="post-header">
       <h1 class="post-title">{{ .Title }}</h1>
-      <div class="extra-post-info">
-        <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
-      </div>
+      <time class="post-date" datetime="{{ .Date.Format '2006-01-02' }}">posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
     </header>
     <section class="post-content">
       {{ .Content }}
@@ -180,6 +190,8 @@ Here's an example of what these files could look like for a simple blog:
 </main>
 {{ partial "foot.html" . }}
 {{< /highlight >}}
+
+
 
 **partials/index.html**
 {{< highlight html >}}
