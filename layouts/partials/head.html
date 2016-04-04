@@ -13,9 +13,9 @@
 <body class="{{if .IsPage}}is-page{{end}}">
   <div class="site-wrapper container">
     <div class="main-header show-if-is-page">
-      <h1 class="page-title center"><a href="{{ .Site.BaseURL }}"><img class="site-logo" alt="Smashing Things Together Logo" src="{{ .Site.BaseURL }}svgs/logo.svg" /></a></h1>
+      <h1 class="page-title center"><a href="{{ .Site.BaseURL }}"><img class="site-logo" alt="{{ .Title }} Logo" src="{{ .Site.BaseURL }}svgs/logo.svg" /></a></h1>
     </div>
     <div class="main-header hide-if-is-page">
-      <h1 class="page-title"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}<img class="site-logo" alt="Smashing Things Together Logo" src="{{ .Site.BaseURL }}svgs/logo.svg" /></a></h1>
+      <h1 class="page-title"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}<img class="site-logo" alt="{{ .Title }} Logo" src="{{ .Site.BaseURL }}svgs/logo.svg" /></a></h1>
       <h2 class="page-description">{{ .Site.Params.description }}</h2>
     </div>
