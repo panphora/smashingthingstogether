@@ -71,11 +71,11 @@ For more a more detailed guide, go here: https://gohugo.io/overview/installing/
 <a name="createsite"></a>
 ## 2. Create a site
 
-**Tip:** you can download the basic site that we create in steps 1-6 here: [Basic-Hugo-Site](https://github.com/panphora/Basic-Hugo-Site)
-
 {{< highlight console >}}
 hugo new site your_site
 {{< /highlight >}}
+
+<div class="tip mt1point5"><b>Tip:</b> You can download the basic site we create in steps 2-6: <a href="https://github.com/panphora/Basic-Hugo-Site">Basic Hugo Site</a></div>
 
 <a name="cleanup"></a>
 ## 3. Clean up
@@ -316,7 +316,7 @@ footer a {
 }
 {{< /highlight >}}
 
-**Tip:** you can download the basic site that we create in steps 1-6 here: [Basic-Hugo-Site](https://github.com/panphora/Basic-Hugo-Site)
+<div class="tip mt1point5"><b>Tip:</b> You can download the basic site we create in steps 2-6: <a href="https://github.com/panphora/Basic-Hugo-Site">Basic Hugo Site</a></div>
 
 
 <a name="firstblogpost"></a>

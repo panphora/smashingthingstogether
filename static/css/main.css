@@ -25,6 +25,18 @@ a {
   text-decoration: underline;
 }
 
+.tip {
+	background-color: #6E4480;
+	background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,.05) 20px, rgba(255,255,255,.05) 40px);
+	color: #fff;
+	padding: 1rem;
+	border: 1px solid #222;
+}
+
+.tip a {
+	color: #fff;
+}
+
 .container {
   max-width: 52rem;
 }
@@ -80,7 +92,7 @@ a {
 }
 
 .highlight {
-  padding: 1em;
+  padding: 1em 1em .3em 1em;
   color: #ffffff;
   margin-bottom: 1rem;
 }
