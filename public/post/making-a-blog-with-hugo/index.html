@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Make a simple static blog with Hugo and deploy it to GitHub Pages: An easy, step-by-step tutorial</title>
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://smashingthingstogether.com/css/main.css">
+</head>
+<body class="is-page">
+  <div class="site-wrapper container">
+    <div class="main-header show-if-is-page">
+      <h1 class="page-title center"><a href="http://smashingthingstogether.com/"><img class="site-logo" alt="Make a simple static blog with Hugo and deploy it to GitHub Pages: An easy, step-by-step tutorial Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+    </div>
+    <div class="main-header hide-if-is-page">
+      <h1 class="page-title"><a href="http://smashingthingstogether.com/">Smashing Things Together<img class="site-logo" alt="Make a simple static blog with Hugo and deploy it to GitHub Pages: An easy, step-by-step tutorial Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+      <h2 class="page-description">Experiments, projects, and random ideas</h2>
+    </div>
+<main class="content" role="main">
+  <article class="post mb8">
+    <header class="post-header">
+      <h1 class="post-title">Make a simple static blog with Hugo and deploy it to GitHub Pages: An easy, step-by-step tutorial</h1>
+      <div class="mb3 extra-post-info">
+        <time class="post-date" datetime="2016-03-30">posted Wed, Mar 30, 2016</time> &middot; <a class="comment-link" href="http://smashingthingstogether.com/post/making-a-blog-with-hugo/#disqus_thread" data-disqus-identifier="8">Comments</a>
+      </div>
+    </header>
+    <section class="post-content">
+      
+
+<h2 id="why-static:0a0e9da1f26411e529ad432d2c89b074">Why Static?</h2>
+
+<p>Skip this section if you already know that static websites are, in general, faster, less expensive, more customizeable, and more secure than dynamic websites.</p>
+
+<p><strong>Faster:</strong> Many web servers are automatically optimized to serve static websites. Dynamic website <em>can</em> be just as fast, it just usually requires a lot more maintenance and tuning.</p>
+
+<p><strong>Less expensive:</strong> I pay a few cents per month to host a static website on Amazon&rsquo;s S3 service. I pay absolutely nothing to host a couple websites on GitHub pages. In contrast, the 3 simple Ghost blogs I host on Runkite end up costing me $15 a month.</p>
+
+<p><strong>Easier to customize:</strong> In my experience, building a theme for Tumblr/Wordpress/Ghost is much more complicated than building a theme for a simple static website. There are just a lot more moving parts in those systems. Of course, this means they have more functionality built in, but when it comes down most of these extra features hardly ever matter that much.</p>
+
+<p><strong>More secure:</strong> I&rsquo;m in the process of moving most of my websites over to static websites because the server that I hosted all of my side projects on got hacked. There was an insecure version of Redis installed on it (my fault), but now that I&rsquo;m transitioning over to static sites, insecure software is just one more thing I don&rsquo;t have to think about.</p>
+
+<h2 id="why-hugo:0a0e9da1f26411e529ad432d2c89b074">Why Hugo?</h2>
+
+<p>Skip this section if you&rsquo;ve already decided to work with Hugo.</p>
+
+<p>When looking for a static website generator, I considered many things, but when it came down to it only one thing really matters: <em>Does this software make it easier or harder to write a blog post?</em></p>
+
+<p>I like writing. Hugo makes it easy to write. Not only is it fast, but it&rsquo;s incredibly focused. The directory structure is simple. The blog posts are all in plain text, formatted in Markdown. Syntax highlighting comes built in and doesn&rsquo;t even require JavaScript.</p>
+
+<p>I can open my laptop, create a text file, and start writing. I don&rsquo;t have to wait for Medium/Tumblr/Wordpress to load. I don&rsquo;t have to deal with updating plugins or making sure my blogging software is up to date. I don&rsquo;t even have to be on the internet.</p>
+
+<p>I can just write. Hugo is great for that.</p>
+
+<h2 id="why-not-hugo:0a0e9da1f26411e529ad432d2c89b074">Why not Hugo?</h2>
+
+<p>There&rsquo;s one big downside to Hugo: it doesn&rsquo;t preprocess any static assets. This means no Sass, Jade, or Coffeescript.</p>
+
+<p>Either do the preprocessesing on your own using a watch task in Gulp or Grunt, or keep your CSS and JavaScript simple like I do.</p>
+
+<p>This lack of preprocessing support can be seen as a downside, but I actually think it&rsquo;s nice. The last time I tried to start up an old gulp project, I got about 3-4 warnings about out-of-date NPM dependencies. When all I want to do is write a simple blog post, this kind of thing is a constant source of annoyance.</p>
+
+<p>If Hugo adds support for minifying and concatenating CSS and JavaScript in the future, I&rsquo;ll use it, but until then I&rsquo;m going to enjoy keeping things simple.</p>
+
+<h1 id="let-s-build-something:0a0e9da1f26411e529ad432d2c89b074">Let&rsquo;s build something!</h1>
+
+<h2 id="table-of-contents:0a0e9da1f26411e529ad432d2c89b074">Table of contents</h2>
+
+<ol>
+<li><a href="#installhugo">Install Hugo</a></li>
+<li><a href="#createsite">Create a site</a></li>
+<li><a href="#cleanup">Clean up</a></li>
+<li><a href="#sitewidedata">Site-wide data</a></li>
+<li><a href="#layouts">Layouts and templates</a></li>
+<li><a href="#staticassets">Static assets</a></li>
+<li><a href="#firstblogpost">Your first blog post!</a></li>
+<li><a href="#syntaxhighlighting">Syntax highlighting</a></li>
+<li><a href="#disqus">Comments with Disqus</a></li>
+<li><a href="#githubpages">Host on GitHub Pages</a></li>
+<li><a href="#deploy">How to deploy</a></li>
+</ol>
+
+<p><a name="installhugo"></a></p>
+
+<h2 id="install-hugo:0a0e9da1f26411e529ad432d2c89b074">Install Hugo</h2>
+
+<p>On OS X, if you have Homebrew:</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>brew update &amp;&amp; brew install hugo
+</pre></div>
+
+
+<p>Otherwise, download the installer here: <a href="https://github.com/spf13/hugo/releases">https://github.com/spf13/hugo/releases</a></p>
+
+<p>For more a more detailed guide, go here: <a href="https://gohugo.io/overview/installing/">https://gohugo.io/overview/installing/</a></p>
+
+<p><a name="createsite"></a></p>
+
+<h2 id="create-a-site:0a0e9da1f26411e529ad432d2c89b074">Create a site</h2>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>hugo new site your_site
+</pre></div>
+
+
+<p><a name="cleanup"></a></p>
+
+<h2 id="clean-up:0a0e9da1f26411e529ad432d2c89b074">Clean up</h2>
+
+<p>For a simple blog, you don&rsquo;t need the <code>archetypes</code> or <code>data</code> directories, so I just deleted them for now.</p>
+
+<p>You don&rsquo;t have to delete them, but I&rsquo;m not going to explain what they&rsquo;re for in this tutorial.</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>cd your_site
+rm -r archetypes
+rm -r data
+</pre></div>
+
+
+<p><a name="sitewidedata"></a></p>
+
+<h2 id="site-wide-data:0a0e9da1f26411e529ad432d2c89b074">Site-wide data</h2>
+
+<p>Add some basic info about your site to the <code>config.toml</code> file. You&rsquo;ll be able to use this info in all your templates.</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>baseurl = &quot;http://yoursite.com/&quot;
+languageCode = &quot;en-us&quot;
+title = &quot;Your Site Title&quot;
+
+[Params]
+  author = &quot;Your Name&quot;
+  description = &quot;Your Site Description&quot;
+</pre></div>
+
+
+<p><a name="layouts"></a></p>
+
+<h2 id="layouts-and-templates:0a0e9da1f26411e529ad432d2c89b074">Layouts and templates</h2>
+
+<p>This is where we get into the design of the site. We&rsquo;ll to keep things simple for now.</p>
+
+<p>You can skip this section if you&rsquo;d prefer to install a theme from the <a href="http://themes.gohugo.io/">Hugo Themes Directory</a>. It&rsquo;s as simple as:</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>mkdir themes &amp;&amp; cd themes
+git clone &lt;theme_clone_url&gt;
+</pre></div>
+
+
+<p>Otherwise, continue with the instructions here:</p>
+
+<p>The files you&rsquo;ll need to create in this folder are:</p>
+
+<ul>
+<li><code>partials/head.html</code></li>
+<li><code>partials/foot.html</code></li>
+<li><code>post/list.html</code></li>
+<li><code>post/single.html</code></li>
+<li><code>index.html</code></li>
+</ul>
+
+<p>Files in the <code>partials</code> directory are html snippets that you can use in any template. We&rsquo;ll pass them the parent template&rsquo;s context, so they&rsquo;ll be able to display post data or data defined in your <code>config.toml</code> file.</p>
+
+<p>Inside the <code>post</code> directory there are two files, <code>list.html</code> and <code>single.html</code>. The <code>list.html</code> file will be used to render the front page&rsquo;s list of blog posts. The <code>single.html</code> file will be used to render a single blog post.</p>
+
+<p>The <code>index.html</code> file is used to render the front page of your site.</p>
+
+<p>Here&rsquo;s an example of what these files could look like for a <em>very</em> simple blog:</p>
+
+<p><strong>partials/head.html</strong>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #75715e">&lt;!DOCTYPE html&gt;</span>
+<span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">html</span> <span style="color: #a6e22e">xmlns</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span style="color: #a6e22e">xml:lang</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;en&quot;</span> <span style="color: #a6e22e">lang</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;en-us&quot;</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">head</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">meta</span> <span style="color: #a6e22e">http-equiv</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;content-type&quot;</span> <span style="color: #a6e22e">content</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;text/html; charset=utf-8&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">meta</span> <span style="color: #a6e22e">name</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;viewport&quot;</span> <span style="color: #a6e22e">content</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;width=device-width, initial-scale=1.0, maximum-scale=1&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">title</span><span style="color: #f8f8f2">&gt;</span>{{ .Title }}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">title</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">link</span> <span style="color: #a6e22e">rel</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;stylesheet&quot;</span> <span style="color: #a6e22e">href</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;{{ .Site.BaseURL }}css/main.css&quot;</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">head</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">body</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;container&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;site-header&quot;</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">h1</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;site-title&quot;</span><span style="color: #f8f8f2">&gt;&lt;</span><span style="color: #f92672">a</span> <span style="color: #a6e22e">href</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;{{ .Site.BaseURL }}&quot;</span><span style="color: #f8f8f2">&gt;</span>{{ .Site.Title }}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">a</span><span style="color: #f8f8f2">&gt;&lt;/</span><span style="color: #f92672">h1</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">h2</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;page-description&quot;</span><span style="color: #f8f8f2">&gt;</span>{{ .Site.Params.description }}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">h2</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+</pre></div>
+</p>
+
+<p>The <code>head.html</code> partial is included in the <code>index.html</code> and <code>single.html</code> templates, which means it will show up on every page of your blog.</p>
+
+<p>In this partial, we set up all the basics for a basic, functional HTML template. We use the <code>Title</code> variable defined in your <code>config.toml</code> file, we have a link to a stylesheet, and we set up a basic header.</p>
+
+<p>In the closing partial, <code>footer.html</code>, we close off all of the HTML tags created here.</p>
+
+<p><strong>partials/foot.html</strong>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">footer</span><span style="color: #f8f8f2">&gt;</span>© {{ .Site.Params.author }} · Proudly published with <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">a</span> <span style="color: #a6e22e">href</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;http://gohugo.io/&quot;</span><span style="color: #f8f8f2">&gt;</span>Hugo<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">a</span><span style="color: #f8f8f2">&gt;&lt;/</span><span style="color: #f92672">footer</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">body</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">html</span><span style="color: #f8f8f2">&gt;</span>
+</pre></div>
+</p>
+
+<p>The <code>foot.html</code> partial is included in the <code>index.html</code> and <code>single.html</code> templates, which means it will show up on every page of your blog.</p>
+
+<p>In this partial, we include a link back to Hugo, as well as a copyright notice. We also close all of the HTML tags that we opened in the <code>head.html</code> partial.</p>
+
+<p><strong>post/list.html</strong>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">a</span> <span style="color: #a6e22e">href</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;{{ .Permalink }}&quot;</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">header</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post-header&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">h2</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post-title&quot;</span><span style="color: #f8f8f2">&gt;</span>{{ .Title }}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">h2</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">time</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post-date&quot;</span> <span style="color: #a6e22e">datetime</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;{{ .Date.Format &#39;2006-01-02&#39; }}&quot;</span><span style="color: #f8f8f2">&gt;</span>posted {{ .Date.Format &quot;Mon, Jan 2, 2006&quot; }}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">time</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">header</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">section</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post-excerpt&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    {{if .IsPage}}
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">p</span><span style="color: #f8f8f2">&gt;</span>{{ .Summary }}...<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">p</span><span style="color: #f8f8f2">&gt;</span>
+    {{end}}
+  <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">section</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">a</span><span style="color: #f8f8f2">&gt;</span>
+</pre></div>
+</p>
+
+<p>The <code>list.html</code> template is responsible for rendering a blog post&rsquo;s content on the home page, as part of a list of blog posts. It includes a reference to a template variable called <code>Permalink</code> and another one called <code>Summary</code>. These variables are automically generated for you by Hugo.</p>
+
+<p>The <code>Permalink</code> variable will be replaced by a link to your full post when you generate your site. And the <code>Summary</code> variable will, by default, automatically be set to the first 70 words of a blog post&rsquo;s content.</p>
+
+<p><strong>post/single.html</strong>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>{{ partial &quot;head.html&quot; . }}
+<span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">main</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;content&quot;</span> <span style="color: #a6e22e">role</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;main&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">article</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">header</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post-header&quot;</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">h1</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post-title&quot;</span><span style="color: #f8f8f2">&gt;</span>{{ .Title }}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">h1</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">time</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post-date&quot;</span> <span style="color: #a6e22e">datetime</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;{{ .Date.Format &#39;2006-01-02&#39; }}&quot;</span><span style="color: #f8f8f2">&gt;</span>posted {{ .Date.Format &quot;Mon, Jan 2, 2006&quot; }}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">time</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">header</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">section</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;post-content&quot;</span><span style="color: #f8f8f2">&gt;</span>
+      {{ .Content }}
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">section</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">article</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">main</span><span style="color: #f8f8f2">&gt;</span>
+{{ partial &quot;foot.html&quot; . }}
+</pre></div>
+</p>
+
+<p>The <code>single.html</code> template is responsible for rendering a single blog post. It includes references to the <code>head.html</code> and <code>foot.html</code> partials because it represents an entire page, unlike the <code>list.html</code> template.</p>
+
+<p>This template includes the <code>Title</code>, <code>Date</code>, and <code>Content</code> variables. Hugo provides the ability to format the date. You can use pretty much any format here, as long as you use 2006 for the year, January for the month, and the 2nd for the day.</p>
+
+<p><strong>partials/index.html</strong>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>{{ partial &quot;head.html&quot; . }}
+<span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">main</span> <span style="color: #a6e22e">id</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;content&quot;</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;content&quot;</span> <span style="color: #a6e22e">role</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;main&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  {{ range .Data.Pages }}
+    {{ if eq .Type  &quot;post&quot; }}
+      {{ .Render &quot;list&quot;}}
+    {{ end }}
+  {{ end }}
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">main</span><span style="color: #f8f8f2">&gt;</span>
+{{ partial &quot;foot.html&quot; . }}
+</pre></div>
+</p>
+
+<p>The <code>index.html</code> template is used to generate the front page of your site. It includes references to the <code>head.html</code> and <code>foot.html</code> partials because it represents an entire page.</p>
+
+<p>In this template, we loop through the pages, which are stored inside a variable called <code>Data</code>. Then, if the page has a type of &ldquo;post&rdquo;, we render it using the <code>list.html</code> template. Otherwise, we ignore it.</p>
+
+<p>For this simple blog, we will only have one type of page, but it&rsquo;s still good to leave this check in here in case we add more types later.</p>
+
+<p><a name="staticassets"></a></p>
+
+<h2 id="static-assets:0a0e9da1f26411e529ad432d2c89b074">Static assets</h2>
+
+<p>For a basic blog, you have all you need. But we should definitely add a stylesheet to make things look nice.</p>
+
+<p><a name="firstblogpost"></a></p>
+
+<h2 id="your-first-blog-post:0a0e9da1f26411e529ad432d2c89b074">Your first blog post!</h2>
+
+<p><a name="syntaxhighlighting"></a></p>
+
+<h2 id="syntax-highlighting:0a0e9da1f26411e529ad432d2c89b074">Syntax highlighting</h2>
+
+<p><a name="disqus"></a></p>
+
+<h2 id="comments-with-disqus:0a0e9da1f26411e529ad432d2c89b074">Comments with Disqus</h2>
+
+<p><a name="githubpages"></a></p>
+
+<h2 id="host-on-github-pages:0a0e9da1f26411e529ad432d2c89b074">Host on GitHub Pages</h2>
+
+<p><a name="deploy"></a></p>
+
+<h2 id="how-to-deploy:0a0e9da1f26411e529ad432d2c89b074">How to deploy</h2>
+
+<hr />
+
+<p>Things you need to know</p>
+
+<p>/content
+  we have types of content, but just one for now: post
+  posts can have data
+    drafts
+  posts are formatted in markdown
+  syntax highlighting built in!</p>
+
+<p>/layouts
+  two things you need for a blog: list layout, single layout
+  you can put these in a folder called post or default, probably better to put them in post
+  partials for header and footer
+  index file for the home page and post loop</p>
+
+<p>/static
+  not automatically preprocessed
+    no sass
+    no concatenation
+    no minification
+    does this matter that much? not if you keep these assets few and small, but yes if not
+      you can use a watcher here to preprocess files &ndash; i prefer not to to keep things simple
+  put css, images, js, svgs, favicon here</p>
+
+<p>config
+  site name
+  site description
+  site url
+  author?</p>
+
+<p>adding disqus</p>
+
+<p>hosting on github
+  deploy process
+  making the public folder a subtree
+  script for commit and push out everything</p>
+
+<p>what making a new post is like
+  front matter
+  does disqus have to be manual? can i use slug?
+  markdown formatting
+  code highlighting
+  add draft tag if not done yet
+  run deploy script</p>
+
+    </section>
+  </article>
+</main>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'smashingthings';
+if (disqus_shortname && disqus_shortname !== 'example') {
+  var disqus_identifier = '8';
+
+   
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+}
+</script>
+    <footer class="site-footer clearfix">
+      <section class="poweredby">Proudly published with <a href="http://gohugo.io/">Hugo</a></section>
+    </footer>
+  </div>
+  <script type="text/javascript" src="http://smashingthingstogether.com/js/main.js"></script>
+</body>
+</html>

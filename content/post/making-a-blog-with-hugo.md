@@ -34,28 +34,29 @@ There's one big downside to Hugo: it doesn't preprocess any static assets. This 
 
 Either do the preprocessesing on your own using a watch task in Gulp or Grunt, or keep your CSS and JavaScript simple like I do.
 
-This lack of preprocessing support can be seen as a downside, but I actually think it's nice. The last time I tried to start up an old gulp project, I got about 3-4 warnings about out-of-date NPM dependencies. This would have been a minor annoyance if I was building a big web application, because I'd just be grateful for the new updates to software I got for free, but when all I want to do is write a simple blog post, it's actually quite an annoyance.
+This lack of preprocessing support can be seen as a downside, but I actually think it's nice. The last time I tried to start up an old gulp project, I got about 3-4 warnings about out-of-date NPM dependencies. When all I want to do is write a simple blog post, this kind of thing is a constant source of annoyance.
 
-If Hugo supports minifying and concatenating CSS and JavaScript in the future, I'll use it, but until then I'm going to enjoy keeping things simple.
+If Hugo adds support for minifying and concatenating CSS and JavaScript in the future, I'll use it, but until then I'm going to enjoy keeping things simple.
 
 # Let's build something!
 
 ## Table of contents
 
-1. Install Hugo https://gohugo.io/overview/installing/
-2. Create a site
-3. Clean up (delete https://gohugo.io/content/archetypes/ and delete /data)
-4. Add some site-wide data
-5. Add a layout (index, list, single, head, footer)
-6. Add static assets (css, images, js, svgs, favicon)
-7. Add a blog post
-8. Add syntax highlighting
-9. Add disqus
-10. Host on GitHub
-11. How to deploy after writing a new post
+1. [Install Hugo](#installhugo)
+2. [Create a site](#createsite)
+3. [Clean up](#cleanup)
+4. [Site-wide data](#sitewidedata)
+5. [Layouts and templates](#layouts)
+6. [Static assets](#staticassets)
+7. [Your first blog post!](#firstblogpost)
+8. [View your blog](#viewblog)
+8. [Syntax highlighting](#syntaxhighlighting)
+9. [Comments with Disqus](#disqus)
+10. [Host on GitHub Pages](#githubpages)
+11. [How to deploy](#deploy)
 
-
-## Install Hugo
+<a name="installhugo"></a>
+## 1. Install Hugo
 
 On OS X, if you have Homebrew:
 
@@ -67,13 +68,17 @@ Otherwise, download the installer here: https://github.com/spf13/hugo/releases
 
 For more a more detailed guide, go here: https://gohugo.io/overview/installing/
 
-## Create a site
+<a name="createsite"></a>
+## 2. Create a site
+
+**Tip:** you can download the basic site that we create in steps 1-6 here: [Basic-Hugo-Site](https://github.com/panphora/Basic-Hugo-Site)
 
 {{< highlight console >}}
 hugo new site your_site
 {{< /highlight >}}
 
-## Clean up
+<a name="cleanup"></a>
+## 3. Clean up
 
 For a simple blog, you don't need the `archetypes` or `data` directories, so I just deleted them for now.
 
@@ -85,7 +90,8 @@ rm -r archetypes
 rm -r data
 {{< /highlight >}}
 
-## Add some site-wide data
+<a name="sitewidedata"></a>
+## 4. Site-wide data
 
 Add some basic info about your site to the `config.toml` file. You'll be able to use this info in all your templates.
 
@@ -99,7 +105,8 @@ title = "Your Site Title"
   description = "Your Site Description"
 {{< /highlight >}}
 
-## Add a layout
+<a name="layouts"></a>
+## 5. Layouts and templates
 
 This is where we get into the design of the site. We'll to keep things simple for now.
 
@@ -107,35 +114,26 @@ You can skip this section if you'd prefer to install a theme from the [Hugo Them
 
 {{< highlight console >}}
 mkdir themes && cd themes
-git clone <your_chosen_themes_clone_url>
+git clone <theme_clone_url>
 {{< /highlight >}}
 
 Otherwise, continue with the instructions here:
 
 The files you'll need to create in this folder are:
-- partials/foot.html
-- partials/head.html
-- post/list.html
-- post/single.html
-- index.html
 
-Files in the `partials` directory are html snippets that you can use in any template. In most cases, they will be passed the parent template's context, so they can display post data or data defined in your config file. In this example, we're creating a `foot.html` file for the footer html and a `head.html` file for the header.
+- `partials/head.html`
+- `partials/foot.html`
+- `post/list.html`
+- `post/single.html`
+- `index.html`
 
-Inside the `post` directory are two files, `list.html` and `single.html`. The `list.html` file will be used to render the front page's list of blog posts. The `single.html` file will be used to render a single blog post.
+Files in the `partials` directory are html snippets that you can use in any template. We'll pass them the parent template's context, so they'll be able to display post data or data defined in your `config.toml` file.
 
-The `index.html` file is they template used for your front page. It renders the `list.html` template inside itself, so that we end up with a list of blog posts on the home page.
+Inside the `post` directory there are two files, `list.html` and `single.html`. The `list.html` file will be used to render the front page's list of blog posts. The `single.html` file will be used to render a single blog post.
+
+The `index.html` file is used to render the front page of your site.
 
 Here's an example of what these files could look like for a *very* simple blog:
-
-**partials/foot.html**
-{{< highlight html >}}
-    <footer>Proudly published with <a href="http://gohugo.io/">Hugo</a></section></footer>
-  </div>
-</body>
-</html>
-{{< /highlight >}}
-
-The `foot.html` partial is included in the `index.html` and `single.html` templates, which means it will show up on every page of our blog. In this example, it adds a link back to Hugo, closes the `.container` div defined in `head.html` and closes the `body` and `html` tags.
 
 **partials/head.html**
 {{< highlight html >}}
@@ -150,19 +148,35 @@ The `foot.html` partial is included in the `index.html` and `single.html` templa
 <body>
   <div class="container">
     <div class="site-header">
-      <h1 class="site-title"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}<img class="site-logo" alt="{{ .Title }} Logo" src="{{ .Site.BaseURL }}svgs/logo.svg" /></a></h1>
+      <h1 class="site-title"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>
       <h2 class="page-description">{{ .Site.Params.description }}</h2>
     </div>
 {{< /highlight >}}
 
-The `head.html` partial is included in the `index.html` and `single.html` tempaltes, which means it will show up on every page of our blog. In this example, it sets up a basic, well-formatted html website. It includes a link to a single stylesheet and opens the `body` tag. It also adds a site header, which uses the title and description that we defined in the `config.toml` file. It also includes a reference to an SVG logo, which, according to this example, should be put inside a folder called `svgs` inside of the `static` folder.
+The `head.html` partial is included in the `index.html` and `single.html` templates, which means it will show up on every page of your blog. 
+
+In this partial, we set up all the basics for a basic, functional HTML template. We use the `Title` variable defined in your `config.toml` file, we have a link to a stylesheet, and we set up a basic header.
+
+In the closing partial, `footer.html`, we close off all of the HTML tags created here.
+
+**partials/foot.html**
+{{< highlight html >}}
+    <footer>&copy; {{ .Site.Params.author }} &middot; Proudly published with <a href="http://gohugo.io/">Hugo</a></footer>
+  </div>
+</body>
+</html>
+{{< /highlight >}}
+
+The `foot.html` partial is included in the `index.html` and `single.html` templates, which means it will show up on every page of your blog. 
+
+In this partial, we include a link back to Hugo, as well as a copyright notice. We also close all of the HTML tags that we opened in the `head.html` partial.
 
 **post/list.html**
 {{< highlight html >}}
 <a href="{{ .Permalink }}" class="post">
   <header class="post-header">
     <h2 class="post-title">{{ .Title }}</h2>
-    <time class="post-date" datetime="{{ .Date.Format '2006-01-02' }}">posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
+    <time class="post-date" datetime='{{ .Date.Format "2006-01-02" }}'>posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
   </header>
   <section class="post-excerpt">
     {{if .IsPage}}
@@ -172,7 +186,9 @@ The `head.html` partial is included in the `index.html` and `single.html` tempal
 </a>
 {{< /highlight >}}
 
-This template is responsible for rendering a single blog post on the home page. It includes a reference to a template variable called `Permalink` and another one called `Summary`. These variables are automically generated for you by Hugo. The `Permalink` variable will automatically be converted into a link to your full post. And the `Summary` variable will, by default, automatically be set to the first 70 words of your content.
+The `list.html` template is responsible for rendering a blog post's content on the home page, as part of a list of blog posts. It includes a reference to a template variable called `Permalink` and another one called `Summary`. These variables are automically generated for you by Hugo. 
+
+The `Permalink` variable will be replaced by a link to your full post when you generate your site. And the `Summary` variable will, by default, automatically be set to the first 70 words of a blog post's content.
 
 **post/single.html**
 {{< highlight html >}}
@@ -180,8 +196,8 @@ This template is responsible for rendering a single blog post on the home page. 
 <main class="content" role="main">
   <article class="post">
     <header class="post-header">
-      <h1 class="post-title">{{ .Title }}</h1>
-      <time class="post-date" datetime="{{ .Date.Format '2006-01-02' }}">posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
+      <h2 class="post-title">{{ .Title }}</h2>
+      <time class="post-date" datetime='{{ .Date.Format "2006-01-02" }}'>posted {{ .Date.Format "Mon, Jan 2, 2006" }}</time>
     </header>
     <section class="post-content">
       {{ .Content }}
@@ -191,7 +207,9 @@ This template is responsible for rendering a single blog post on the home page. 
 {{ partial "foot.html" . }}
 {{< /highlight >}}
 
+The `single.html` template is responsible for rendering a single blog post. It includes references to the `head.html` and `foot.html` partials because it represents an entire page, unlike the `list.html` template.
 
+This template includes the `Title`, `Date`, and `Content` variables. Hugo provides the ability to format the date. You can use pretty much any format here, as long as you use 2006 for the year, January for the month, and the 2nd for the day.
 
 **partials/index.html**
 {{< highlight html >}}
@@ -206,21 +224,118 @@ This template is responsible for rendering a single blog post on the home page. 
 {{ partial "foot.html" . }}
 {{< /highlight >}}
 
-This will give you:
-- A header and footer included on every page
-- A site title and description based on the one your set up in config.toml
-- A reference to a stylesheet in your <head>
-- A reference to a js file after the main content, before the <body> closes
-- A list of posts with the date and a summary
-- A single post view with the title, date, and content of the post
+The `index.html` template is used to generate the front page of your site. It includes references to the `head.html` and `foot.html` partials because it represents an entire page.
+
+In this template, we loop through the pages, which are stored inside a variable called `Data`. Then, if the page has a type of "post", we render it using the `list.html` template. Otherwise, we ignore it.
+
+For this simple blog, we will only have one type of page, but it's still good to leave this check in here in case we add more types later.
+
+<a name="staticassets"></a>
+## 6. Static assets
+
+For a basic blog, you have all you need. But we should definitely add a stylesheet to make things look a little bit nicer.
+
+The following CSS should provide some very basic styling for your blog.
+
+{{< highlight css >}}
+/* normalize.css 4.0.0 */
+progress,sub,sup{vertical-align:baseline}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0} figcaption, menu,article,aside,details,figure,footer,header,main,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0} [hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,select,textarea{font:inherit;margin:0}optgroup{font-weight:700} select,button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{cursor:pointer}[disabled]{cursor:default}[type=submit], [type=reset],button,html [type=button]{-webkit-appearance:button}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}button:-moz-focusring,input:-moz-focusring{outline:ButtonText dotted 1px}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}/*# sourceMappingURL=normalize.min.css.map */
+
+/* main style */
+
+body {
+  line-height: 1.4em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1 { font-size: 2.2rem }
+h2 { font-size: 1.7rem }
+h3 { font-size: 1.5rem }
+h4 { font-size: 1.25rem }
+h5 { font-size: 1rem }
+h6 { font-size: .875rem }
+
+a {
+  text-decoration: underline;
+  color: #0074d9;
+}
+
+.container {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.site-header {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
+.site-title {
+  margin-bottom: 1.5rem;
+}
+
+.site-title a {
+  color: #222;
+  text-decoration: none;
+}
+
+.site-title a:hover {
+  color: #aaa;
+}
+
+a.post {
+  display: block;
+  text-decoration: none;
+  color: #222;
+  padding: 1rem 1rem .5rem 1rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  border: 1px solid transparent;
+  margin-bottom: 2rem;
+}
+
+a.post:hover {
+  border: 1px solid #ccc;
+}
+
+.post-title {
+  margin-bottom: .5rem;
+}
+
+footer  {
+  margin-top: 3rem;
+  color: #999;
+}
+
+footer a {
+  color: #999;
+}
+{{< /highlight >}}
+
+**Tip:** you can download the basic site that we create in steps 1-6 here: [Basic-Hugo-Site](https://github.com/panphora/Basic-Hugo-Site)
 
 
-What's happening here:
-- Hugo uses the `index.html` file to render a list of all your posts. It gets them from the `Data.Pages` template variable.
-- Hugo renders all of the individual posts using the `single.html` template. 
-- If someone clicks on a post on the home page, they're taken to the corresponding post.
+<a name="firstblogpost"></a>
+## 7. Your first blog post!
 
+<a name="viewblog"></a>
+## 7. View your blog
 
+<a name="syntaxhighlighting"></a>
+## 8. Syntax highlighting
+
+<a name="disqus"></a>
+## 9. Comments with Disqus
+
+<a name="githubpages"></a>
+## 10. Host on GitHub Pages
+
+<a name="deploy"></a>
+## 11. How to deploy
 
 ---------
 
