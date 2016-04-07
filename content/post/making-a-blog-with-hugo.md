@@ -2,6 +2,7 @@
 date = "2016-03-30"
 title = "Make a simple static blog with Hugo and deploy it to GitHub Pages: An easy, step-by-step tutorial"
 postid = 8
+draft = true
 +++
 
 ## Why?
@@ -340,12 +341,17 @@ footer a {
 
 taken directly from: https://gohugo.io/tutorials/github-pages-blog#configure-git-workflow
 
+make sure you have a `README.md` file before starting this
+
 {{< highlight console >}}
 # Create a new orphand branch (no commit history) named gh-pages
 git checkout --orphan gh-pages
 
 # Unstage all files
 git rm --cached $(git ls-files)
+
+# i added this
+git rm -r *
 
 # Grab one file from the master branch so we can make a commit
 git checkout master README.md
@@ -363,14 +369,19 @@ git checkout master
 # Remove the public folder to make room for the gh-pages subtree
 rm -rf public
 
+# i added this too
+git commit -am "removed public dir"
+
 # Add the gh-pages branch of the repository. It will look like a folder named public
-git subtree add --prefix=public git@github.com:spencerlyon2/hugo_gh_blog.git gh-pages --squash
+git subtree add --prefix=public git@github.com:<github_username>/<github_repo_name>.git gh-pages --squash
 
 # Pull down the file we just committed. This helps avoid merge conflicts
-git subtree pull --prefix=public git@github.com:spencerlyon2/hugo_gh_blog.git gh-pages
+git subtree pull --prefix=public git@github.com:<github_username>/<github_repo_name>.git gh-pages
 
 # Run hugo. Generated site will be placed in public directory (or omit -t ThemeName if you're not using a theme)
 hugo -t ThemeName
+# or just
+hugo
 
 # Add everything
 git add -A
@@ -379,12 +390,43 @@ git add -A
 git commit -m "Updating site" && git push origin master
 
 # Push the public subtree to the gh-pages branch
-git subtree push --prefix=public git@github.com:spencerlyon2/hugo_gh_blog.git gh-pages
+git subtree push --prefix=public git@github.com:<github_username>/<github_repo_name>.git gh-pages
 {{< /highlight >}}
 
 
 <a name="deploy"></a>
 ## 11. How to deploy
+
+make `deploy.sh` file
+
+{{< highlight bash >}}
+#!/bin/bash
+echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
+
+# Build the project.
+hugo
+
+# Add changes to git.
+git add -A
+
+# Commit changes.
+msg="rebuilding site `date`"
+if [ $# -eq 1 ]
+  then msg="$1"
+fi
+git commit -m "$msg"
+
+# Push source and build repos.
+git push origin master
+git subtree push --prefix=public git@github.com:panphora/panphora.git gh-pages
+{{< /highlight >}}
+
+<a name="githubpagesdomain"></a>
+## 11. Custom domain on GitHub Pages
+
+1. Adding your custom domain to a CNAME file: https://help.github.com/articles/setting-up-your-pages-site-repository/
+  - this might not work with our subtree setup
+2. Setting up an apex domain and www subdomain: https://help.github.com/articles/setting-up-an-apex-domain-and-www-subdomain/
 
 ---------
 
