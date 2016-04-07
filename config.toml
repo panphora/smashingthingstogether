@@ -5,3 +5,6 @@ title = "Smashing Things Together"
 [Params]
   author = "David Miranda"
   description = "Experiments, projects, and random ideas"
+
+[permalinks]
+  post = "/:slug/"

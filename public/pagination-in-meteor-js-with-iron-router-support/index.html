@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Pagination in Meteor.js (with Iron Router support)</title>
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://smashingthingstogether.com/css/main.css">
+</head>
+<body class="is-page">
+  <div class="site-wrapper container">
+    <div class="main-header show-if-is-page">
+      <h1 class="page-title center"><a href="http://smashingthingstogether.com/"><img class="site-logo" alt="Pagination in Meteor.js (with Iron Router support) Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+    </div>
+    <div class="main-header hide-if-is-page">
+      <h1 class="page-title"><a href="http://smashingthingstogether.com/">Smashing Things Together<img class="site-logo" alt="Pagination in Meteor.js (with Iron Router support) Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+      <h2 class="page-description">Experiments, projects, and random ideas</h2>
+    </div>
+<main class="content" role="main">
+  <article class="post mb8">
+    <header class="post-header">
+      <h1 class="post-title">Pagination in Meteor.js (with Iron Router support)</h1>
+      <div class="mb3 extra-post-info">
+        <time class="post-date" datetime="2015-08-17">posted Mon, Aug 17, 2015</time> &middot; <a class="comment-link" href="http://smashingthingstogether.com/pagination-in-meteor-js-with-iron-router-support/#disqus_thread" data-disqus-identifier="6">Comments</a>
+      </div>
+    </header>
+    <section class="post-content">
+      
+
+<p>Pagination might at first seem like a pretty easy, if not downright fun, feature to implement. However, like a lot of seemingly-small features, it can quickly balloon into a multi-day or multi-week project.</p>
+
+<p>To give you an idea of how complicated pagination can be to implement, check out this 3 part tutorial written by the talented <a href="https://github.com/riebeekn">Nick Riebeek</a>:</p>
+
+<ol>
+<li><a href="http://experimentsinmeteor.com/paging-and-sorting-part-1/">Part 1</a></li>
+<li><a href="http://experimentsinmeteor.com/paging-and-sorting-part-1a/">Part 1a</a></li>
+<li><a href="http://experimentsinmeteor.com/paging-and-sorting-part-2/">Part 2</a></li>
+</ol>
+
+<p>At the end of this tutorial, the author ends up with a well-designed, but pretty basic, pagination system. There&rsquo;s a &ldquo;Previous&rdquo; button and a &ldquo;Next&rdquo; button, but no ability to skip directly to a page by clicking on its page number &mdash; or to skip directly to the first or the last page.</p>
+
+<p>Also, unfortunately, the code in these blogs posts was not designed to be modular, so a lot of the code would have to be rewritten and customized for every page that has pagination on it or, ideally, reworked to be modular.</p>
+
+<h2 id="let-s-use-a-package-instead:0647cfcf54323acd521eb61e27ee3c4a">Let&rsquo;s use a package instead!</h2>
+
+<p>We&rsquo;re going to use a package because we don&rsquo;t want to go through the hassle of implementing a pagination system ourselves. We&rsquo;re lucky there happens to be a really good pagination package already available: <a href="https://atmospherejs.com/alethes/pages">Meteor Pages</a></p>
+
+<p>This is the best, most feature-complete package I&rsquo;ve found for adding pagination to Meteor. Some of its features include:</p>
+
+<ul>
+<li>The ability to pre-fetch data from neighboring pages. The default it to grab 3 pages ahead of the first page, so when you click on pages 2-4, they should load instantly.</li>
+<li>A local cache of each page is stored on the client, so data is never fetched more than once.</li>
+<li>The whole collection isn&rsquo;t sent to the client. Only the data that&rsquo;s necessary is fetched. This is especially good for projects with large collections. <strong>Note:</strong> All collection data will be sent to the client anyways if you have the default <code>autopublish</code> package installed.</li>
+</ul>
+
+<p>One downside of using this package, as we&rsquo;ll see later in this post, is it can be a little hard to customize. However, since <a href="https://trello.com/c/YxHqvlXW/67-pagination-in-core">pagination isn&rsquo;t coming to the core Meteor tools any time soon</a>, this package will probably be the best solution for a while.</p>
+
+<h1 id="getting-started:0647cfcf54323acd521eb61e27ee3c4a">Getting started</h1>
+
+<h2 id="create-an-app:0647cfcf54323acd521eb61e27ee3c4a">Create an app</h2>
+
+<p>Create an app if you don&rsquo;t have one already:</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>meteor create [your-app-name]
+</pre></div>
+
+
+<h2 id="add-the-required-packages:0647cfcf54323acd521eb61e27ee3c4a">Add the required packages</h2>
+
+<p>Add the <a href="https://atmospherejs.com/alethes/pages">Meteor Pages</a> package, which we&rsquo;ll use to handle pagination:</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>meteor add alethes:pages
+</pre></div>
+
+
+<p>Add the <a href="https://atmospherejs.com/iron/router">Iron Router</a> package, which we&rsquo;ll use to handle routing:</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>meteor add iron:router
+</pre></div>
+
+
+<h2 id="add-some-data-to-a-collection-so-we-have-something-to-page-through:0647cfcf54323acd521eb61e27ee3c4a">Add some data to a collection, so we have something to page through</h2>
+
+<p><strong>Note:</strong> You only need to do this section if you don&rsquo;t already have a collection with lots of data in it.</p>
+
+<p>Create a folder called <code>lib</code> in your project&rsquo;s main directory and create a file called <code>test-data.js</code> there.</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>cd your-app-directory/
+mkdir lib
+cd lib
+nano test-data.js # use your favorite text editor to create the file
+</pre></div>
+
+
+<p>Add the following code to the <code>test-data.js</code> file.</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">Items</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Mongo</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Collection</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;items&quot;</span><span style="color: #f8f8f2">);</span>
+
+<span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">Meteor</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">isServer</span> <span style="color: #f92672">&amp;&amp;</span> <span style="color: #a6e22e">Items</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">find</span><span style="color: #f8f8f2">().</span><span style="color: #a6e22e">count</span><span style="color: #f8f8f2">()</span> <span style="color: #f92672">!==</span> <span style="color: #ae81ff">1000</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #75715e">// this will delete the data in the items collection</span>
+  <span style="color: #a6e22e">Items</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">remove</span><span style="color: #f8f8f2">({});</span>
+
+  <span style="color: #75715e">// adds an index to make sorting by the &#39;id&#39; property quicker</span>
+  <span style="color: #a6e22e">Items</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">_ensureIndex</span><span style="color: #f8f8f2">({</span>
+    <span style="color: #a6e22e">id</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">1</span>
+  <span style="color: #f8f8f2">});</span>
+
+  <span style="color: #75715e">// adds 1000 documents to &#39;items&#39; collection</span>
+  <span style="color: #66d9ef">for</span> <span style="color: #f8f8f2">(</span><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">&lt;</span> <span style="color: #ae81ff">1001</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span><span style="color: #f92672">++</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+    <span style="color: #a6e22e">Items</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">insert</span><span style="color: #f8f8f2">({</span>
+      <span style="color: #a6e22e">id</span><span style="color: #f92672">:</span> <span style="color: #a6e22e">i</span><span style="color: #f8f8f2">,</span>
+      <span style="color: #a6e22e">text</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&#39;Hello from item #&#39;</span> <span style="color: #f92672">+</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">+</span> <span style="color: #e6db74">&#39;!&#39;</span>
+    <span style="color: #f8f8f2">});</span>
+  <span style="color: #f8f8f2">}</span>
+<span style="color: #f8f8f2">}</span>
+</pre></div>
+
+
+<p>This will generate 1000 documents, each with some unique text, and insert them into a collection called <code>items</code>.</p>
+
+<p>We make sure we&rsquo;re indexing this collection by the <code>id</code> property, so it&rsquo;ll be easy to sort by this property later.</p>
+
+<h2 id="create-the-main-templates:0647cfcf54323acd521eb61e27ee3c4a">Create the main templates</h2>
+
+<p>Include the following markup in your main <code>html</code> file. If you generated your project with <code>Meteor create</code>, this file will be called <code>[your-project-name].html</code></p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">template</span> <span style="color: #a6e22e">name</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;Layout&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  {{&gt; yield}}
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">template</span><span style="color: #f8f8f2">&gt;</span>
+
+<span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">template</span> <span style="color: #a6e22e">name</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;Items&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  {{&gt; pages}}
+  {{&gt; pagesNav}}
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">template</span><span style="color: #f8f8f2">&gt;</span>
+</pre></div>
+
+
+<p>The first template, which we name <code>Layout</code> here, is an <strong>Iron Router</strong> convention. It&rsquo;s the layout, or container, that your app&rsquo;s pages will be rendered into.</p>
+
+<p>The second template, which we name <code>Items</code> here, is what we&rsquo;ll use to render this particular page&rsquo;s content into.</p>
+
+<p>So, to clarify, our page&rsquo;s data goes in the <code>Items</code> template, which, in turn, is rendered into the <code>Layout</code> template.</p>
+
+<p>Inside the <code>Items</code> template, we have the <code>pages</code> and <code>pagesNav</code> helpers. These are bundled with the <strong>Meteor Pages</strong> package and are handled automatically.</p>
+
+<p>The <code>pages</code> helper is responsible for handling the display of the main part of the page, where all of our &ldquo;items&rdquo; will be displayed as a list.</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>Item 1 
+Item 2
+Item 3
+etc.
+</pre></div>
+
+
+<p>The <code>pagesNav</code> helper, on the other hand, is responsible for displaying the pagination controls, which appear at the bottom of the page and look something like this:</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>&lt;&lt;  &lt;  1  2  3  4  5  6  7  &gt;  &gt;&gt;
+</pre></div>
+
+
+<h2 id="let-s-initialize-the-pagination-functionality:0647cfcf54323acd521eb61e27ee3c4a">Let&rsquo;s initialize the pagination functionality!</h2>
+
+<p>Now we can initialize a <code>Meteor.Pagination</code> object, and get pagination working!</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">Pages</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Meteor</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Pagination</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">Items</span><span style="color: #f8f8f2">,</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #a6e22e">route</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;/items/&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">router</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;iron-router&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">routerTemplate</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;Items&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">routerLayout</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;Layout&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">sort</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">{</span>
+    <span style="color: #a6e22e">id</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">1</span>
+  <span style="color: #f8f8f2">},</span>
+  <span style="color: #a6e22e">templateName</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;Items&quot;</span>
+<span style="color: #f8f8f2">});</span>
+</pre></div>
+
+
+<p>There are many settings that we can add in the initialization code, but the above code covers the basics. Check out the <a href="https://github.com/alethes/meteor-pages/#settings">Settings</a> section of the <strong>Meteor Pages</strong> documentation for even more options. (The settings under the &ldquo;Available to the client&rdquo; heading are the ones you can customize.)</p>
+
+<p>The <code>route</code> setting specifies the route that will be used for showing the different pages. Since we&rsquo;re using &ldquo;/items/&rdquo; here, the second page will look like &ldquo;/items/2&rdquo; and the third page will look like &ldquo;/items/3&rdquo;.</p>
+
+<p>The <code>router</code> setting specifies that we&rsquo;re using the <strong>Iron Router</strong> package for routing requests. This is the only router that <strong>Meteor Pages</strong> supports out of the box, although you can manually add others.</p>
+
+<p>The <code>routerTemplate</code> setting specifies the template we&rsquo;re using to display the main content of this page. It should contain the <code>pages</code> and <code>pagesNav</code> helpers in it.</p>
+
+<p>The <code>routerLayout</code> setting specifies the layout that this page will be rendered into.</p>
+
+<p>The <code>sort</code> setting enables sorting on the collection. We&rsquo;re sorting our collection using the <code>id</code> property. (We could just as easily sort it by a different property, like <code>createdDate</code>, if the items in this collection had this property.)</p>
+
+<p>The <code>templateName</code> setting isn&rsquo;t strictly necessary. You only need to use it if the value of your <code>routerTemplate</code> setting doesn&rsquo;t match the name of your collection.</p>
+
+<p>I&rsquo;m in the habit of using all lowercase letters for my collection names and a capitalized word for my template names, so I need to use the <code>templateName</code> setting, as you can see. (If you&rsquo;re interested, you can read more about this issue here: <a href="https://github.com/alethes/meteor-pages/issues/95">Meteor Pages Issue 95</a>).</p>
+
+<p><strong>Note:</strong> This configuration assumes you&rsquo;re okay with the <strong>Meteor Pages</strong> package handling this route for you. If you want to handle the route yourself, but add paging to some part of your page, <a href="#extratiphowtoaddpaginationtoanexistingroute">check out this tip</a>.</p>
+
+<h2 id="we-re-all-done:0647cfcf54323acd521eb61e27ee3c4a">We&rsquo;re all done!</h2>
+
+<p>Well, not quite&hellip;</p>
+
+<p>Everything should be working now. <em>Wooo!</em></p>
+
+<p>However, you may want to customize the look and feel of your pagination items and controls. If this is the case, read on.</p>
+
+<h2 id="customizing-the-look-of-each-item:0647cfcf54323acd521eb61e27ee3c4a">Customizing the look of each item</h2>
+
+<p>Right now we&rsquo;re using a template that&rsquo;s bundled with <strong>Meteor Pages</strong> to display each item.</p>
+
+<p>Let&rsquo;s add a custom template to override the built-in template by using the <code>itemTemplate</code> setting in our initialization code.</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">Pages</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Meteor</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Pagination</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">Items</span><span style="color: #f8f8f2">,</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #a6e22e">itemTemplate</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;Item&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #75715e">// add your template&#39;s name here</span>
+  <span style="color: #a6e22e">route</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;/items/&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">router</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;iron-router&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">routerTemplate</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;Items&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">routerLayout</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;Layout&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #a6e22e">sort</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">{</span>
+    <span style="color: #a6e22e">id</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">1</span>
+  <span style="color: #f8f8f2">},</span>
+  <span style="color: #a6e22e">templateName</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;Items&quot;</span>
+<span style="color: #f8f8f2">});</span>
+</pre></div>
+
+
+<p>Now let&rsquo;s write the code for the <code>Item</code> template, which will be passed all of the properties from each item.</p>
+
+<p>In this case, it will have access to the <code>id</code> and <code>text</code> properties, but we&rsquo;ll only be displaying the value of the <code>text</code> property.</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">template</span> <span style="color: #a6e22e">name</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;Item&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;item&quot;</span><span style="color: #f8f8f2">&gt;</span>{{text}}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">template</span><span style="color: #f8f8f2">&gt;</span>
+</pre></div>
+</p>
+
+<p>We&rsquo;re just using a very simple <code>&lt;div&gt;</code> here, with the text of the item inside of it.</p>
+
+<p>Let&rsquo;s style it to make it look a little better. Put the following code in your main <code>css</code> file. If you generated your project with <code>Meteor create</code>, this file will be called <code>[your-project-name].css</code>.</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">.item</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #f8f8f2">width</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">300px</span><span style="color: #f8f8f2">;</span>
+  <span style="color: #f8f8f2">border</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">1px</span> <span style="color: #f8f8f2">solid</span> <span style="color: #f8f8f2">black;</span>
+  <span style="color: #f8f8f2">padding</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">rem;</span>
+  <span style="color: #f8f8f2">margin-bottom</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">rem;</span>
+  <span style="color: #f8f8f2">margin-left</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">auto;</span>
+  <span style="color: #f8f8f2">margin-right</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">auto;</span>
+<span style="color: #f8f8f2">}</span>
+</pre></div>
+</p>
+
+<p>Now we have a nice looking item template that doesn&rsquo;t automatically show all the properties of our items, like the default template did.</p>
+
+<p>Feel free to customize it further.</p>
+
+<h2 id="customizing-the-pagination-controls:0647cfcf54323acd521eb61e27ee3c4a">Customizing the pagination controls</h2>
+
+<p>What about the pagination controls, the ones that look like this:</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>&lt;&lt;  &lt;  1  2  3  4  5  6  7  &gt;  &gt;&gt;
+</pre></div>
+</p>
+
+<p>Can we customize these too?</p>
+
+<p>You&rsquo;ll notice they already look pretty nice. The HTML is structured well and each button is styled clearly. However, it&rsquo;s natural to want to change these things to suit the design of your app.</p>
+
+<p>Here&rsquo;s where things get a little difficult.</p>
+
+<p>I would strongly suggest just trying to work with the default HTML that&rsquo;s already there. You can achieve most styles you&rsquo;re looking for simply by overwriting the default CSS with your own.</p>
+
+<p>If you can make this work for you, then you&rsquo;ve really lucked out.</p>
+
+<p>However, if you&rsquo;re set on being able to modify the underlying HTML, continue on.</p>
+
+<h2 id="there-must-be-a-setting-for-this:0647cfcf54323acd521eb61e27ee3c4a">There must be a setting for this&hellip;</h2>
+
+<p>There <strong>is</strong> actually a setting called <code>navTemplate</code>, which, according to the documentation, is &ldquo;the name of the template used for displaying the pagination navigation&rdquo;.</p>
+
+<p>However! Unfortunately, this setting is &ldquo;unavailable to the client&rdquo;. This means it can&rsquo;t be modified without directly modifying the package code. It&rsquo;s tied to other functionality in the package too much to be easily modifiable.</p>
+
+<p>You can see a proposal I created on GitHub to allow  users to modify this setting: <a href="https://github.com/alethes/meteor-pages/issues/166">Meteor Pages Issue 166</a>. It hasn&rsquo;t been responded to yet.</p>
+
+<p>If you&rsquo;re still set on being able to modify the HTML directly, and you&rsquo;re okay with modifying the underlying package code, continue on to the dark side&hellip;</p>
+
+<h2 id="a-quick-warning-about-modifying-the-source-code-of-an-external-package:0647cfcf54323acd521eb61e27ee3c4a">A quick warning about modifying the source code of an external package</h2>
+
+<p>I would hardly ever suggest modifying the source code of another package and here&rsquo;s why&hellip;</p>
+
+<p>It has 3 major drawbacks that I can think of:</p>
+
+<ol>
+<li>As a good open-source citizen and responsible developer, if a package is missing a feature you need, you should fork the project and submit a pull request to the original author, after adding the functionality that you want. This way, everyone can benefit from your work.</li>
+<li>It will be harder to update this package in the future. Not only will you be breaking the functionality that automatically tells you about updates to this package, you&rsquo;ll also be making it harder for other developers working on your project to update it. That&rsquo;s because even if they manually update it in the future, they&rsquo;ll somehow have to figure out how to re-implement all the changes you made into the new version of the package (which can be incredibly challenging if the package&rsquo;s API has changed significantly).</li>
+<li>You&rsquo;re also making your code harder to debug. Expecting your developers to know that you made a change to an external package in your local repository is unfair and usually very hard to document. If a bug pops up due to your modifications, it will be hard to track down and fix it.</li>
+</ol>
+
+<p>If you&rsquo;re okay with all of the above concerns&hellip; keep reading.</p>
+
+<h2 id="modifying-the-pagination-controls-template:0647cfcf54323acd521eb61e27ee3c4a">Modifying the pagination controls template</h2>
+
+<p>Download the alethes:pages package into a /packages folder in the root of your project</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>cd your-app-directory/
+mkdir packages
+cd packages
+git clone https://github.com/alethes/meteor-pages.git
+</pre></div>
+</p>
+
+<p>Change the package&rsquo;s name. You&rsquo;ll need to go into the package&rsquo;s package.js file inside of the <code>meteor-pages-master</code> folder that you just downloaded. At the top of that file, change the name of the package from &ldquo;alethes:pages&rdquo; to &ldquo;alethes:pages-modified&rdquo; or something like that.</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>cd meteor-pages-master/
+nano package.js
+</pre></div>
+</p>
+
+<p>Here&rsquo;s what the new code will look like:</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">Package</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">describe</span><span style="color: #f8f8f2">({</span>
+  <span style="color: #e6db74">&quot;name&quot;</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;alethes:pages-modified&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #75715e">// change this line</span>
+  <span style="color: #e6db74">&quot;summary&quot;</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;State of the art, out of the box Meteor pagination&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #e6db74">&quot;version&quot;</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;1.8.4&quot;</span><span style="color: #f8f8f2">,</span>
+  <span style="color: #e6db74">&quot;git&quot;</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;https://github.com/alethes/meteor-pages&quot;</span>
+<span style="color: #f8f8f2">});</span>
+</pre></div>
+</p>
+
+<p>Now, remove the original package:</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>meteor remove alethes:pages
+</pre></div>
+</p>
+
+<p>And install your new custom package.</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>meteor add alethes:pages-modified
+</pre></div>
+</p>
+
+<p><strong>Warning:</strong> As I mentioned above, this will prevent Meteor from pinging you with update notifications for this package (because you&rsquo;re changing its name).</p>
+
+<p>Now you can modify the template where the pagination controls are kept, which you can find in <code>your-app-directory/packages/meteor-pages-master/client/templates.html</code></p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>cd your-app-directory/packages/meteor-pages-master/client/
+nano templates.html # use your favorite text editor here
+</pre></div>
+</p>
+
+<p>The template you want to modify is called <code>_pagesNav</code>.</p>
+
+<p>Here&rsquo;s an example of how I modified mine:</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">template</span> <span style="color: #a6e22e">name</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;_pagesNav&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  {{#if show}}
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span> <span style="color: #a6e22e">data-pages</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;{{name}}&quot;</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;pagination-cont&quot;</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;pagination&quot;</span><span style="color: #f8f8f2">&gt;</span>
+      {{#each navigationNeighbors}}
+        {{#unless isNavLink}}<span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;sm-hide clear&quot;</span><span style="color: #f8f8f2">&gt;&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>{{/unless}}
+        {{#if isNextLink}}<span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;sm-hide clear&quot;</span><span style="color: #f8f8f2">&gt;&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>{{/if}}
+        <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">a</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;pagination-item block {{#unless isNavLink}}number{{/unless}} ml1 mr1 left plain-nav-link-with-hover {{active}} {{disabled}}&quot;</span> <span style="color: #a6e22e">href</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;{{link}}&quot;</span><span style="color: #f8f8f2">&gt;</span>{{p}}<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">a</span><span style="color: #f8f8f2">&gt;</span>
+      {{/each}}
+      <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+  {{/if}}
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">template</span><span style="color: #f8f8f2">&gt;</span>
+</pre></div>
+</p>
+
+<p>This is just an example, but it&rsquo;s what I&rsquo;m using in my own project. It made it easier for me to make my pagination controls responsive, as well as replace the arrows (&ldquo;&gt;&rdquo; and &ldquo;&lt;&ldquo;) with labels, like &ldquo;Next&rdquo; and &ldquo;Previous&rdquo;.</p>
+
+<p>In order to get this template working, I also had to add some additional helpers to the <code>_pagesNav</code> template.</p>
+
+<p>These helpers can be found in <code>your-app-directory/packages/meteor-pages-master/client/controllers.coffee</code></p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>cd your-app-directory/packages/meteor-pages-master/client/
+nano controllers.coffee # use your favorite text editor here
+</pre></div>
+</p>
+
+<p>Here&rsquo;s an example of how you could modify these:</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">Template</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">_pagesNav</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">helpers</span>
+  <span style="color: #75715e">// Note:</span>
+  <span style="color: #75715e">// the &quot;show&quot;, &quot;link&quot;, and &quot;navigationNeighbors&quot; helpers </span>
+  <span style="color: #75715e">// aren&#39;t shown here because they come with the package</span>
+  <span style="color: #a6e22e">isNavLink</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">text</span><span style="color: #f8f8f2">)</span> <span style="color: #f92672">-&gt;</span>
+    <span style="color: #75715e">// this tells the template that this is not a page number link</span>
+    <span style="color: #75715e">// which lets me style these links differently</span>
+    <span style="color: #a6e22e">navLinkNames</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #e6db74">&#39;First&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;Previous&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;Next&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;Last&#39;</span><span style="color: #f8f8f2">];</span>
+
+    <span style="color: #66d9ef">if</span> <span style="color: #a6e22e">navLinkNames</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">indexOf</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">this</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">p</span><span style="color: #f8f8f2">)</span> <span style="color: #f92672">&gt;=</span> <span style="color: #ae81ff">0</span>
+      <span style="color: #66d9ef">return</span> <span style="color: #66d9ef">true</span>
+  <span style="color: #a6e22e">isNextLink</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">text</span><span style="color: #f8f8f2">)</span> <span style="color: #f92672">-&gt;</span>
+    <span style="color: #75715e">// this lets me know which link is the &quot;Next&quot; link</span>
+    <span style="color: #75715e">// and I use this to implement a custom layout</span>
+    <span style="color: #66d9ef">if</span> <span style="color: #66d9ef">this</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">p</span> <span style="color: #a6e22e">is</span> <span style="color: #e6db74">&#39;Next&#39;</span>
+      <span style="color: #66d9ef">return</span> <span style="color: #66d9ef">true</span>
+</pre></div>
+</p>
+
+<p>The helper that I appreciate the most here is the <code>isNavLink</code> helper. In my design I planned to style the &ldquo;First&rdquo;, &ldquo;Previous&rdquo;, &ldquo;Next&rdquo;, and &ldquo;Last&rdquo; buttons differently than the individual page buttons, and this gave me ability to easily add different classes to the page number links so I could style them differently.</p>
+
+<p>Thats it!</p>
+
+<p>You&rsquo;re all set with your completely custom pagination!</p>
+
+<h2 id="extra-tip-how-to-add-pagination-to-an-existing-route:0647cfcf54323acd521eb61e27ee3c4a">Extra tip: how to add pagination to an existing route</h2>
+
+<p>Let&rsquo;s say you have an existing route with its own data and you want to add paging to a small section of the page.</p>
+
+<p>The author of the <strong>Meteor Pages</strong> package has some notes on how to do that here: <a href="https://github.com/alethes/meteor-pages/issues/104">Issue 104: Use Existing Iron-Router Route</a>. Basically, you can remove the built-in routing setting and handle changing the pages yourself. He provides some sample code for how to accomplish this.</p>
+
+<h2 id="this-code-is-on-github:0647cfcf54323acd521eb61e27ee3c4a">This code is on GitHub</h2>
+
+<p>You can access all of the code mentioned in this article here: <a href="https://github.com/panphora/pagination-demo">Pagination demo</a></p>
+
+<p>This repository doesn&rsquo;t include the custom &ldquo;alethes:pages-modified&rdquo; package that we made above. If you want to add that in, you&rsquo;ll have to do it yourself.</p>
+
+<h2 id="questions:0647cfcf54323acd521eb61e27ee3c4a">Questions?</h2>
+
+<p>If you have any questions, you can leave a comment here, contact me on twitter at <a href="https://twitter.com/artisfyhq">artisfyhq</a>, or email me at <a href="mailto:david@storylog.com">david@storylog.com</a>.</p>
+
+<p><strong>Also,</strong> If anyone has a different solution for customizing the <code>_pagesNav</code> template, please let me know!</p>
+
+    </section>
+  </article>
+</main>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'smashingthings';
+if (disqus_shortname && disqus_shortname !== 'example') {
+  var disqus_identifier = '6';
+
+   
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+}
+</script>
+    <footer class="site-footer clearfix">
+      <section class="poweredby">Proudly published with <a href="http://gohugo.io/">Hugo</a></section>
+    </footer>
+  </div>
+  <script type="text/javascript" src="http://smashingthingstogether.com/js/main.js"></script>
+</body>
+</html>
