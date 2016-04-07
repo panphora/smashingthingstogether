@@ -332,6 +332,8 @@ footer a {
 <a name="viewblog"></a>
 ## 7. View your blog
 
+extra note: you can customize permalinks
+
 <a name="syntaxhighlighting"></a>
 ## 8. Syntax highlighting
 
