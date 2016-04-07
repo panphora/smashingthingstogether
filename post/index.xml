@@ -11,10 +11,10 @@
     
     <item>
       <title>How to Handle Errors in Meteor Methods</title>
-      <link>http://smashingthingstogether.com/post/handling-errors-in-meteor-methods/</link>
+      <link>http://smashingthingstogether.com/handling-errors-in-meteor-methods/</link>
       <pubDate>Thu, 03 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://smashingthingstogether.com/post/handling-errors-in-meteor-methods/</guid>
+      <guid>http://smashingthingstogether.com/handling-errors-in-meteor-methods/</guid>
       <description>
 
 &lt;p&gt;If you define methods for altering your collections, you get the convenience of not having to define security-issue-prone &lt;code&gt;allow&lt;/code&gt;/&lt;code&gt;deny&lt;/code&gt; rules.&lt;/p&gt;
@@ -137,10 +137,10 @@
     
     <item>
       <title>Pagination in Meteor.js (with Iron Router support)</title>
-      <link>http://smashingthingstogether.com/post/pagination-in-meteor-js-with-iron-router-support/</link>
+      <link>http://smashingthingstogether.com/pagination-in-meteor-js-with-iron-router-support/</link>
       <pubDate>Mon, 17 Aug 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://smashingthingstogether.com/post/pagination-in-meteor-js-with-iron-router-support/</guid>
+      <guid>http://smashingthingstogether.com/pagination-in-meteor-js-with-iron-router-support/</guid>
       <description>
 
 &lt;p&gt;Pagination might at first seem like a pretty easy, if not downright fun, feature to implement. However, like a lot of seemingly-small features, it can quickly balloon into a multi-day or multi-week project.&lt;/p&gt;
@@ -540,10 +540,10 @@ nano controllers.coffee # use your favorite text editor here
     
     <item>
       <title>The JavaScript Runtime, Fibers, and Meteor.wrapAsync (Meteor.js)</title>
-      <link>http://smashingthingstogether.com/post/the-javascript-runtime-fibers-and-meteor-wrapasync/</link>
+      <link>http://smashingthingstogether.com/the-javascript-runtime-fibers-and-meteor-wrapasync/</link>
       <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://smashingthingstogether.com/post/the-javascript-runtime-fibers-and-meteor-wrapasync/</guid>
+      <guid>http://smashingthingstogether.com/the-javascript-runtime-fibers-and-meteor-wrapasync/</guid>
       <description>
 
 &lt;h2 id=&#34;part-1:0a937069e89d2f82c268b50205f4fb17&#34;&gt;Part 1:&lt;/h2&gt;
@@ -890,10 +890,10 @@ http://localhost:8080/debug?port=5858
     
     <item>
       <title>Make Your First Meteor.js Package</title>
-      <link>http://smashingthingstogether.com/post/make-your-first-meteor-js-package/</link>
+      <link>http://smashingthingstogether.com/make-your-first-meteor-js-package/</link>
       <pubDate>Wed, 03 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://smashingthingstogether.com/post/make-your-first-meteor-js-package/</guid>
+      <guid>http://smashingthingstogether.com/make-your-first-meteor-js-package/</guid>
       <description>
 
 &lt;p&gt;This tutorial will take you through the steps I took in order to make my first Meteor package.&lt;/p&gt;
@@ -1134,10 +1134,10 @@ rm -rf packages/environment-template-helpers/
     
     <item>
       <title>Deploying Your App to Scalingo (Meteor.js)</title>
-      <link>http://smashingthingstogether.com/post/deploying-your-app-to-scalingo-meteor-js/</link>
+      <link>http://smashingthingstogether.com/deploying-your-app-to-scalingo-meteor-js/</link>
       <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://smashingthingstogether.com/post/deploying-your-app-to-scalingo-meteor-js/</guid>
+      <guid>http://smashingthingstogether.com/deploying-your-app-to-scalingo-meteor-js/</guid>
       <description>
 
 &lt;p&gt;Deploying Meteor webapps can be difficult. When I was trying to deploy to &lt;a href=&#34;https://www.digitalocean.com/&#34;&gt;Digital Ocean&lt;/a&gt; from my Windows machine, I ran into some serious issues. They were easy enough to resolve after I figured out what they were, but they required an extra 10-20 minutes of work &lt;em&gt;every&lt;/em&gt; deploy.&lt;/p&gt;
@@ -1303,10 +1303,10 @@ Your public key has been saved in /Users/username/.ssh/id_rsa.pub.
     
     <item>
       <title>How to Make Custom Sign Up and Login Forms (Meteor.js)</title>
-      <link>http://smashingthingstogether.com/post/how-to-make-a-custom-sign-up-form-meteor-js/</link>
+      <link>http://smashingthingstogether.com/how-to-make-a-custom-sign-up-form-meteor-js/</link>
       <pubDate>Fri, 29 May 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://smashingthingstogether.com/post/how-to-make-a-custom-sign-up-form-meteor-js/</guid>
+      <guid>http://smashingthingstogether.com/how-to-make-a-custom-sign-up-form-meteor-js/</guid>
       <description>
 
 &lt;p&gt;If you&amp;rsquo;re making a basic website, the &lt;code&gt;accounts-ui&lt;/code&gt; package is a great option to get started with (&lt;a href=&#34;https://atmospherejs.com/meteor/accounts-ui&#34;&gt;https://atmospherejs.com/meteor/accounts-ui&lt;/a&gt;).&lt;/p&gt;
@@ -1531,10 +1531,10 @@ meteor add juliancwirko:s-alert
     
     <item>
       <title>Using Scoped ReactiveVars to Control Tab Visibility (Meteor.js)</title>
-      <link>http://smashingthingstogether.com/post/scoped-reactive-var-meteor-js/</link>
+      <link>http://smashingthingstogether.com/scoped-reactive-var-meteor-js/</link>
       <pubDate>Mon, 25 May 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://smashingthingstogether.com/post/scoped-reactive-var-meteor-js/</guid>
+      <guid>http://smashingthingstogether.com/scoped-reactive-var-meteor-js/</guid>
       <description>
 
 &lt;h2 id=&#34;step-1:be17c3b1dd9703692e6e1425a1f00964&#34;&gt;Step 1&lt;/h2&gt;
