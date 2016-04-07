@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>How to Make Custom Sign Up and Login Forms (Meteor.js)</title>
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://smashingthingstogether.com/css/main.css">
+</head>
+<body class="is-page">
+  <div class="site-wrapper container">
+    <div class="main-header show-if-is-page">
+      <h1 class="page-title center"><a href="http://smashingthingstogether.com/"><img class="site-logo" alt="How to Make Custom Sign Up and Login Forms (Meteor.js) Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+    </div>
+    <div class="main-header hide-if-is-page">
+      <h1 class="page-title"><a href="http://smashingthingstogether.com/">Smashing Things Together<img class="site-logo" alt="How to Make Custom Sign Up and Login Forms (Meteor.js) Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+      <h2 class="page-description">Experiments, projects, and random ideas</h2>
+    </div>
+<main class="content" role="main">
+  <article class="post mb8">
+    <header class="post-header">
+      <h1 class="post-title">How to Make Custom Sign Up and Login Forms (Meteor.js)</h1>
+      <div class="mb3 extra-post-info">
+        <time class="post-date" datetime="2015-05-29">posted Fri, May 29, 2015</time> &middot; <a class="comment-link" href="http://smashingthingstogether.com/post/how-to-make-a-custom-sign-up-form-meteor-js/#disqus_thread" data-disqus-identifier="2">Comments</a>
+      </div>
+    </header>
+    <section class="post-content">
+      
+
+<p>If you&rsquo;re making a basic website, the <code>accounts-ui</code> package is a great option to get started with (<a href="https://atmospherejs.com/meteor/accounts-ui">https://atmospherejs.com/meteor/accounts-ui</a>).</p>
+
+<p>However, if you want to add some custom styles to your sign up and login forms, follow along here.</p>
+
+<h2 id="1-install-some-basic-packages:eb1c42d623b1b1c8a006d6a9493a0eae">1. Install some basic packages</h2>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>meteor add accounts-password
+meteor add juliancwirko:s-alert
+</pre></div>
+
+
+<p>The <code>accounts-password</code> package depends on the <code>accounts-base</code> package, so that will also be installed.</p>
+
+<p>The <code>juliancwirko:s-alert</code> package will show alerts in the corner of the screen. We&rsquo;ll use this to let a user know they entered an email address or password that&rsquo;s invalid.</p>
+
+<h2 id="2-configure-the-alerts:eb1c42d623b1b1c8a006d6a9493a0eae">2. Configure the alerts</h2>
+
+<p>I put the following code in the main <code>lib</code> folder (in a file called <code>startup.js</code>) to configure the style of the popup alerts.</p>
+
+<p>Putting it in the <code>lib</code> folder ensures it will be loaded before other files, although that&rsquo;s not strictly necessary here.</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">Meteor</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">startup</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">Meteor</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">isClient</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+    <span style="color: #a6e22e">sAlert</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">config</span><span style="color: #f8f8f2">({</span>
+      <span style="color: #a6e22e">effect</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&#39;flip&#39;</span><span style="color: #f8f8f2">,</span>
+      <span style="color: #a6e22e">position</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&#39;bottom-right&#39;</span><span style="color: #f8f8f2">,</span>
+      <span style="color: #a6e22e">timeout</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">5000</span><span style="color: #f8f8f2">,</span>
+      <span style="color: #a6e22e">html</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">,</span>
+      <span style="color: #a6e22e">onRouteClose</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">true</span><span style="color: #f8f8f2">,</span>
+      <span style="color: #a6e22e">stack</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">true</span>
+    <span style="color: #f8f8f2">});</span>
+  <span style="color: #f8f8f2">}</span>
+<span style="color: #f8f8f2">});</span>
+</pre></div>
+
+
+<p>If you want to also use the flip animation I&rsquo;m using here, you have to install a separate package for that:</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span>meteor add juliancwirko:s-alert-flip
+</pre></div>
+
+
+<p>You can see all the available options and effects for this package here: <a href="http://s-alert.meteor.com/">http://s-alert.meteor.com/</a></p>
+
+<h2 id="3-make-some-helper-functions-for-validating-your-forms:eb1c42d623b1b1c8a006d6a9493a0eae">3. Make some helper functions for validating your forms</h2>
+
+<p>We&rsquo;re going to want to make sure that each user enters a valid email address and password, so we&rsquo;re just going to write those functions ahead of time.</p>
+
+<p>They&rsquo;ll be included in the <code>submit</code> event binding for both the Login form and the Sign up form.</p>
+
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">checkEmailIsValid</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">aString</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #a6e22e">aString</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">aString</span> <span style="color: #f92672">||</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">;</span>
+  <span style="color: #66d9ef">return</span> <span style="color: #a6e22e">aString</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span> <span style="color: #f92672">&gt;</span> <span style="color: #ae81ff">1</span> <span style="color: #f92672">&amp;&amp;</span> <span style="color: #a6e22e">aString</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">indexOf</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;@&#39;</span><span style="color: #f8f8f2">)</span> <span style="color: #f92672">&gt;</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">}</span>
+
+<span style="color: #a6e22e">checkPasswordIsValid</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">aString</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+  <span style="color: #a6e22e">aString</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">aString</span> <span style="color: #f92672">||</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">;</span>
+  <span style="color: #66d9ef">return</span> <span style="color: #a6e22e">aString</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span> <span style="color: #f92672">&gt;</span> <span style="color: #ae81ff">7</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">}</span>
+</pre></div>
+
+
+<p>Don&rsquo;t use the <code>var</code> keyword here unless you want these functions to be scoped to the file they&rsquo;re in. Meteor allows you to omit the <code>var</code> keyword to make a variable global across all files.</p>
+
+<p>I put these function in a <code>helpers.js</code> file in my main <code>lib</code> folder. This way we can use them anywhere on the server or the client.</p>
+
+<h2 id="4-build-the-html-for-the-sign-up-form:eb1c42d623b1b1c8a006d6a9493a0eae">4. Build the html for the Sign up form</h2>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">template</span> <span style="color: #a6e22e">name</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;SignUp&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">form</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;sign-up-form&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>  
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">input</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;email-address-input&quot;</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;text&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">input</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;password-input&quot;</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;password&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">button</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;submit&quot;</span><span style="color: #f8f8f2">&gt;</span>Sign up<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">button</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">form</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">template</span><span style="color: #f8f8f2">&gt;</span>
+</pre></div>
+</p>
+
+<p>You&rsquo;ll probably want to add some more style to this, or at least some <code>label</code> elements and <code>placeholder</code> values for the email and password fields.</p>
+
+<h2 id="5-build-the-html-for-the-login-form:eb1c42d623b1b1c8a006d6a9493a0eae">5. Build the html for the Login form</h2>
+
+<p>The login form is pretty much identical.</p>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">template</span> <span style="color: #a6e22e">name</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;Login&quot;</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">form</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;login-form&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>  
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">input</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;email-address-input&quot;</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;text&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">input</span> <span style="color: #a6e22e">class</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;password-input&quot;</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;password&quot;</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+      <span style="color: #f8f8f2">&lt;</span><span style="color: #f92672">button</span> <span style="color: #a6e22e">type</span><span style="color: #f92672">=</span><span style="color: #e6db74">&quot;submit&quot;</span><span style="color: #f8f8f2">&gt;</span>Login<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">button</span><span style="color: #f8f8f2">&gt;</span>
+    <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">div</span><span style="color: #f8f8f2">&gt;</span>
+  <span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">form</span><span style="color: #f8f8f2">&gt;</span>
+<span style="color: #f8f8f2">&lt;/</span><span style="color: #f92672">template</span><span style="color: #f8f8f2">&gt;</span>
+</pre></div>
+</p>
+
+<h2 id="6-set-up-the-event-handlers-for-the-sign-up-form:eb1c42d623b1b1c8a006d6a9493a0eae">6. Set up the event handlers for the Sign up form</h2>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">Template</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">SignUp</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">events</span><span style="color: #f8f8f2">({</span>
+  <span style="color: #e6db74">&#39;submit .sign-up-form&#39;</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">event</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">template</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+    <span style="color: #a6e22e">event</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">preventDefault</span><span style="color: #f8f8f2">();</span>
+
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">$form</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">event</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">currentTarget</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">$emailInput</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$form</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">find</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;.email-address-input&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">eq</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">$passwordInput</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$form</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">find</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;.password-input&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">eq</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">);</span>
+
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">emailAddress</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$emailInput</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">val</span><span style="color: #f8f8f2">()</span> <span style="color: #f92672">||</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">;</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">password</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$passwordInput</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">val</span><span style="color: #f8f8f2">()</span> <span style="color: #f92672">||</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">;</span>
+
+    <span style="color: #75715e">//trim</span>
+    <span style="color: #a6e22e">emailAddress</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">emailAddress</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">replace</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">/^\s*|\s*$/g</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #a6e22e">password</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">password</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">replace</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">/^\s*|\s*$/g</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">);</span>
+
+    <span style="color: #75715e">//validate</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">isValidEmail</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">checkEmailIsValid</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">emailAddress</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">isValidPassword</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">checkPasswordIsValid</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">password</span><span style="color: #f8f8f2">);</span>
+
+    <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #f92672">!</span><span style="color: #a6e22e">isValidEmail</span> <span style="color: #f92672">||</span> <span style="color: #f92672">!</span><span style="color: #a6e22e">isValidPassword</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+      <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #f92672">!</span><span style="color: #a6e22e">isValidEmail</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+        <span style="color: #a6e22e">sAlert</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;Invalid email address&#39;</span><span style="color: #f8f8f2">);</span>
+      <span style="color: #f8f8f2">}</span>
+      <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #f92672">!</span><span style="color: #a6e22e">isValidPassword</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+        <span style="color: #a6e22e">sAlert</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;Your password must be at least 8 characters long&#39;</span><span style="color: #f8f8f2">);</span>
+      <span style="color: #f8f8f2">}</span>
+    <span style="color: #f8f8f2">}</span> <span style="color: #66d9ef">else</span> <span style="color: #f8f8f2">{</span>
+      <span style="color: #a6e22e">Accounts</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">createUser</span><span style="color: #f8f8f2">({</span>
+        <span style="color: #a6e22e">email</span><span style="color: #f92672">:</span> <span style="color: #a6e22e">emailAddress</span><span style="color: #f8f8f2">,</span>
+        <span style="color: #a6e22e">password</span><span style="color: #f92672">:</span> <span style="color: #a6e22e">password</span>
+      <span style="color: #f8f8f2">},</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+        <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+          <span style="color: #a6e22e">sAlert</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;Account creation failed for unknown reasons :(&#39;</span><span style="color: #f8f8f2">);</span>
+        <span style="color: #f8f8f2">}</span> <span style="color: #66d9ef">else</span> <span style="color: #f8f8f2">{</span>
+          <span style="color: #a6e22e">Router</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">go</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;loggedInHome&#39;</span><span style="color: #f8f8f2">);</span>
+        <span style="color: #f8f8f2">}</span>
+      <span style="color: #f8f8f2">});</span>
+    <span style="color: #f8f8f2">}</span>
+  <span style="color: #f8f8f2">}</span>
+<span style="color: #f8f8f2">});</span>
+</pre></div>
+</p>
+
+<ol>
+<li>We grab the form element and wrap it in jQuery and use it to find the inputs we&rsquo;re interested in.</li>
+<li>We get the values for the email and password inputs and trim these values of white space (just in case a user enters in their email address followed by a few spaces or something).</li>
+<li>We check to see if the email and password values are valid using the functions we made in the 3rd step and show an alert to the user if they&rsquo;re invalid.</li>
+<li>If they&rsquo;re valid, we create a new account with the <code>Accounts.createUser</code> function. If that returns an error, we surface an error for the user. If it&rsquo;s successful, we redirect them to a new page</li>
+</ol>
+
+<h3 id="some-notes:eb1c42d623b1b1c8a006d6a9493a0eae">Some notes</h3>
+
+<p>We&rsquo;re using the <code>sAlert</code> function from the alert package we installed earlier to show alerts.</p>
+
+<p>We&rsquo;re also redirecting the user to a new route after they sign up, using <a href="https://github.com/iron-meteor/iron-router">Iron Router</a>. This is a route and template you have to set up separately. I recommend using the <code>iron-meteor</code> scaffolding tool (<a href="https://github.com/iron-meteor/iron-cli">https://github.com/iron-meteor/iron-cli</a>).</p>
+
+<h2 id="6-set-up-the-event-handlers-for-the-login-form:eb1c42d623b1b1c8a006d6a9493a0eae">6. Set up the event handlers for the Login form</h2>
+
+<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #a6e22e">Template</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Login</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">events</span><span style="color: #f8f8f2">({</span>
+  <span style="color: #e6db74">&#39;submit .login-form&#39;</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">event</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">template</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+    <span style="color: #a6e22e">event</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">preventDefault</span><span style="color: #f8f8f2">();</span>
+
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">$form</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">event</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">currentTarget</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">$emailInput</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$form</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">find</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;.email-address-input&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">eq</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">$passwordInput</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$form</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">find</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;.password-input&#39;</span><span style="color: #f8f8f2">).</span><span style="color: #a6e22e">eq</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">);</span>
+
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">emailAddress</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$emailInput</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">val</span><span style="color: #f8f8f2">()</span> <span style="color: #f92672">||</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">;</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">password</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">$passwordInput</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">val</span><span style="color: #f8f8f2">()</span> <span style="color: #f92672">||</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">;</span>
+
+    <span style="color: #75715e">//trim</span>
+    <span style="color: #a6e22e">emailAddress</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">emailAddress</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">replace</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">/^\s*|\s*$/g</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #a6e22e">password</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">password</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">replace</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">/^\s*|\s*$/g</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;&#39;</span><span style="color: #f8f8f2">);</span>
+
+    <span style="color: #75715e">//validate</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">isValidEmail</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">checkEmailIsValid</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">emailAddress</span><span style="color: #f8f8f2">);</span>
+    <span style="color: #66d9ef">var</span> <span style="color: #a6e22e">isValidPassword</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">checkPasswordIsValid</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">password</span><span style="color: #f8f8f2">);</span>
+
+    <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #f92672">!</span><span style="color: #a6e22e">isValidEmail</span> <span style="color: #f92672">||</span> <span style="color: #f92672">!</span><span style="color: #a6e22e">isValidPassword</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+      <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #f92672">!</span><span style="color: #a6e22e">isValidEmail</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+        <span style="color: #a6e22e">sAlert</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;Invalid email address&#39;</span><span style="color: #f8f8f2">);</span>
+      <span style="color: #f8f8f2">}</span>
+      <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #f92672">!</span><span style="color: #a6e22e">isValidPassword</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+        <span style="color: #a6e22e">sAlert</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;Your password must be at least 8 characters long&#39;</span><span style="color: #f8f8f2">);</span>
+      <span style="color: #f8f8f2">}</span>
+    <span style="color: #f8f8f2">}</span> <span style="color: #66d9ef">else</span> <span style="color: #f8f8f2">{</span>
+      <span style="color: #a6e22e">Meteor</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">loginWithPassword</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">emailAddress</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">password</span><span style="color: #f8f8f2">,</span> <span style="color: #66d9ef">function</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+        <span style="color: #66d9ef">if</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+          <span style="color: #a6e22e">sAlert</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">error</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;Account login failed for unknown reasons :(&#39;</span><span style="color: #f8f8f2">);</span>
+        <span style="color: #f8f8f2">}</span> <span style="color: #66d9ef">else</span> <span style="color: #f8f8f2">{</span>
+          <span style="color: #a6e22e">Router</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">go</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;loggedInHome&#39;</span><span style="color: #f8f8f2">);</span>
+        <span style="color: #f8f8f2">}</span>
+      <span style="color: #f8f8f2">});</span>
+    <span style="color: #f8f8f2">}</span>
+  <span style="color: #f8f8f2">}</span>
+<span style="color: #f8f8f2">});</span>
+</pre></div>
+</p>
+
+<p>This event handler is almost identical to the last one, except for the selector used to get the submit event on the form (it&rsquo;s now <code>submit .login-form</code> instead of <code>submit .sign-up-form</code>). Also, the SignUp template uses the <code>Accounts.createUser</code> function, while the Login template uses the <code>Meteor.loginWithPassword</code> function.</p>
+
+<p>These functions have slightly different APIs (<code>Accounts.createUser</code> takes an object for its first argument and <code>Meteor.loginWithPassword</code> just takes three flat arguments), so be careful with that.</p>
+
+<h2 id="finishing-up:eb1c42d623b1b1c8a006d6a9493a0eae">Finishing up</h2>
+
+<p>This is a really basic example. For a full-featured application, you&rsquo;ll also want to allow the user to reset their password.</p>
+
+<p>Look into <a href="http://docs.meteor.com/#/full/accounts_forgotpassword">Accounts.forgotPassword</a> and <a href="http://docs.meteor.com/#/full/accounts_resetpassword">Accounts.resetPassword</a> for more information about how to do this.</p>
+
+<p>There&rsquo;s also a good write-up on this over on Ben McMahen&rsquo;s blog: <a href="http://blog.benmcmahen.com/post/41741539120/building-a-customized-accounts-ui-for-meteor">http://blog.benmcmahen.com/post/41741539120/building-a-customized-accounts-ui-for-meteor</a></p>
+
+    </section>
+  </article>
+</main>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'smashingthings';
+if (disqus_shortname && disqus_shortname !== 'example') {
+  var disqus_identifier = '2';
+
+   
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+}
+</script>
+    <footer class="site-footer clearfix">
+      <section class="poweredby">Proudly published with <a href="http://gohugo.io/">Hugo</a></section>
+    </footer>
+  </div>
+  <script type="text/javascript" src="http://smashingthingstogether.com/js/main.js"></script>
+</body>
+</html>
