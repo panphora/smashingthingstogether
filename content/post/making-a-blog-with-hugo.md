@@ -9,6 +9,8 @@ draft = true
 
 A free, fast, easy to update, fully customizeable blog that allows you to use your own domain is a hard thing to find these days. Using a static website generator with GitHub pages gives you many benefits and a ton of flexibility, while also being completely free and super fast.
 
+This is something you can easily do with Ghost or Wordpress if you have around $10/month to spare. However, the satisfaction of building something from scratch is indescribeable and $10/month is actually quite a lot of money, *especially* if you have more than one blog.
+
 ## Why Static?
 
 Skip this section if you already know that static websites are, in general, faster, less expensive, more customizeable, and more secure than dynamic websites.
@@ -427,6 +429,8 @@ git subtree push --prefix=public git@github.com:panphora/panphora.git gh-pages
 1. Adding your custom domain to a CNAME file: https://help.github.com/articles/setting-up-your-pages-site-repository/
   - this might not work with our subtree setup
 2. Setting up an apex domain and www subdomain: https://help.github.com/articles/setting-up-an-apex-domain-and-www-subdomain/
+  - ALIAS <your_domain>.com to <github_username>.github.io
+  - CNAME www.<your_domain>.com to <github_username>.github.io
 
 ---------
 
