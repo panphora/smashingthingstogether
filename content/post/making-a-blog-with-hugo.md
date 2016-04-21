@@ -337,6 +337,10 @@ extra note: you can customize permalinks
 <a name="syntaxhighlighting"></a>
 ## 8. Syntax highlighting
 
+set color to white as default in code blocks
+use highlight keyword `console` for commands typed in terminal
+
+
 <a name="disqus"></a>
 ## 9. Comments with Disqus
 
@@ -355,7 +359,7 @@ git checkout --orphan gh-pages
 git rm --cached $(git ls-files)
 
 # i added this
-git rm -r *
+rm -r *
 
 # Grab one file from the master branch so we can make a commit
 git checkout master README.md
