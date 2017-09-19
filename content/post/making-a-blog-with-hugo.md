@@ -433,7 +433,6 @@ git subtree push --prefix=public git@github.com:panphora/panphora.git gh-pages
 ## 11. Custom domain on GitHub Pages
 
 1. Adding your custom domain to a CNAME file: https://help.github.com/articles/setting-up-your-pages-site-repository/
-  - this might not work with our subtree setup
 2. Setting up an apex domain and www subdomain: https://help.github.com/articles/setting-up-an-apex-domain-and-www-subdomain/
   - ALIAS <your_domain>.com to <github_username>.github.io
   - CNAME www.<your_domain>.com to <github_username>.github.io
