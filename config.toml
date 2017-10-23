@@ -1,6 +1,7 @@
 baseurl = "http://smashingthingstogether.com/"
 languageCode = "en-us"
 title = "Smashing Things Together"
+publishDir = "docs"
 
 [Params]
   author = "David Miranda"

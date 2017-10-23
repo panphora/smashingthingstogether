@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Deploying Your App to Scalingo (Meteor.js)</title>
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://smashingthingstogether.com/css/main.css">
+</head>
+<body class="is-page">
+  <div class="site-wrapper container">
+    <div class="main-header show-if-is-page">
+      <h1 class="page-title center"><a href="http://smashingthingstogether.com/"><img class="site-logo" alt="Deploying Your App to Scalingo (Meteor.js) Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+    </div>
+    <div class="main-header hide-if-is-page">
+      <h1 class="page-title"><a href="http://smashingthingstogether.com/">Smashing Things Together<img class="site-logo" alt="Deploying Your App to Scalingo (Meteor.js) Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+      <h2 class="page-description">Experiments, projects, and random ideas</h2>
+    </div>
+<main class="content" role="main">
+  <article class="post mb8">
+    <header class="post-header">
+      <h1 class="post-title">Deploying Your App to Scalingo (Meteor.js)</h1>
+      <div class="mb3 extra-post-info">
+        <time class="post-date" datetime="2015-06-02">posted Tue, Jun 2, 2015</time> &middot; <a class="comment-link" href="http://smashingthingstogether.com/deploying-your-app-to-scalingo-meteor-js/#disqus_thread" data-disqus-identifier="3">Comments</a>
+      </div>
+    </header>
+    <section class="post-content">
+      
+
+<p>Deploying Meteor webapps can be difficult. When I was trying to deploy to <a href="https://www.digitalocean.com/">Digital Ocean</a> from my Windows machine, I ran into some serious issues. They were easy enough to resolve after I figured out what they were, but they required an extra 10-20 minutes of work <em>every</em> deploy.</p>
+
+<p>I&rsquo;ve heard good things about <a href="https://modulus.io/">Modulus</a>. Supposedly they make it really easy to get things set up with their automated command line tool. <a href="http://www.meteorpodcast.com/">The Meteor Podcast</a> recommends them highly.</p>
+
+<p>Today, I heard about <a href="https://scalingo.com/">Scalingo</a> and decided to try it out. It was surprisingly easy to set up and I&rsquo;m very tempted to stay with them simply because they&rsquo;re relatively inexpensive and super easy to work with (mostly because of the easy part).</p>
+
+<h2 id="step-1">Step 1</h2>
+
+<p>Sign up for an account: <a href="https://scalingo.com/meteorjs-hosting">https://scalingo.com/meteorjs-hosting</a></p>
+
+<h2 id="step-2">Step 2</h2>
+
+<p>Create an app</p>
+
+<p><img src="https://s3.amazonaws.com/webnet/smashing-things/post-scalingo/scalingo-dashboard.png" alt="Scalingo Dashboard" /></p>
+
+<p>When you activate your account and login, you&rsquo;ll be presented with this screen. Click the big blue button and name your app.</p>
+
+<h2 id="step-3">Step 3</h2>
+
+<p>Install the Scalingo command line tool: <a href="http://cli.scalingo.com/">http://cli.scalingo.com/</a></p>
+
+<p>It&rsquo;s one command on linux or mac os, but they have installers for just about every operating system.</p>
+
+<h2 id="step-4">Step 4</h2>
+
+<p>Generate a local ssh key.</p>
+
+<p><strong>On mac or linux, use the following command:</strong></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">ssh-keygen</span></code></pre>
+</div>
+
+<p>Accept the defaults. Press <code>&lt;Enter&gt;</code> through all the prompts. It&rsquo;ll look like this:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">Generating public/private rsa key pair.
+</span><span style="">Enter file in which to save the key (/Users/username/.ssh/id_rsa): 
+</span><span style="">Enter passphrase (empty for no passphrase): 
+</span><span style="">Enter same passphrase again: 
+</span><span style="">Your identification has been saved in /Users/username/.ssh/id_rsa.
+</span><span style="">Your public key has been saved in /Users/username/.ssh/id_rsa.pub.</span></code></pre>
+</div>
+
+<h2 id="step-5">Step 5</h2>
+
+<p>Add your new public SSH key to Scalingo using the command line tool.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">scalingo keys-add &#34;YourComputerName SSH Key&#34; /$HOME/.ssh/id_rsa.pub</span></code></pre>
+</div>
+
+<p>You can also do this through their web interface. Click on your profile name in the left sidebar and a tab called &ldquo;SSH Keys&rdquo; will be revealed.</p>
+
+<p><img src="https://s3.amazonaws.com/webnet/smashing-things/post-scalingo/scalingo-username.png" alt="Scalingo username" /></p>
+
+<h2 id="step-6">Step 6</h2>
+
+<p>Add a link to the Scalingo remote repository for your app. Your app needs to be part of a git repo in order for this step to work.</p>
+
+<p>Inside your app directory:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">git remote add scalingo git@scalingo.com:yourappname.git</span></code></pre>
+</div>
+
+<p>See: <a href="http://doc.scalingo.com/languages/javascript/nodejs/getting-started-with-meteor.html">Scalingo - Getting Started with Meteor</a></p>
+
+<h2 id="step-7-optional">Step 7 (optional)</h2>
+
+<p>This step is only necessary if you want to use a custom domain name. If you&rsquo;re okay with the default domain name (<a href="https://yourapp.scalingo.io">https://yourapp.scalingo.io</a>), skip this step.</p>
+
+<ol>
+<li>Add a CNAME record from www.yourdomainname.com to yourapp.scalingo.io</li>
+<li>Use an ALIAS record or CNAME record from your root domain (yourdomainname.com) to yourapp.scalingo.com.</li>
+</ol>
+
+<p>The second step can be quite hard if your DNS service doesn&rsquo;t support it. I signed up for <a href="https://dnsimple.com/">DNSimple</a> and used their custom ALIAS record to accomplish the second step. It can seem expensive to pay $5 a month for DNS (look for their Bronze plan), but there&rsquo;s a free trial and, when it comes to deploys, having an easy-to-use DNS service is amazing.</p>
+
+<p>Also, make sure you add both the <code>www</code> and root domain of your website to Scalingo, under the <strong>Domains</strong> tab.</p>
+
+<h2 id="step-8-optional">Step 8 (optional)</h2>
+
+<p>This step is only necessary if you want to use HTTPS with your custom domain name. Skip this step if you&rsquo;re using the default <a href="https://yourapp.scalingo.io">https://yourapp.scalingo.io</a> domain name.</p>
+
+<p>I get my SSL Certificates from Namecheap. They&rsquo;re very inexpensive. Just make sure you use <code>www</code> in your domain name when ordering the certificate. (An SSL Certificate for <code>www.yourdomainname.com</code> will cover both the <code>www</code> version as well as the root domain, while an SSL Certificate for the root domain will only cover the root domain.)</p>
+
+<p>Once you get your Certificate and Intermediate CA in an email, combine them into a file called <code>yourappname.crt</code>. Make sure you include the lines that look like:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">-----BEGIN CERTIFICATE-----</span></code></pre>
+</div>
+
+<p>and</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">-----END CERTIFICATE-----</span></code></pre>
+</div>
+
+<p>Upload this file using the Scalingo web interface:</p>
+
+<ol>
+<li>Go to the Domains tab</li>
+<li>Click on the gear</li>
+<li>Upload the <code>crt</code> file you just made, as well as they key that you generated on your own in order to get the certificate.</li>
+</ol>
+
+<p><img src="https://s3.amazonaws.com/webnet/smashing-things/post-scalingo/scalingo-ssl.png" alt="Scalingo SSL" />
+<a href="https://s3.amazonaws.com/webnet/smashing-things/post-scalingo/scalingo-ssl.png">Full-sized image</a></p>
+
+<p><strong>Update 06/08/15:</strong></p>
+
+<p>If you want your app to always redirect to the <code>https</code> version, you will also have to install the <code>force-ssl</code> package. You can find that here: <a href="https://atmospherejs.com/meteor/force-ssl">meteor force-ssl</a></p>
+
+<p>I ran into one problem with the <code>force-ssl</code> package. When I went to my domain name, it would redirect to the scalingo default domain, e.g. yourapp.scalingo.com</p>
+
+<p>In order to fix this, add this line to a file in your main <code>server</code> directory:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">Meteor.startup(function () {
+</span><span style="">  Meteor.absoluteUrl.defaultOptions.rootUrl = &#34;https://yourdomainname.com&#34;;
+</span><span style="">});</span></code></pre>
+</div>
+
+<h2 id="step-9-optional">Step 9 (optional)</h2>
+
+<p>This step is only necessary if your Meteor app isn&rsquo;t in the root of your git repository. Skip this step if you&rsquo;re using an example Meteor app or if you generated your app using <code>meteor create myapp</code>.</p>
+
+<p>Using the Scalingo command line tool, add an environment variable pointing to the location of your app, relative to the root of your git repo.</p>
+
+<p>In your project directory:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">scalingo -a myapp env-set PROJECT_DIR=path/to/app</span></code></pre>
+</div>
+
+<p>See: <a href="http://doc.scalingo.com/deployment/project-dir">Use a custom directory - Scalingo</a></p>
+
+<h2 id="step-10">Step 10</h2>
+
+<p>Deploy your application to Scalingo.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console"><span style="">git push scalingo master</span></code></pre>
+</div>
+
+<p>3&hellip;</p>
+
+<p>2&hellip;</p>
+
+<p>1&hellip;</p>
+
+<p><strong>Go!</strong></p>
+
+<p>You should see a screen of commands flash by. Some of them take a while to complete. In the end, though, you should have an app at <a href="https://yourapp.scalingo.io">https://yourapp.scalingo.io</a> and at your custom domain (if you have one and if the DNS has had time to propagate).</p>
+
+<p><strong>P.S.</strong> Here&rsquo;s another good write-up on the topic: <a href="http://dev4devs.com/2015/05/18/meteor-how-to-deploy-meteor-application-in-scalingo/">How to Deploy a Meteor App in Scalingo - Dev 4 Days</a></p>
+
+    </section>
+  </article>
+</main>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'smashingthings';
+if (disqus_shortname && disqus_shortname !== 'example') {
+  var disqus_identifier = '3';
+
+   
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+}
+</script>
+    <footer class="site-footer clearfix">
+      <section class="poweredby">Proudly published with <a href="http://gohugo.io/">Hugo</a></section>
+    </footer>
+  </div>
+  <script type="text/javascript" src="http://smashingthingstogether.com/js/main.js"></script>
+</body>
+</html>

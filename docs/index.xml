@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Smashing Things Together</title>
+    <link>http://smashingthingstogether.com/</link>
+    <description>Recent content on Smashing Things Together</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://smashingthingstogether.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Making a Web Game with JavaScript, Day 1</title>
+      <link>http://smashingthingstogether.com/making-a-web-game-day-1/</link>
+      <pubDate>Sun, 22 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/making-a-web-game-day-1/</guid>
+      <description>I&amp;rsquo;m going to pass around a piece of paper to each of you. I want you to write what you know about making games and programming, what you&amp;rsquo;re hoping to learn by the end of today, and why you want to learn it.
+What we&amp;rsquo;ll be learning today:  Foundational concepts of programming Introductory lesson on JavaScript Making a game that lets a player control a character and move them around a game board  The first thing to understand is that the concepts we&amp;rsquo;re learning today will be useful for making any kind of software, not just a game.</description>
+    </item>
+    
+    <item>
+      <title>Building a Simple Javascript Application</title>
+      <link>http://smashingthingstogether.com/building-a-simple-javascript-application/</link>
+      <pubDate>Fri, 11 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/building-a-simple-javascript-application/</guid>
+      <description>Getting Started New projects are always exciting. However, there&amp;rsquo;s always the temptation to over-complicate things by planning ahead too much and adding on features that you won&amp;rsquo;t even use in your final program.
+For this project, we&amp;rsquo;re just going to focus on the basics of getting a functional web-app up and running.
+ This app will not be multi-user. It will just be for personal use. We can figure out how to make it multi-user later on.</description>
+    </item>
+    
+    <item>
+      <title>How to Handle Errors in Meteor Methods</title>
+      <link>http://smashingthingstogether.com/handling-errors-in-meteor-methods/</link>
+      <pubDate>Thu, 03 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/handling-errors-in-meteor-methods/</guid>
+      <description>If you define methods for altering your collections, you get the convenience of not having to define security-issue-prone allow/deny rules.
+If you define these methods on both the client and the server, you get the benefit of Meteor&amp;rsquo;s latency compensation feature.
+You can run into trouble, however, when you throw an error in a client-side method. You get the following unhandled exception:
+Exception while simulating the effect of invoking &amp;#39;yourMethodName&amp;#39;   Throwing errors on the client and the server In order to get around this, you can create a wrapper function that will throw an error on the server and simply return it on the client.</description>
+    </item>
+    
+    <item>
+      <title>Pagination in Meteor.js (with Iron Router support)</title>
+      <link>http://smashingthingstogether.com/pagination-in-meteor-js-with-iron-router-support/</link>
+      <pubDate>Mon, 17 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/pagination-in-meteor-js-with-iron-router-support/</guid>
+      <description>Pagination might at first seem like a pretty easy, if not downright fun, feature to implement. However, like a lot of seemingly-small features, it can quickly balloon into a multi-day or multi-week project.
+To give you an idea of how complicated pagination can be to implement, check out this 3 part tutorial written by the talented Nick Riebeek:
+ Part 1 Part 1a Part 2  At the end of this tutorial, the author ends up with a well-designed, but pretty basic, pagination system.</description>
+    </item>
+    
+    <item>
+      <title>The JavaScript Runtime, Fibers, and Meteor.wrapAsync (Meteor.js)</title>
+      <link>http://smashingthingstogether.com/the-javascript-runtime-fibers-and-meteor-wrapasync/</link>
+      <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/the-javascript-runtime-fibers-and-meteor-wrapasync/</guid>
+      <description>Part 1: The call stack, the event loop, the task queue, and how asyncronous functions work
+ First, some basic context. When you run some JavaScript code, it&amp;rsquo;s added to the task queue. Think of this as a todo list.
+When we reach the first item on the todo list, we move it over to another todo list called the call stack. Think of this as a todo list that you want to complete before moving on to the rest of the stuff in your main todo list.</description>
+    </item>
+    
+    <item>
+      <title>Make Your First Meteor.js Package</title>
+      <link>http://smashingthingstogether.com/make-your-first-meteor-js-package/</link>
+      <pubDate>Wed, 03 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/make-your-first-meteor-js-package/</guid>
+      <description>This tutorial will take you through the steps I took in order to make my first Meteor package.
+The Problem I wanted to be able to show some elements on the page when my app was in production (i.e. deployed to a live server) and other elements when it was in development mode (i.e. on my local machine).
+In the end, I wanted to be able to write code like this:</description>
+    </item>
+    
+    <item>
+      <title>Deploying Your App to Scalingo (Meteor.js)</title>
+      <link>http://smashingthingstogether.com/deploying-your-app-to-scalingo-meteor-js/</link>
+      <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/deploying-your-app-to-scalingo-meteor-js/</guid>
+      <description>Deploying Meteor webapps can be difficult. When I was trying to deploy to Digital Ocean from my Windows machine, I ran into some serious issues. They were easy enough to resolve after I figured out what they were, but they required an extra 10-20 minutes of work every deploy.
+I&amp;rsquo;ve heard good things about Modulus. Supposedly they make it really easy to get things set up with their automated command line tool.</description>
+    </item>
+    
+    <item>
+      <title>How to Make Custom Sign Up and Login Forms (Meteor.js)</title>
+      <link>http://smashingthingstogether.com/how-to-make-a-custom-sign-up-form-meteor-js/</link>
+      <pubDate>Fri, 29 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/how-to-make-a-custom-sign-up-form-meteor-js/</guid>
+      <description>If you&amp;rsquo;re making a basic website, the accounts-ui package is a great option to get started with (https://atmospherejs.com/meteor/accounts-ui).
+However, if you want to add some custom styles to your sign up and login forms, follow along here.
+1. Install some basic packages meteor add accounts-password meteor add juliancwirko:s-alert  The accounts-password package depends on the accounts-base package, so that will also be installed.
+The juliancwirko:s-alert package will show alerts in the corner of the screen.</description>
+    </item>
+    
+    <item>
+      <title>Using Scoped ReactiveVars to Control Tab Visibility (Meteor.js)</title>
+      <link>http://smashingthingstogether.com/scoped-reactive-var-meteor-js/</link>
+      <pubDate>Mon, 25 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/scoped-reactive-var-meteor-js/</guid>
+      <description>Step 1 Install the ReactiveVar package.
+meteoraddreactive-var  Step 2 When the template is created, initialize a new ReactiveVar and set its default value.
+This ReactiveVar, this.currentPage, will be available on the page&amp;rsquo;s Template instance.
+Template.DiscoverPage.created=function(){this.currentTab=newReactiveVar(&amp;#39;recent projects&amp;#39;);};  Step 3 Also, on template creation, add a function to the template instance to check if the current tab is equal to the passed in value.
+We will re-use this function a couple times, so we&amp;rsquo;re putting it on the template instance instead of defining it in a helper multiple times.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Using Scoped ReactiveVars to Control Tab Visibility (Meteor.js)</title>
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://smashingthingstogether.com/css/main.css">
+</head>
+<body class="is-page">
+  <div class="site-wrapper container">
+    <div class="main-header show-if-is-page">
+      <h1 class="page-title center"><a href="http://smashingthingstogether.com/"><img class="site-logo" alt="Using Scoped ReactiveVars to Control Tab Visibility (Meteor.js) Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+    </div>
+    <div class="main-header hide-if-is-page">
+      <h1 class="page-title"><a href="http://smashingthingstogether.com/">Smashing Things Together<img class="site-logo" alt="Using Scoped ReactiveVars to Control Tab Visibility (Meteor.js) Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+      <h2 class="page-description">Experiments, projects, and random ideas</h2>
+    </div>
+<main class="content" role="main">
+  <article class="post mb8">
+    <header class="post-header">
+      <h1 class="post-title">Using Scoped ReactiveVars to Control Tab Visibility (Meteor.js)</h1>
+      <div class="mb3 extra-post-info">
+        <time class="post-date" datetime="2015-05-25">posted Mon, May 25, 2015</time> &middot; <a class="comment-link" href="http://smashingthingstogether.com/scoped-reactive-var-meteor-js/#disqus_thread" data-disqus-identifier="1">Comments</a>
+      </div>
+    </header>
+    <section class="post-content">
+      
+
+<h2 id="step-1">Step 1</h2>
+
+<p>Install the ReactiveVar package.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="">meteor</span><span style=""> </span><span style="">add</span><span style=""> </span><span style="">reactive-var</span></code></pre>
+</div>
+
+<h2 id="step-2">Step 2</h2>
+
+<p>When the template is created, initialize a new ReactiveVar and set its default value.</p>
+
+<p>This ReactiveVar, this.currentPage, will be available on the page&rsquo;s Template instance.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">Template</span><span style="">.</span><span style="color:#a6e22e">DiscoverPage</span><span style="">.</span><span style="color:#a6e22e">created</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">()</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">this</span><span style="">.</span><span style="color:#a6e22e">currentTab</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">new</span><span style=""> </span><span style="color:#a6e22e">ReactiveVar</span><span style="">(</span><span style="color:#e6db74">&#39;recent projects&#39;</span><span style="">);</span><span style="">
+</span><span style=""></span><span style="">};</span></code></pre>
+</div>
+
+<h2 id="step-3">Step 3</h2>
+
+<p>Also, on template creation, add a function to the template instance to check if the current tab is equal to the passed in value.</p>
+
+<p>We will re-use this function a couple times, so we&rsquo;re putting it on the template instance instead of defining it in a helper multiple times.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">Template</span><span style="">.</span><span style="color:#a6e22e">DiscoverPage</span><span style="">.</span><span style="color:#a6e22e">created</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">()</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">this</span><span style="">.</span><span style="color:#a6e22e">currentTab</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">new</span><span style=""> </span><span style="color:#a6e22e">ReactiveVar</span><span style="">(</span><span style="color:#e6db74">&#39;recent projects&#39;</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">this</span><span style="">.</span><span style="color:#a6e22e">currentTabIs</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">tabName</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="color:#a6e22e">tabName</span><span style=""> </span><span style="color:#f92672">===</span><span style=""> </span><span style="color:#a6e22e">Template</span><span style="">.</span><span style="color:#a6e22e">instance</span><span style="">().</span><span style="color:#a6e22e">currentTab</span><span style="">.</span><span style="color:#a6e22e">get</span><span style="">();</span><span style="">
+</span><span style="">  </span><span style="">}</span><span style="">  
+</span><span style=""></span><span style="">};</span></code></pre>
+</div>
+
+<h2 id="step-4">Step 4</h2>
+
+<p>The html should look something like this:</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="">&lt;</span><span style=""></span><span style="color:#f92672">template</span><span style=""> </span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style=""></span><span style="color:#e6db74">&#34;DiscoverPage&#34;</span><span style=""></span><span style=""></span><span style="">&gt;</span><span style="">
+</span><span style="">  </span><span style="">&lt;</span><span style=""></span><span style="color:#f92672">div</span><span style=""> </span><span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style=""></span><span style="color:#e6db74">&#34;nav&#34;</span><span style=""></span><span style=""></span><span style="">&gt;</span><span style="">
+</span><span style="">    </span><span style="">&lt;</span><span style=""></span><span style="color:#f92672">a</span><span style=""> </span><span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style=""></span><span style="color:#e6db74">&#34;tab-link {{selectedIfCurrentTabIs &#39;recent projects&#39;}}&#34;</span><span style=""> </span><span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style=""></span><span style="color:#e6db74">&#34;#&#34;</span><span style=""> </span><span style="color:#a6e22e">data-tab-name</span><span style="color:#f92672">=</span><span style=""></span><span style="color:#e6db74">&#34;recent projects&#34;</span><span style=""></span><span style=""></span><span style="">&gt;</span><span style="">recent projects</span><span style="">&lt;</span><span style=""></span><span style="">/</span><span style=""></span><span style="color:#f92672">a</span><span style=""></span><span style="">&gt;</span><span style="">
+</span><span style="">    </span><span style="">&lt;</span><span style=""></span><span style="color:#f92672">a</span><span style=""> </span><span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style=""></span><span style="color:#e6db74">&#34;tab-link {{selectedIfCurrentTabIs &#39;recent sketches&#39;}}&#34;</span><span style=""> </span><span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style=""></span><span style="color:#e6db74">&#34;#&#34;</span><span style=""> </span><span style="color:#a6e22e">data-tab-name</span><span style="color:#f92672">=</span><span style=""></span><span style="color:#e6db74">&#34;recent sketches&#34;</span><span style=""></span><span style=""></span><span style="">&gt;</span><span style="">recent sketches</span><span style="">&lt;</span><span style=""></span><span style="">/</span><span style=""></span><span style="color:#f92672">a</span><span style=""></span><span style="">&gt;</span><span style="">
+</span><span style="">  </span><span style="">&lt;</span><span style=""></span><span style="">/</span><span style=""></span><span style="color:#f92672">div</span><span style=""></span><span style="">&gt;</span><span style="">
+</span><span style="">  {{#if currentTabIs &#39;recent projects&#39;}}
+</span><span style="">    {{&gt; RecentProjects }}
+</span><span style="">  {{/if}}
+</span><span style="">  {{#if currentTabIs &#39;recent sketches&#39;}}
+</span><span style="">    {{&gt; RecentSketches }}
+</span><span style="">  {{/if}}
+</span><span style=""></span><span style="">&lt;</span><span style=""></span><span style="">/</span><span style=""></span><span style="color:#f92672">template</span><span style=""></span><span style="">&gt;</span></code></pre>
+</div></p>
+
+<h2 id="step-5">Step 5</h2>
+
+<p>In order to make the html work, we need to add some helpers.</p>
+
+<p>These will check the ReactiveVar we set up in the second step and re-run whenever it changes. (see Docs for ReactiveVar)</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">Template</span><span style="">.</span><span style="color:#a6e22e">DiscoverPage</span><span style="">.</span><span style="color:#a6e22e">helpers</span><span style="">({</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">currentTabIs</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">tabName</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="color:#a6e22e">Template</span><span style="">.</span><span style="color:#a6e22e">instance</span><span style="">().</span><span style="color:#a6e22e">currentTabIs</span><span style="">(</span><span style="color:#a6e22e">tabName</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">},</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">selectedIfCurrentTabIs</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">tabName</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">Template</span><span style="">.</span><span style="color:#a6e22e">instance</span><span style="">().</span><span style="color:#a6e22e">currentTabIs</span><span style="">(</span><span style="color:#a6e22e">tabName</span><span style="">))</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">      </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="color:#e6db74">&#39;selected&#39;</span><span style="">;</span><span style="">
+</span><span style="">    </span><span style="">}</span><span style=""> </span><span style="color:#66d9ef">else</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">      </span><span style="color:#66d9ef">return</span><span style=""> </span><span style="color:#e6db74">&#39;&#39;</span><span style="">;</span><span style="">
+</span><span style="">    </span><span style="">}</span><span style="">
+</span><span style="">  </span><span style="">}</span><span style="">
+</span><span style=""></span><span style="">});</span></code></pre>
+</div></p>
+
+<p>You&rsquo;ll notice we&rsquo;re using the currentTabIs function twice here.</p>
+
+<h2 id="step-6">Step 6</h2>
+
+<p>Finally, we add a click event in order to change the ReactiveVar to the right tab.</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">Template</span><span style="">.</span><span style="color:#a6e22e">DiscoverPage</span><span style="">.</span><span style="color:#a6e22e">events</span><span style="">({</span><span style="">
+</span><span style="">  </span><span style="color:#e6db74">&#39;click .tab-link&#39;</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">e</span><span style="">,</span><span style=""> </span><span style="color:#a6e22e">template</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">e</span><span style="">.</span><span style="color:#a6e22e">preventDefault</span><span style="">();</span><span style="">
+</span><span style="">    </span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">$tabLink</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">$</span><span style="">(</span><span style="color:#a6e22e">e</span><span style="">.</span><span style="color:#a6e22e">currentTarget</span><span style="">);</span><span style="">
+</span><span style="">    </span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">tabName</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">$tabLink</span><span style="">.</span><span style="color:#a6e22e">data</span><span style="">(</span><span style="color:#e6db74">&#39;tab-name&#39;</span><span style="">);</span><span style="">
+</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">template</span><span style="">.</span><span style="color:#a6e22e">currentTab</span><span style="">.</span><span style="color:#a6e22e">set</span><span style="">(</span><span style="color:#a6e22e">tabName</span><span style=""> </span><span style="color:#f92672">||</span><span style=""> </span><span style="color:#e6db74">&#39;recent projects&#39;</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">}</span><span style="">
+</span><span style=""></span><span style="">});</span></code></pre>
+</div></p>
+
+<p>Done!</p>
+
+<p><strong>The Benefits of using a scoped ReactiveVar</strong></p>
+
+<p>The benefits of using a scoped ReactiveVar are many, but the best one is that it makes it a lot easier to re-use the same functionality multiple times on the same page without copying the code. We could very easily make these helper functions and events function global and then use them in multiple templates or the same template multiple times.</p>
+
+    </section>
+  </article>
+</main>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'smashingthings';
+if (disqus_shortname && disqus_shortname !== 'example') {
+  var disqus_identifier = '1';
+
+   
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+}
+</script>
+    <footer class="site-footer clearfix">
+      <section class="poweredby">Proudly published with <a href="http://gohugo.io/">Hugo</a></section>
+    </footer>
+  </div>
+  <script type="text/javascript" src="http://smashingthingstogether.com/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Making a Web Game with JavaScript, Day 1</title>
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://smashingthingstogether.com/css/main.css">
+</head>
+<body class="is-page">
+  <div class="site-wrapper container">
+    <div class="main-header show-if-is-page">
+      <h1 class="page-title center"><a href="http://smashingthingstogether.com/"><img class="site-logo" alt="Making a Web Game with JavaScript, Day 1 Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+    </div>
+    <div class="main-header hide-if-is-page">
+      <h1 class="page-title"><a href="http://smashingthingstogether.com/">Smashing Things Together<img class="site-logo" alt="Making a Web Game with JavaScript, Day 1 Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+      <h2 class="page-description">Experiments, projects, and random ideas</h2>
+    </div>
+<main class="content" role="main">
+  <article class="post mb8">
+    <header class="post-header">
+      <h1 class="post-title">Making a Web Game with JavaScript, Day 1</h1>
+      <div class="mb3 extra-post-info">
+        <time class="post-date" datetime="2017-10-22">posted Sun, Oct 22, 2017</time> &middot; <a class="comment-link" href="http://smashingthingstogether.com/making-a-web-game-day-1/#disqus_thread" data-disqus-identifier="9">Comments</a>
+      </div>
+    </header>
+    <section class="post-content">
+      
+
+<p>I&rsquo;m going to pass around a piece of paper to each of you. I want you to write what you know about making games and programming, what you&rsquo;re hoping to learn by the end of today, and why you want to learn it.</p>
+
+<h2 id="what-we-ll-be-learning-today">What we&rsquo;ll be learning today:</h2>
+
+<ol>
+<li>Foundational concepts of programming</li>
+<li>Introductory lesson on JavaScript</li>
+<li>Making a game that lets a player control a character and move them around a game board</li>
+</ol>
+
+<p>The first thing to understand is that the concepts we&rsquo;re learning today will be useful for making any kind of software, not just a game. I&rsquo;m going to be throwing a lot of things at you and moving fast. I want you to get a handle on the basics and be able to play around with code a little, but you have to be willing to put in the research to look a lot of this stuff up in your free time too!</p>
+
+<p>We have a lot to get to today. Two hours might seem like a lot of time, but it&rsquo;s not. We&rsquo;re going to learn the basics of programming and then build up a game with basic controls. Don&rsquo;t be afraid if you fall behind or feel like you don&rsquo;t understand something. I&rsquo;ll leave time for questions after every section and I&rsquo;ll be coming around to every table once we get started with the coding. It can take a while to get a handle on this stuff.</p>
+
+<h2 id="what-we-ll-be-building">What we&rsquo;ll be building</h2>
+
+<p>The being said, let me show you what we&rsquo;ll be building today:</p>
+
+<ul>
+<li><a href="https://codepen.io/panphora/pen/xXmNow?editors=0010">https://codepen.io/panphora/pen/xXmNow?editors=0010</a></li>
+</ul>
+
+<p><strong>Features for version 1:</strong></p>
+
+<ul>
+<li>A map with terrain</li>
+<li>A character with a walking animation that starts in a random position</li>
+<li>The character can be moved around the map with arrow keys</li>
+</ul>
+
+<p>And let me show you what we&rsquo;ll be building by the end of this series:</p>
+
+<ul>
+<li><a href="https://collect-things-game.firebaseapp.com/">https://collect-things-game.firebaseapp.com/</a> (this is still missing a multiplayer scoreboard and a few other minor features, but it&rsquo;s a mostly complete multiplayer version of the game)</li>
+</ul>
+
+<p><strong>Features for version 3 (which we&rsquo;ll complete on the 3rd day of this series):</strong></p>
+
+<ul>
+<li>All the features in version 1</li>
+<li>Boundaries on the map, where the character can&rsquo;t walk</li>
+<li>Mushrooms that can be collected and appear in random positions</li>
+<li>Points for every mushroom the player collects, which show up in a multiplayer scoreboard</li>
+<li>Multiple players playing together over the internet!</li>
+</ul>
+
+<h2 id="why-learn-how-to-code">Why learn how to code?</h2>
+
+<p>If you already know why you want to code, skip this section.</p>
+
+<p>Okay, now that you have an idea where we&rsquo;re heading, let me give you some reasons why you might want to learn how to code.</p>
+
+<ul>
+<li>Some of the most valuable companies in the world are technology companies. And every company in the world is adapting to add more technology to their products. I mean, it&rsquo;s practically required to have a website if you&rsquo;re in business! So, if you want to start a company or be really valuable to one, learning to code is a really good idea.</li>
+<li>Coding is also great for adding features to websites you already use. I do this to add and remove things from websites all the time. I hide notifications on Twitch. I hide the newsfeed on Facebook. I can see the ratings of YouTube videos before clicking on them. If something bothers me on a website, I can change it (just for me) by automatically adding a little code to the website when it loads. This makes my life a little bit easier. I also build applications and tools for myself when I come up with a new idea.</li>
+<li>Finally, knowing how to code will help you understand and add to the world around you. Self-driving cars, autonomous robots, and virtual reality. These are no longer science fiction. If you want to understand how they work and have a chance to add your own functionality to them, you need to know how to code. Even if you&rsquo;re a product designer or marketer at a technology company, in order to build something amazing, you&rsquo;ll want to be able to effectively communicate with the people who are working on the code. Knowing the basics will help you do that.</li>
+</ul>
+
+<h2 id="let-s-get-started">Let&rsquo;s get started!</h2>
+
+<p>Let&rsquo;s say you want to make a game. In this game, you want to have some tanks moving around a game board and shoot at each other. Where would you start?</p>
+
+<p>A good place to start might be designing the tanks or the terrain. Another good place might be deciding how many players you want to be able to play at once and whether you want them to play over the internet or from the same computer.</p>
+
+<p>For our purposes, we&rsquo;re going to start with how the tanks will move around. We have a few options&hellip; Voice commands. Clicking a mouse button. Eye tracking. Using the keyboard. Swiping with a finger on a cell phone.</p>
+
+<p>However, to keep things simple — and because it&rsquo;s the one I know how to do the best — we&rsquo;ll start with keyboard controls, specifically, the arrow keys.</p>
+
+<p>Can someone describe to me which direction we&rsquo;ll want the tank to move when we press the &ldquo;up&rdquo; arrow key?</p>
+
+<p>&ldquo;Up,&rdquo; that&rsquo;s right! Now, I&rsquo;m going to convert this statement into what&rsquo;s called pseudo-code.</p>
+
+<p>&ldquo;⬆ means the tank moves up&rdquo;</p>
+
+<h2 id="pseudo-code">Pseudo-code</h2>
+
+<p>So, what&rsquo;s pseudo-code?</p>
+
+<p>It&rsquo;s describing code in a way that humans can easily understand, so you can plan out how a program will work. That means my pseudo-code might be different from yours.</p>
+
+<p>I might write:</p>
+
+<p>&ldquo;⬆️ means the tank moves up&rdquo;</p>
+
+<p>But someone else might write:</p>
+
+<p>&ldquo;up arrow -&gt; tank moves up&rdquo;</p>
+
+<p>Someone else:</p>
+
+<p>&ldquo;⬆️ means [pictogram of tank on grid with an arrow pointing from the tank to the grid square above it]&rdquo; (todo: I need to add this pictogram.)</p>
+
+<p>Someone else:</p>
+
+<p>&ldquo;when up arrow is pressed, add 1 to the player&rsquo;s y coordinate&rdquo;</p>
+
+<p>Pseudo-code is used to help you figure out what&rsquo;s going to happen when, why, and for how long before you start writing actual code. Eventually, after you plan everything out enough, you&rsquo;ll want to convert your pseudo-code into real code.</p>
+
+<p>But, it&rsquo;s essential to see how the pieces are going to fit together first, even for really experienced programmers.</p>
+
+<h2 id="writing-pseudo-code-for-our-game">Writing Pseudo-code For Our Game</h2>
+
+<p>So, you should write pseudo-code in whatever way makes sense to you. You can figure out how to convert it into computer code later.</p>
+
+<p>Now, I&rsquo;m going to write out some basic pseudo-code for a really simple game. In this game, there&rsquo;s only one player and all they can do is move a tank around a board. Not much of a game, but it&rsquo;ll give us a start.</p>
+
+<ol>
+<li>Create a character</li>
+<li>Place character on the game board</li>
+<li>When ⬆️, move character up</li>
+<li>When ➡️, move character right</li>
+<li>When ⬇️, move character down</li>
+<li>When ⬅️, move character left</li>
+</ol>
+
+<p>Pretty easy to understand, right? Any questions?</p>
+
+<p>Now, let me take you through the real code that you might use for this. We&rsquo;ll start with the movements, so that&rsquo;s steps 3-6.</p>
+
+<h2 id="first-introduction-to-real-code">First Introduction to Real Code!</h2>
+
+<pre><code>document.body.addEventListener(&quot;keydown&quot;, function (event) {
+    if (event.keyCode === 39) {
+        player.x = player.x + 10;
+    }
+})
+</code></pre>
+
+<p>This is the code you might use to get your player in the game to move to the right.</p>
+
+<p>It might seem like a lot of code for such a simple action, but before we get into it, let me explain how much power comes from understanding this code.</p>
+
+<p>This code is flexible, it doesn&rsquo;t have to be used for just detecting arrow keys. It basically lets you see whatever key is being pressed on a page. You could use code like this to add keyboard shortcuts to a website, add special combo codes for games, or for something like text formatting. You know how in Google Docs or Gmail, when you press <code>ctrl+b</code> and it makes your selection <strong>bold</strong>? That&rsquo;s done with code like this.</p>
+
+<h2 id="code-it-s-not-that-great-after-all">Code? It&rsquo;s not that great after all&hellip;</h2>
+
+<p>So, the code I just showed you is very flexible and powerful&hellip;</p>
+
+<p>But the more important thing I want you to understand about code is&hellip; <em>it doesn&rsquo;t matter.</em></p>
+
+<p>Let&rsquo;s go back to the pseudo-code.</p>
+
+<ol>
+<li>Create a character</li>
+<li>Place character on the game board</li>
+<li>When ⬆️, move character up</li>
+<li>When ➡️, move character right</li>
+<li>When ⬇️, move character down</li>
+<li>When ⬅️, move character left</li>
+</ol>
+
+<p>Does this pseudo-code make sense to you? Do you pretty much know the type of game we&rsquo;re trying to make by looking at this? Do you know, basically, what&rsquo;s going to happen?</p>
+
+<p>Yes! &hellip;right?</p>
+
+<p>That&rsquo;s what matters. As long as you understand what you want to happen when, I guarantee you, you can find a way, with code, to make it happen. And, the specific words you use to translate your pseudo-code into actual code aren&rsquo;t going to matter that much, as long as you understand the underlying ideas. The ideas, the concept and how you tie them together are what matters.</p>
+
+<p>The code will take lots of getting use to, sure, but it&rsquo;s all just computer language. The reason we write in code is so that a computer can understand what you&rsquo;re trying to say. It&rsquo;s not supposed to totally make sense to you, especially not at first.</p>
+
+<p>Your first priority should always be making sure <em>you</em> understand what you&rsquo;re trying to do, not if the computer can understand you.</p>
+
+<p>Okay, with that out of the way, let&rsquo;s get back to the code and I&rsquo;ll show you what&rsquo;s going on.</p>
+
+<h2 id="an-introduction-to-coding">An Introduction to Coding</h2>
+
+<p>We&rsquo;re going to learn a couple new words today. That&rsquo;s because we&rsquo;re learning a brand new language. With most new languages, you have to learn lots of new words, but with this one, you only need to learn a few. And, luckily, they&rsquo;re all in English.</p>
+
+<p>Here are the words we&rsquo;ll be learning about today:</p>
+
+<ol>
+<li>function</li>
+<li>object (i.e. dictionaries)</li>
+<li>array (i.e. lists)</li>
+<li>strings (i.e. words and phrases)</li>
+<li>numbers</li>
+<li>conditionals (i.e. if and else)</li>
+<li>comparisons (i.e. equals, not equals, greater than, less than)</li>
+<li>variables</li>
+</ol>
+
+<h2 id="the-basics">The Basics</h2>
+
+<p>There are a few concepts that will be useful to know when you&rsquo;re building things with code. These concepts are used in all kinds of programming languages, not just JavaScript.</p>
+
+<p>Knowing about them will help you convert pseudo-code into real code. There&rsquo;s just a few of them, but knowing about them will help you build just about anything.</p>
+
+<h3 id="the-basics-functions">The Basics: Functions</h3>
+
+<p>We&rsquo;ll start with an interesting one: <strong>Functions</strong>.</p>
+
+<p><a href="todo: add this illustration">illustration/doodle of 3 robots</a></p>
+
+<p>Every function is different, but they all have something in common: they do stuff.</p>
+
+<p>You can think of functions as little robots that go off and do things for you. One function might fetch you something, another one might calculate something, and another one might display something for you.</p>
+
+<p>Functions are really useful and powerful and they&rsquo;re great because once you have one, you can tell it to do the same thing for you over and over again and it will never get tired of doing it, no matter how complicated or boring the task is.</p>
+
+<p>Any questions about functions?</p>
+
+<p>We&rsquo;ll go over the syntax for them later.</p>
+
+<h3 id="the-basics-objects">The Basics: Objects</h3>
+
+<p>Ok, this next one is also <em>really</em> interesting. <strong>Objects.</strong></p>
+
+<p><a href="todo: add this illustration">doodle/illustration of three bookshelves in a library standing next to each other</a></p>
+
+<p>Objects are also called dictionaries. Here&rsquo;s how they work:</p>
+
+<p>You plug in a key [doodle of a key],
+And they give you whatever&rsquo;s on the side of the corresponding door [doodle of a door with a key hole in it]</p>
+
+<p><em>Why are objects also called dictionaries?</em> Because dictionaries work like this too. Give them a word and they give you back a corresponding definition.</p>
+
+<p>Every search works like this too. If you type in a word or phrase into Google, you get back a bunch of results, right?  Well, on the back-end Google is basically just using a really big object/dictionary. You plug in a word or phrase — the &ldquo;key&rdquo; — they look it up, and you get back a page of search results.</p>
+
+<p>The Boston Public Library works like this, except it uses the Library of Congress Classification system, which uses call numbers as keys.</p>
+
+<p>People work like this too. Think of all the things people could look <em>you</em> up by. Your address, your phone number, your social security number. These are all keys, which, when passed into an object, might return a person like you.</p>
+
+<p>I&rsquo;m going to go into the syntax for objects just a little, because it&rsquo;s so simple. The basic structure looks like this:</p>
+
+<p>key : value</p>
+
+<p>So, you plug the key — i.e. the search term — into Google, e.g. &ldquo;the distance to the moon&rdquo;, and you&rsquo;ll get back an answer (i.e. &ldquo;238,900 miles&rdquo;).</p>
+
+<p>That&rsquo;s represented like this, for objects:</p>
+
+<p>the distance to the moon : 238,900 miles</p>
+
+<p>On the left of the colon is the key, on the right in the value. This is a really useful concept that we&rsquo;ll use a lot.</p>
+
+<h3 id="the-basics-arrays">The Basics: Arrays</h3>
+
+<p>Now, I&rsquo;m going to go through a few more concepts, but these ones you mostly already know about. They&rsquo;re pretty simple, and not as interesting as functions or objects.</p>
+
+<p>These concepts are arrays, strings, numbers, conditionals, comparisons, and variables.</p>
+
+<p>Arrays are pretty simple — they&rsquo;re just lists. In terms of what you&rsquo;d use them for, it&rsquo;s mostly straightforward, basically anything you&rsquo;d use a list for.</p>
+
+<p>If you search Google, you&rsquo;ll get a list of search results. This list is just a list — otherwise known as an array.</p>
+
+<p>I&rsquo;m going to call arrays lists for now, for the sake of simplicity.</p>
+
+<p>Lists are seen everywhere, all over the internet and every app you&rsquo;ve ever used uses them. Lists of friends on Facebook, lists of followers on Twitter or Instagram, lists of notifications in Snapchat, lists of movies on IMDB, lists of email messages in Gmail.</p>
+
+<h3 id="the-basics-strings">The Basics: Strings</h3>
+
+<p>Let&rsquo;s move on to the next one: <strong>Strings.</strong></p>
+
+<p>Strings are words or phrases that you want to use in your program, most likely to display to the people using your program. So, if you want to say, &ldquo;Hello, welcome to my game,&rdquo; you might want to use a string in your code to display this message.</p>
+
+<p>The thing is, you&rsquo;re also writing words to make your program, so the computer needs a way to tell the difference between the words you mean it to understand and the ones that are actually words.</p>
+
+<p>So, if you want to say hello or make a warning pop up, you have to write your words in quotes, like this:</p>
+
+<p>&ldquo;hello&rdquo;</p>
+
+<p>If you want to write a full sentence, it would look like this:</p>
+
+<p>&ldquo;I went to the park&rdquo;</p>
+
+<h3 id="the-basics-numbers">The Basics: Numbers</h3>
+
+<p>Next is numbers. For the most part, we&rsquo;ll be doing pretty simple math, but when we do use it, it&rsquo;s going to come in really handy.</p>
+
+<p>With numbers, you don&rsquo;t need to do anything special.</p>
+
+<p>When you&rsquo;re coding, <code>1 + 1 = 2</code></p>
+
+<p>This is how you multiply: <code>2 * 2 = 4</code></p>
+
+<p>Divide: <code>4 / 2 = 2</code></p>
+
+<p>And subtract: <code>2 - 1 = 1</code></p>
+
+<h3 id="the-basics-conditionals">The Basics: Conditionals</h3>
+
+<p>We only have a few more concepts to get through before you&rsquo;re able to understand the basic building blocks of code.</p>
+
+<p>This next one is something you deal with every day: &ldquo;If I do this, then this will happen. If I don&rsquo;t do this, then this other thing will happen.&rdquo;</p>
+
+<p>For example, &ldquo;if I buy a movie ticket, I&rsquo;ll have fun, but if I don&rsquo;t buy a movie ticket, I&rsquo;ll save $10.&rdquo;</p>
+
+<p>This is something that&rsquo;s very useful when we&rsquo;re coding. Lots of times, we&rsquo;ll want the ability to control when someone&rsquo;s allowed to do something and when they aren&rsquo;t.</p>
+
+<p>For example, if you set up an online store, you&rsquo;d want to make sure someone paid and that you have their address before you send them their package.</p>
+
+<p>That might look something like this in pseudo-code:</p>
+
+<ul>
+<li>if this person paid and we have their address, then send them their package</li>
+<li>else, send them a message asking them to pay and also ask them to put in their address</li>
+</ul>
+
+<h3 id="the-basics-comparisons">The Basics: Comparisons</h3>
+
+<p>Comparisons are also used in our daily life. Many times, they&rsquo;re used with the word &ldquo;if&rdquo;.</p>
+
+<p>Comparisons include &ldquo;greater than&rdquo;, &ldquo;less than&rdquo;, &ldquo;equal&rdquo;, and &ldquo;not equal&rdquo;, which are represented by the following symbols: <code>&gt;</code>, <code>&lt;</code>, <code>===</code>, and <code>!=</code>.</p>
+
+<p>For example, we might say, &ldquo;If that banana costs less than $1, then I&rsquo;ll buy it.&rdquo;</p>
+
+<p>In someone&rsquo;s pseudo-code, this might look like this:</p>
+
+<p>if (banana.price &lt; 1)
+  then buy banana
+else
+  buy an orange</p>
+
+<p>Here&rsquo;s an example from something you might see in a software program like Facebook, written in pseudo-code: &ldquo;If two people add each other as friends, then they can message each other&rdquo;</p>
+
+<p>And, written in something closer to code, it might read like this:</p>
+
+<p>if (person 1 added person 2 as a friend AND person 2 added person 1 as a friend)
+  then they can message each other
+else
+  they cannot message each other</p>
+
+<h3 id="the-basics-variables">The Basics: Variables</h3>
+
+<p>Ok, I&rsquo;ve saved the hardest one for last, but it&rsquo;s also one of the most useful concepts: <strong>Variables.</strong></p>
+
+<p>This is a hard one because it might not make sense why we need them at first, but let me explain.</p>
+
+<p>Variables let you store values, so you can use these values somewhere else in your program.</p>
+
+<p>Let&rsquo;s say you have a program that asks someone their name and lets them type it in. You could store that away and then, later on, greet them by their name.</p>
+
+<p>This is what that actually looks like, using real code:</p>
+
+<pre><code>var name = prompt(&quot;What's your name?&quot;);
+alert(&quot;Hello &quot; + name);
+</code></pre>
+
+<p>Variables are also really useful for keeping track of things you might be confused about when come back to your code later. You can use variables to name values, so your program makes more sense when you come back to it.</p>
+
+<p>Let me give you an example:</p>
+
+<pre><code>0 + 10 - 2
+</code></pre>
+
+<p>If you looked at this code, you&rsquo;d be able to figure out the result, but you might not know why it&rsquo;s trying tog get that result. However, if you label each number it might make more sense:</p>
+
+<p><a href="todo: add this diagram">diagram with labels above each part: &ldquo;Initial position&rdquo; above the 0, &ldquo;Speed&rdquo; above the 10, and &ldquo;Wind resistance&rdquo; above the 2</a></p>
+
+<p>If you&rsquo;re making a game in which the player is sailing a boat, but there&rsquo;s wind resistance, this is the equation you might use to calculate their new position after they try to move. Labels help you keep track of that.</p>
+
+<p>Let me show you how that might look in code:</p>
+
+<pre><code>var initialPosition = 0;
+var speed = 10;
+var windResistance = 2;
+
+var newPosition = initialPosition + speed - windResistance;
+</code></pre>
+
+<p>Now, any game wouldn&rsquo;t be that fun if nothing ever changed, right? If there were no bad guys and the whole game was just a flat path that you could walk on endlessly, it would be really boring&hellip; This is the other thing variables are good for — because you can change their values depending on the situation.</p>
+
+<p>So, if there&rsquo;s a really hard level in your sailing game, you might change the value of the <code>windResistance</code> variable:</p>
+
+<pre><code>var windResistance = 7;
+</code></pre>
+
+<p>That would make it really hard for the boat to sail against the wind. They might need to boost their speed somehow! :)</p>
+
+<h2 id="real-code-a-re-introduction">Real code: A re-introduction</h2>
+
+<p>Before we get started building our game, let&rsquo;s go back to that first bit of real code that I showed you and I&rsquo;ll explain the different parts:</p>
+
+<pre><code>document.body.addEventListener(&quot;keydown&quot;, function (event) {
+    if (event.keyCode === 39) {
+        player.x = player.x + 10;
+    }
+})
+</code></pre>
+
+<p>So, remember objects/dictionaries? They let us put in a key and get back a value? Well, there are a few of those here.</p>
+
+<p>One of the ways you can access the value from an object is by putting a period after the object&rsquo;s name and typing in the key&rsquo;s name.</p>
+
+<p>So, <code>document</code> here is an object. We can access the value of the <code>body</code> key inside of this object by typing:</p>
+
+<pre><code>document.body
+</code></pre>
+
+<p>Then we get the value of <code>body</code>.</p>
+
+<p>What does the value of <code>body</code> equal? Well, it&rsquo;s another object. Then, inside the <code>body</code> object, there&rsquo;s a key called <code>addEventListener</code>, which corresponds to a function. Remember when we talked about functions? They&rsquo;re things that go off and do stuff for us.</p>
+
+<p>In this case, the <code>addEventListener</code> function helps us figure when an event on the page occurs. This could be a mouse click or scroll event, someone pressing a key on a keyboard, or someone writing text in a text area. The function expects an &ldquo;argument&rdquo;, which is something we haven&rsquo;t touched on before.</p>
+
+<p>In this case, the argument we&rsquo;re passing in is a string: &ldquo;keydown&rdquo;. This string tells the <code>addEventListener</code> function that the specific type of event we&rsquo;re looking for is someone pressing a key on a keyboard. If we had passed in the string &ldquo;click&rdquo; instead, it would tell us about mouse clicks. If we passed in the string &ldquo;scroll&rdquo;, it would tell us about every time someone scrolled down the page.</p>
+
+<p>Now, how can a function tell us when something has happened or give us data we requested from us? One way would be to pop something up on the screen for us. This could be done by the function calling <code>alert()</code> inside of itself. However, what if we don&rsquo;t want to display the result in the browser?</p>
+
+<p>Another way a function could return data to us &mdash; in fact the most common way &mdash; would be to just give us a result back from the function, which we can assign to a variable. This is called returning a value, and when a function does this, we can get the value it returns like this:</p>
+
+<pre><code>var searchResults = getSearchResultsFor(&quot;movie times&quot;);
+</code></pre>
+
+<p>This is great for most types of functions. With most functions, they&rsquo;re meant for a single purpose and once you call them, they&rsquo;ve done their job. You can forget about them until the next time you need them.</p>
+
+<p>However, sometimes you need new data every time an event happens. For example, if you&rsquo;re building a game and you want to know when someone presses a key &mdash; as soon as they press the key.</p>
+
+<p>In this case, a very common pattern is to pass a function into another function. Then, the function you pass in will be called whenever the event happens, on the dot. And that&rsquo;s what&rsquo;s happening here:</p>
+
+<pre><code>document.body.addEventListener(&quot;keydown&quot;, function (event) {
+    if (event.keyCode === 39) {
+        player.x = player.x + 10;
+    }
+})
+</code></pre>
+
+<p>The second argument to <code>addEventListener</code> is a function that will get called whenever someone presses a key on the keyboard.</p>
+
+<h3 id="side-note-function-syntax">Side note: Function syntax</h3>
+
+<p>This is how you define a function:</p>
+
+<pre><code>function () {
+  // code that's run when the function runs
+}
+</code></pre>
+
+<p>If we want the function to have a name, so we can refer to it or call it later, we can write it like this:</p>
+
+<pre><code>function getSearchResults () {
+  // code that's run when the function runs
+}
+</code></pre>
+
+<h2 id="back-to-our-code">Back to our code</h2>
+
+<p>Okay, so, to review: we have an object, <code>document</code>, that has another object inside of it, <code>body</code>, that has a function inside of it, called <code>addEventListener</code>.</p>
+
+<p>When we call <code>addEventListener</code>, it expects to be passed two arguments.</p>
+
+<p>The first argument is the type of event we want to be notified about.</p>
+
+<p>The second argument is a function, that we define, that will be called whenever that event takes place.</p>
+
+<p>So, in this case, when a user presses a key on the keyboard, the function we passed to <code>addEventListener</code> will be called. And, to top is off, when <code>addEventListener</code> calls our little function, it will also be nice enough to give us some of the details about the event.</p>
+
+<p>In the example, we refer to these details with the name <code>event</code>. It&rsquo;s an object that has a lot of information in it, but the thing that tells us which key was actually pressed is under the key inside it labeled <code>keyCode</code>.</p>
+
+<p>We check to see if the value of <code>keyCode</code> represents the key for the right arrow (i.e. 39), and then, if it is, we move our character to the right.</p>
+
+<p>(You can learn more about the key code for specific keys here: <a href="http://keycode.info/">http://keycode.info/</a>)</p>
+
+<hr />
+
+<p>In plain English:
+- We ask the computer to tell us when someone presses a key.
+- When that key press happens, the computer tells us some of the details about which key was pressed.
+- We use this information to see if the right arrow key was pressed.
+- In the case that the right arrow was pressed, we move our character to the right.</p>
+
+<h2 id="okay-let-s-make-a-game">Okay, let&rsquo;s make a game!</h2>
+
+<p>The first thing I want to tell you is we won&rsquo;t be building this game from scratch. We&rsquo;ll be using a game library to help us out.</p>
+
+<p>The reason for using a library is this: when something has been built thousands of times before (like games and game libraries have), you can learn a lot from established solutions and get a lot of the hard work done for you for free.</p>
+
+<p>If you want to build a game from scratch, instead of using a library, it will be a lot easier for you to do that after understanding the basic principles of game development.</p>
+
+<p>By using a library from the start, you&rsquo;ll have a head start on other people who just dive in because you&rsquo;ll start closer to a working solution. Not only will you know what it takes to make a nice-looking game that performs well, has animations, and has tile maps that you can build yourself &mdash; you also won&rsquo;t get discouraged as easily by fumbling with the basics.</p>
+
+<h3 id="coin-collecting-game-part-1-a-moving-sprite">Coin Collecting Game: Part 1: A Moving Sprite</h3>
+
+<p>Okay, let&rsquo;s get started!</p>
+
+<p>Here&rsquo;s the first bit of code I want us to look at: <a href="https://codepen.io/panphora/pen/PJXvEj?editors=0010">https://codepen.io/panphora/pen/PJXvEj?editors=0010</a></p>
+
+<p>The first thing to notice is that we already have a working animation! That&rsquo;s huge. And, with very little code!</p>
+
+<h4 id="game-development-concepts">Game Development Concepts</h4>
+
+<p>There are bound to be a lot of things you don&rsquo;t understand when you first look at this.</p>
+
+<p>But, let&rsquo;s go back to basics, to what I said in the beginning — the specific code doesn&rsquo;t matter, as long as you understand the concepts. So, let&rsquo;s first go through the basic concepts that every game designer should understand.</p>
+
+<p>Those are:</p>
+
+<ol>
+<li>Sprites</li>
+<li>Coordinates</li>
+<li>The game loop</li>
+</ol>
+
+<p>Each of these concepts is super simple on its own, but when you put them together you have the basics for making a game.</p>
+
+<h5 id="sprites">Sprites</h5>
+
+<p>Sprites are items or characters or tiles on a map that you want to display on a screen. They might be a shape or they might be a drawing or icon. Ideally, in nice-looking game, they&rsquo;ll animate as they move. So, when the character jumps, it will looks like they&rsquo;re actually jumping because the image will change to have the character&rsquo;s legs pull in and their arms fly up.</p>
+
+<p>We&rsquo;re initiating the sprite on the 3rd line. We pass in an object, with key/value pairs. This object sets up all the initial settings for our sprite.</p>
+
+<p>In fact, that&rsquo;s how we&rsquo;re creating most of the functionality for this game: passing in an object, with key/value pairs, into a function, and assigning the return value to a variable.</p>
+
+<h5 id="coordinates">Coordinates</h5>
+
+<p>Coordinates are just where the sprites appear on the screen. If we have a sprite that moves to the right, we need to know where it starts, so we can tell it where to go next.</p>
+
+<p>With this game library, the 0,0 coordinate is in the top left. That means the further the sprite gets from the top left corner, the higher these coordinates go. If the sprite has negative coordinates, it&rsquo;s off the screen. And if it has coordinates around 800,800, it&rsquo;s close to the bottom right.</p>
+
+<p>The first coordinate is the <code>x</code> coordinate and it represents how far the sprite is from the left side of the game board. The second coordinate is the <code>y</code> coordinate and it represents how far the sprite is from the top of the game board.</p>
+
+<p>These <code>x</code> and <code>y</code> coordinates are being passed in as the first two settings we&rsquo;re passing in when we create the sprite.</p>
+
+<h5 id="the-game-loop">The game loop</h5>
+
+<p>The game loop is also simple. In order to trick your eyes into thinking something is actually moving across a screen, it has to move smoothly, that is, its coordinates have to update very often every second. The game loop makes sure this happens by updating all the positions of the players and then rendering the players. It does this about 60 times a second.</p>
+
+<p>You can change the amount of times the game loop renders, if you want. You can have it render 30 times a seconds. If you set the fps too low and increase the movement speed too much (change the value of the movement speed by changing the value of <code>dx</code> to something really high, like <code>50</code>; change the fps by adding a key value pair as the first argument being passed to the game loop that looks like: <code>fps: 10</code>), the block should look like it&rsquo;s stuttering across the screen.</p>
+
+<p>The game loop has two parts. The first part is the update function, where we make sure the sprites have the most recent values. And the second part is where we render those values.</p>
+
+<p>In the update function, we can see there&rsquo;s a little extra logic to make the sprite loop around if it goes beyond the bounds of the game board. This basically says that once the sprite is off the board, place it just to the left of the board. This allows the sprite to loop endlessly.</p>
+
+<p>I should mention one of the big reasons why a game loop is used. Every time the player moves, their character needs to move. In some games, the whole scene changes as the character moves. What would happen if we only move the character without erasing the previous version? You can see what this might look like by completing the last exercise below.</p>
+
+<ul>
+<li>Exercise: play around with the initial <code>x</code> and <code>y</code> coordinates to give the red square a different starting position.</li>
+<li>Exercise:  try getting the square to move really fast across the screen.</li>
+<li>Exercise: try to get the square to reset its position after traveling for 300 pixels.</li>
+<li>Exercise: Add <code>clearCanvas: false</code> to the arguments you pass into <code>kontra.gameLoop</code> and you&rsquo;ll see exactly what happens when the canvas doesn&rsquo;t clear after every game loop.</li>
+</ul>
+
+<h3 id="coin-collecting-game-part-2-moving-with-keyboard-controls">Coin Collecting Game: Part 2: Moving with Keyboard Controls</h3>
+
+<p>Here&rsquo;s the next part: <a href="https://codepen.io/panphora/pen/ZXVNMP?editors=0010">https://codepen.io/panphora/pen/ZXVNMP?editors=0010</a></p>
+
+<p>This is where we add code to let us move the sprite around using the keyboard arrow keys. The code goes into the <code>update</code> function.</p>
+
+<p>So, first of all, this is easier than doing it yourself. You can use natural language instead of key codes. And inside the update function, you have access to the sprite. The sprite is accessed with the <code>this</code> keyword.</p>
+
+<p>The <code>this</code> keyword is special, and not something we have time to get into right now. But, basically, it lets us have access to the sprite because we&rsquo;re in a function that&rsquo;s passed into the sprite.</p>
+
+<p>We also add some code to prevent the default action of the arrow keys. This is also a little easier to write because we&rsquo;re using the Kontra library, but wouldn&rsquo;t be hard to write without it. If we remove this code to prevent the default action and our game board was large enough, whenever you pressed the down button, the page would scroll down. You character would also move, but the unintended scrolling would be annoying to say the least.</p>
+
+<p>(Exercise: Try mapping the control keys to somewhere else on your keyboard. For example, try using the <code>w</code> key for up, the <code>s</code> key for down, the <code>a</code> key for left, and the <code>d</code> key for right.)</p>
+
+<h3 id="coin-collecting-game-part-3-loading-a-sprite-image">Coin Collecting Game: Part 3: Loading a Sprite Image</h3>
+
+<p>Here&rsquo;s the third part: <a href="https://codepen.io/panphora/pen/NaeVEM?editors=0010">https://codepen.io/panphora/pen/NaeVEM?editors=0010</a></p>
+
+<p>This is where things get fun — we start to add designs for our sprites to the game. We can add any design we want here, any image will work if we upload it and add a reference to it.</p>
+
+<p>The code we&rsquo;re using to load the assets and wait until their loaded, saves us from having to learn how to do it ourselves. Again, it&rsquo;s not super hard to do, but let me give you an idea of what it might look like in pseudo-code if we wanted to load two images (which we&rsquo;ll do pretty soon) and we wanted to write this ourselves:</p>
+
+<ol>
+<li>create a new image objects</li>
+<li>set the value of the first image object to a url</li>
+<li>set the value of the second image object to a url</li>
+<li>wait for the first image to load</li>
+<li>after the first image loads, wait for the second image to load</li>
+</ol>
+
+<p>This also handles repainting the sprite as it moves, as I mentioned before.</p>
+
+<h3 id="coin-collecting-game-part-4-loading-a-tile-sheet">Coin Collecting Game: Part 4: Loading a Tile Sheet</h3>
+
+<p>The fourth part: <a href="https://codepen.io/panphora/pen/mBaYgM?editors=0010">https://codepen.io/panphora/pen/mBaYgM?editors=0010</a></p>
+
+<p>Okay, so now we&rsquo;ve got a little character running around the map, but they don&rsquo;t have any terrain to run over. It&rsquo;s just a black screen in the middle of the page. Let&rsquo;s fix that!</p>
+
+<p>In this step, we&rsquo;re going to load up a tile sheet.</p>
+
+<p>Let me show you what that looks like: <a href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/126441/map_tilesheet.png">https://s3-us-west-2.amazonaws.com/s.cdpn.io/126441/map_tilesheet.png</a></p>
+
+<p>Tile sheets are meant to contain a bunch of terrain, items, and characters that you can use in your game. You can tell the computer how to tell how big each tile is in the image and it&rsquo;s the designers job to make sure that each tile is an equal size. After you know how big each tile is, it&rsquo;s just a matter of counting from 1, from the top left, to figure out which tile you want to place down.</p>
+
+<p>So, first we load the image up, the same way we loaded up our character&rsquo;s sprite.</p>
+
+<p>Then, we initialize the tile engine, to tell Kontra how big each tile is and how big the total size of the map is.</p>
+
+<p>We add the image we loaded into the tile engine.</p>
+
+<p>And then we get this neat little interface where all we have to do is specify the tile number and Kontra will paint it onto the game board for us — as long as we render the tile engine in the game loop!</p>
+
+<p>This saves us a lot of time. Imagine loading each of these tiles in the tile sheet by ourselves, figuring out the coordinates we want to paint them in, and then, if we ever wanted to change things down the road, we&rsquo;d have to do a lot of the calculation over again. By thinking through this ahead of time, game developers have come up with the standard of tile sheets and maps that you can add individual tiles to, which ends up saving everyone a lot of time!</p>
+
+<p>(exercise: look at the tile sheet image and try to make your map use a different tile for the terrain. play around with it and don&rsquo;t be afraid to get it wrong.)</p>
+
+<h3 id="coin-collecting-game-part-5-adding-layers-to-the-map">Coin Collecting Game: Part 5: Adding Layers to the Map</h3>
+
+<p>The fifth part: <a href="https://codepen.io/panphora/pen/yzGWrw?editors=0010">https://codepen.io/panphora/pen/yzGWrw?editors=0010</a></p>
+
+<p>Now, we&rsquo;re going to add another layer to our game map. The first layer is going to be ocean and the second layer is going to be an island. You can play around with this at this point and try to make the terrain look however you want it to.</p>
+
+<p>This is a big step. We&rsquo;ve gone from having terrain that looks very bland to something that looks a bit more realistic. We&rsquo;ve started to create our own little world here. And now that you know how the pieces fit together, you&rsquo;ll be able to go off and download other tile sheets and make your own game worlds.</p>
+
+<p>The zeros in the ground layer are transparent, as well as some of the edges of the island. That&rsquo;s why we get to see the water underneath.</p>
+
+<h3 id="coin-collecting-game-part-6-add-a-walking-animation">Coin Collecting Game: Part 6: Add a Walking Animation</h3>
+
+<p>The sixth part: <a href="https://codepen.io/panphora/pen/jGXooQ?editors=0010">https://codepen.io/panphora/pen/jGXooQ?editors=0010</a></p>
+
+<p>Okay, it&rsquo;s been a long day, I know, but we&rsquo;re approaching the last part. This next part will let us see our character walk!</p>
+
+<p>The first thing we&rsquo;re going to do is load up a sprite sheet instead of the image of the alien standing still. A sprite sheet is used for animations. It&rsquo;s just an image with every frame of the animation in it and we can loop through them however we want.</p>
+
+<p>First, we tell Kontra what the height and width of each frame is inside the image. That makes a sprite sheet for us that we can animate.</p>
+
+<p>Next, we pass that generated animation to our sprite in the animations key. Now, every five frames, when update is called on this sprite, it&rsquo;ll look like it&rsquo;s walking!</p>
+
+<p>This makes it really easy for us again, to add an animation to our character. Something that would take a bit more effort to implement on our own. However, I encourage you to play around with the code and try to figure out how it works</p>
+
+<h3 id="coin-collecting-game-part-7-load-sprite-in-a-random-position">Coin Collecting Game: Part 7: Load Sprite in a Random Position</h3>
+
+<p>The seventh part: <a href="https://codepen.io/panphora/pen/xXmNow?editors=0010">https://codepen.io/panphora/pen/xXmNow?editors=0010</a></p>
+
+<p>(Only if we have time) (todo: add text for this section)</p>
+
+<h2 id="wrapping-up">Wrapping Up</h2>
+
+<p>If you&rsquo;re interested in learning the basics of game development, there&rsquo;s no better way to start than exploring some code that doesn&rsquo;t use a game library and trying to figure it out and play around with it</p>
+
+<p>Here&rsquo;s an example project i built that does just that: <a href="https://codepen.io/panphora/pen/KgxwZz">https://codepen.io/panphora/pen/KgxwZz</a></p>
+
+<p>Try customizing this game to your liking. For example, try replacing the character or the sound that plays when they collect coins. This is intended for people who want to start from the basics, and also want to learn HTML and CSS.</p>
+
+<p>For the rest of you, who are more interested in learning programming, please continue playing around with the code I&rsquo;ve shown you today.</p>
+
+<p>We&rsquo;ll meet up next week to review how to code and fix a few things with our game. For example, you&rsquo;ll notice that the character can walk outside the bounds of the island. That&rsquo;s something we&rsquo;ll fix next week. We&rsquo;ll also add items for the character to pick up, which will give him points, and we&rsquo;ll add a little counter to keep track of the points.</p>
+
+<p>The week after next week, we&rsquo;ll make this game multiplayer, so more than one person can play at once!</p>
+
+    </section>
+  </article>
+</main>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'smashingthings';
+if (disqus_shortname && disqus_shortname !== 'example') {
+  var disqus_identifier = '9';
+
+   
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+}
+</script>
+    <footer class="site-footer clearfix">
+      <section class="poweredby">Proudly published with <a href="http://gohugo.io/">Hugo</a></section>
+    </footer>
+  </div>
+  <script type="text/javascript" src="http://smashingthingstogether.com/js/main.js"></script>
+</body>
+</html>
