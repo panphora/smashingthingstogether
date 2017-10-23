@@ -85,7 +85,7 @@ But someone else might write:
 
 Someone else:
 
-"⬆️ means [pictogram of tank on grid with an arrow pointing from the tank to the grid square above it]" (todo: I need to add this pictogram.)
+"⬆️ means [todo: add a pictogram of tank on grid with an arrow pointing from the tank to the grid square above it]"
 
 Someone else:
 
@@ -116,13 +116,13 @@ Now, let me take you through the real code that you might use for this. We'll st
 
 ## First Introduction to Real Code!
 
-```
+{{< highlight javascript >}}
 document.body.addEventListener("keydown", function (event) {
     if (event.keyCode === 39) {
         player.x = player.x + 10;
     }
 })
-```
+{{< /highlight >}}
 
 This is the code you might use to get your player in the game to move to the right.
 
@@ -185,7 +185,7 @@ Knowing about them will help you convert pseudo-code into real code. There's jus
 
 We'll start with an interesting one: **Functions**.
 
-[illustration/doodle of 3 robots] (todo: add this illustration)
+- illustration/doodle of 3 robots (todo: add this illustration)
 
 Every function is different, but they all have something in common: they do stuff.
 
@@ -201,20 +201,24 @@ We'll go over the syntax for them later.
 
 Ok, this next one is also *really* interesting. **Objects.**
 
-[doodle/illustration of three bookshelves in a library standing next to each other] (todo: add this illustration)
+- doodle/illustration of three bookshelves in a library standing next to each other (todo: add this illustration)
 
 Objects are also called dictionaries. Here's how they work:
 
-You plug in a key [doodle of a key],
-And they give you whatever's on the side of the corresponding door [doodle of a door with a key hole in it]
+You plug in a key [todo: doodle of a key],
+And they give you whatever's on the side of the corresponding door [todo: doodle of a door with a key hole in it]
 
 *Why are objects also called dictionaries?* Because dictionaries work like this too. Give them a word and they give you back a corresponding definition.
+
+#### Examples of objects
 
 Every search works like this too. If you type in a word or phrase into Google, you get back a bunch of results, right?  Well, on the back-end Google is basically just using a really big object/dictionary. You plug in a word or phrase — the "key" — they look it up, and you get back a page of search results.
 
 The Boston Public Library works like this, except it uses the Library of Congress Classification system, which uses call numbers as keys. 
 
 People work like this too. Think of all the things people could look *you* up by. Your address, your phone number, your social security number. These are all keys, which, when passed into an object, might return a person like you.
+
+#### Syntax
 
 I'm going to go into the syntax for objects just a little, because it's so simple. The basic structure looks like this:
 
@@ -227,6 +231,16 @@ That's represented like this, for objects:
 the distance to the moon : 238,900 miles
 
 On the left of the colon is the key, on the right in the value. This is a really useful concept that we'll use a lot.
+
+The complete syntax for an object actually looks like this:
+
+{{< highlight javascript >}}
+{
+  key1: value1,
+  key2: value2,
+  key3: value3
+}
+{{< /highlight >}}
 
 ### The Basics: Arrays
 
@@ -330,42 +344,42 @@ Let's say you have a program that asks someone their name and lets them type it 
 
 This is what that actually looks like, using real code:
 
-```
+{{< highlight javascript >}}
 var name = prompt("What's your name?");
 alert("Hello " + name);
-```
+{{< /highlight >}}
 
 Variables are also really useful for keeping track of things you might be confused about when come back to your code later. You can use variables to name values, so your program makes more sense when you come back to it.
 
 Let me give you an example:
 
-```
+{{< highlight javascript >}}
 0 + 10 - 2
-```
+{{< /highlight >}}
 
 If you looked at this code, you'd be able to figure out the result, but you might not know why it's trying tog get that result. However, if you label each number it might make more sense:
 
-[diagram with labels above each part: "Initial position" above the 0, "Speed" above the 10, and "Wind resistance" above the 2] (todo: add this diagram)
+- diagram with labels above each part: "Initial position" above the 0, "Speed" above the 10, and "Wind resistance" above the 2 (todo: add this diagram)
 
 If you're making a game in which the player is sailing a boat, but there's wind resistance, this is the equation you might use to calculate their new position after they try to move. Labels help you keep track of that.
 
 Let me show you how that might look in code:
 
-```
+{{< highlight javascript >}}
 var initialPosition = 0;
 var speed = 10;
 var windResistance = 2;
 
 var newPosition = initialPosition + speed - windResistance;
-```
+{{< /highlight >}}
 
 Now, any game wouldn't be that fun if nothing ever changed, right? If there were no bad guys and the whole game was just a flat path that you could walk on endlessly, it would be really boring... This is the other thing variables are good for — because you can change their values depending on the situation.
 
 So, if there's a really hard level in your sailing game, you might change the value of the `windResistance` variable:
 
-```
+{{< highlight javascript >}}
 var windResistance = 7;
-``` 
+{{< /highlight >}}
 
 That would make it really hard for the boat to sail against the wind. They might need to boost their speed somehow! :)
 
@@ -374,13 +388,13 @@ That would make it really hard for the boat to sail against the wind. They might
 
 Before we get started building our game, let's go back to that first bit of real code that I showed you and I'll explain the different parts:
 
-```
+{{< highlight javascript >}}
 document.body.addEventListener("keydown", function (event) {
     if (event.keyCode === 39) {
         player.x = player.x + 10;
     }
 })
-```
+{{< /highlight >}}
 
 So, remember objects/dictionaries? They let us put in a key and get back a value? Well, there are a few of those here.
 
@@ -388,9 +402,9 @@ One of the ways you can access the value from an object is by putting a period a
 
 So, `document` here is an object. We can access the value of the `body` key inside of this object by typing:
 
-```
+{{< highlight javascript >}}
 document.body
-```
+{{< /highlight >}}
 
 Then we get the value of `body`.
 
@@ -404,9 +418,9 @@ Now, how can a function tell us when something has happened or give us data we r
 
 Another way a function could return data to us &mdash; in fact the most common way &mdash; would be to just give us a result back from the function, which we can assign to a variable. This is called returning a value, and when a function does this, we can get the value it returns like this: 
 
-```
+{{< highlight javascript >}}
 var searchResults = getSearchResultsFor("movie times");
-```
+{{< /highlight >}}
 
 This is great for most types of functions. With most functions, they're meant for a single purpose and once you call them, they've done their job. You can forget about them until the next time you need them.
 
@@ -414,13 +428,13 @@ However, sometimes you need new data every time an event happens. For example, i
 
 In this case, a very common pattern is to pass a function into another function. Then, the function you pass in will be called whenever the event happens, on the dot. And that's what's happening here:
 
-```
+{{< highlight javascript >}}
 document.body.addEventListener("keydown", function (event) {
     if (event.keyCode === 39) {
         player.x = player.x + 10;
     }
 })
-```
+{{< /highlight >}}
 
 The second argument to `addEventListener` is a function that will get called whenever someone presses a key on the keyboard.
 
@@ -429,19 +443,19 @@ The second argument to `addEventListener` is a function that will get called whe
 
 This is how you define a function:
 
-```
+{{< highlight javascript >}}
 function () {
   // code that's run when the function runs
 }
-```
+{{< /highlight >}}
 
 If we want the function to have a name, so we can refer to it or call it later, we can write it like this: 
 
-```
+{{< highlight javascript >}}
 function getSearchResults () {
   // code that's run when the function runs
 }
-```
+{{< /highlight >}}
 
 ## Back to our code
 

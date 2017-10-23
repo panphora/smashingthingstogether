@@ -148,12 +148,12 @@
 
 <h2 id="first-introduction-to-real-code">First Introduction to Real Code!</h2>
 
-<pre><code>document.body.addEventListener(&quot;keydown&quot;, function (event) {
-    if (event.keyCode === 39) {
-        player.x = player.x + 10;
-    }
-})
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="">document</span><span style="">.</span><span style="color:#a6e22e">body</span><span style="">.</span><span style="color:#a6e22e">addEventListener</span><span style="">(</span><span style="color:#e6db74">&#34;keydown&#34;</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">event</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">event</span><span style="">.</span><span style="color:#a6e22e">keyCode</span><span style=""> </span><span style="color:#f92672">===</span><span style=""> </span><span style="color:#ae81ff">39</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">        </span><span style="color:#a6e22e">player</span><span style="">.</span><span style="color:#a6e22e">x</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">player</span><span style="">.</span><span style="color:#a6e22e">x</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#ae81ff">10</span><span style="">;</span><span style="">
+</span><span style="">    </span><span style="">}</span><span style="">
+</span><span style=""></span><span style="">})</span></code></pre>
+</div>
 
 <p>This is the code you might use to get your player in the game to move to the right.</p>
 
@@ -359,16 +359,16 @@ else
 
 <p>This is what that actually looks like, using real code:</p>
 
-<pre><code>var name = prompt(&quot;What's your name?&quot;);
-alert(&quot;Hello &quot; + name);
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">name</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">prompt</span><span style="">(</span><span style="color:#e6db74">&#34;What&#39;s your name?&#34;</span><span style="">);</span><span style="">
+</span><span style=""></span><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#e6db74">&#34;Hello &#34;</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#a6e22e">name</span><span style="">);</span></code></pre>
+</div>
 
 <p>Variables are also really useful for keeping track of things you might be confused about when come back to your code later. You can use variables to name values, so your program makes more sense when you come back to it.</p>
 
 <p>Let me give you an example:</p>
 
-<pre><code>0 + 10 - 2
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ae81ff">0</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#ae81ff">10</span><span style=""> </span><span style="color:#f92672">-</span><span style=""> </span><span style="color:#ae81ff">2</span></code></pre>
+</div>
 
 <p>If you looked at this code, you&rsquo;d be able to figure out the result, but you might not know why it&rsquo;s trying tog get that result. However, if you label each number it might make more sense:</p>
 
@@ -378,19 +378,19 @@ alert(&quot;Hello &quot; + name);
 
 <p>Let me show you how that might look in code:</p>
 
-<pre><code>var initialPosition = 0;
-var speed = 10;
-var windResistance = 2;
-
-var newPosition = initialPosition + speed - windResistance;
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">initialPosition</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">speed</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">10</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">windResistance</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">;</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">newPosition</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">initialPosition</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#a6e22e">speed</span><span style=""> </span><span style="color:#f92672">-</span><span style=""> </span><span style="color:#a6e22e">windResistance</span><span style="">;</span></code></pre>
+</div>
 
 <p>Now, any game wouldn&rsquo;t be that fun if nothing ever changed, right? If there were no bad guys and the whole game was just a flat path that you could walk on endlessly, it would be really boring&hellip; This is the other thing variables are good for — because you can change their values depending on the situation.</p>
 
 <p>So, if there&rsquo;s a really hard level in your sailing game, you might change the value of the <code>windResistance</code> variable:</p>
 
-<pre><code>var windResistance = 7;
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">windResistance</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">7</span><span style="">;</span></code></pre>
+</div>
 
 <p>That would make it really hard for the boat to sail against the wind. They might need to boost their speed somehow! :)</p>
 
@@ -398,12 +398,12 @@ var newPosition = initialPosition + speed - windResistance;
 
 <p>Before we get started building our game, let&rsquo;s go back to that first bit of real code that I showed you and I&rsquo;ll explain the different parts:</p>
 
-<pre><code>document.body.addEventListener(&quot;keydown&quot;, function (event) {
-    if (event.keyCode === 39) {
-        player.x = player.x + 10;
-    }
-})
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="">document</span><span style="">.</span><span style="color:#a6e22e">body</span><span style="">.</span><span style="color:#a6e22e">addEventListener</span><span style="">(</span><span style="color:#e6db74">&#34;keydown&#34;</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">event</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">event</span><span style="">.</span><span style="color:#a6e22e">keyCode</span><span style=""> </span><span style="color:#f92672">===</span><span style=""> </span><span style="color:#ae81ff">39</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">        </span><span style="color:#a6e22e">player</span><span style="">.</span><span style="color:#a6e22e">x</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">player</span><span style="">.</span><span style="color:#a6e22e">x</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#ae81ff">10</span><span style="">;</span><span style="">
+</span><span style="">    </span><span style="">}</span><span style="">
+</span><span style=""></span><span style="">})</span></code></pre>
+</div>
 
 <p>So, remember objects/dictionaries? They let us put in a key and get back a value? Well, there are a few of those here.</p>
 
@@ -411,8 +411,8 @@ var newPosition = initialPosition + speed - windResistance;
 
 <p>So, <code>document</code> here is an object. We can access the value of the <code>body</code> key inside of this object by typing:</p>
 
-<pre><code>document.body
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="">document</span><span style="">.</span><span style="color:#a6e22e">body</span></code></pre>
+</div>
 
 <p>Then we get the value of <code>body</code>.</p>
 
@@ -426,8 +426,8 @@ var newPosition = initialPosition + speed - windResistance;
 
 <p>Another way a function could return data to us &mdash; in fact the most common way &mdash; would be to just give us a result back from the function, which we can assign to a variable. This is called returning a value, and when a function does this, we can get the value it returns like this:</p>
 
-<pre><code>var searchResults = getSearchResultsFor(&quot;movie times&quot;);
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">searchResults</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">getSearchResultsFor</span><span style="">(</span><span style="color:#e6db74">&#34;movie times&#34;</span><span style="">);</span></code></pre>
+</div>
 
 <p>This is great for most types of functions. With most functions, they&rsquo;re meant for a single purpose and once you call them, they&rsquo;ve done their job. You can forget about them until the next time you need them.</p>
 
@@ -435,12 +435,12 @@ var newPosition = initialPosition + speed - windResistance;
 
 <p>In this case, a very common pattern is to pass a function into another function. Then, the function you pass in will be called whenever the event happens, on the dot. And that&rsquo;s what&rsquo;s happening here:</p>
 
-<pre><code>document.body.addEventListener(&quot;keydown&quot;, function (event) {
-    if (event.keyCode === 39) {
-        player.x = player.x + 10;
-    }
-})
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="">document</span><span style="">.</span><span style="color:#a6e22e">body</span><span style="">.</span><span style="color:#a6e22e">addEventListener</span><span style="">(</span><span style="color:#e6db74">&#34;keydown&#34;</span><span style="">,</span><span style=""> </span><span style="color:#66d9ef">function</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">event</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">event</span><span style="">.</span><span style="color:#a6e22e">keyCode</span><span style=""> </span><span style="color:#f92672">===</span><span style=""> </span><span style="color:#ae81ff">39</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">        </span><span style="color:#a6e22e">player</span><span style="">.</span><span style="color:#a6e22e">x</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">player</span><span style="">.</span><span style="color:#a6e22e">x</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#ae81ff">10</span><span style="">;</span><span style="">
+</span><span style="">    </span><span style="">}</span><span style="">
+</span><span style=""></span><span style="">})</span></code></pre>
+</div>
 
 <p>The second argument to <code>addEventListener</code> is a function that will get called whenever someone presses a key on the keyboard.</p>
 
@@ -448,17 +448,17 @@ var newPosition = initialPosition + speed - windResistance;
 
 <p>This is how you define a function:</p>
 
-<pre><code>function () {
-  // code that's run when the function runs
-}
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span><span style=""> </span><span style="">()</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// code that&#39;s run when the function runs
+</span><span style="color:#75715e"></span><span style="">}</span></code></pre>
+</div>
 
 <p>If we want the function to have a name, so we can refer to it or call it later, we can write it like this:</p>
 
-<pre><code>function getSearchResults () {
-  // code that's run when the function runs
-}
-</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span><span style=""> </span><span style="color:#a6e22e">getSearchResults</span><span style=""> </span><span style="">()</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// code that&#39;s run when the function runs
+</span><span style="color:#75715e"></span><span style="">}</span></code></pre>
+</div>
 
 <h2 id="back-to-our-code">Back to our code</h2>
 
