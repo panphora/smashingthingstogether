@@ -92,9 +92,12 @@ a {
 }
 
 .highlight {
-  padding: 1em 1em .3em 1em;
   color: #ffffff;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.highlight pre {
+  padding: 1rem 1.5rem;
 }
 
 .poweredby {
@@ -193,7 +196,7 @@ a {
 }
 
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
-  margin-bottom: .5em;
+  margin-bottom: 1em;
   padding-top: 1.5em;
 }
 
