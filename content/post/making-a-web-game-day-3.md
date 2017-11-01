@@ -6,6 +6,17 @@ postid = 10
 +++
 
 
+# Intro
+
+## What we'll be going over today
+
+## What we won't get to today
+
+## If you want to stay in touch
+
+## Free gift
+
+
 # Reviewing the Basic Concepts
 
 ## Functions
@@ -138,6 +149,92 @@ postid = 10
 ### Writing a boolean in code
 ### Using with a conditional
 ### More examples
+
+
+# Example Program #1
+
+## Example
+
+## Description
+
+Ask for someone's name and then tell them hello
+
+
+# Example Program #2
+
+## Example
+
+## Description
+
+Use arrow keys to make something move across the screen
+
+
+# Continuing where we left off in the mushroom collecting game 
+
+## Where we left off 
+
+What we've done so far:
+
+- 
+
+## Pseudo Code for Step 6 (animating our character sprite)
+
+
+
+
+## Code for Step 6
+
+
+
+
+
+# Step 7 (random position for character sprite)
+
+## Pseudo Code
+
+
+## Actual Code
+
+
+
+# Step 8 (create character sprite within boundaries and keep it there)
+
+## Pseudo Code
+
+
+## Actual Code
+
+
+# Step 9 (add mushroom sprite)
+
+## Pseudo Code
+
+
+## Actual Code
+
+
+# Step 10 (mushroom random starting position)
+
+## Pseudo Code
+
+
+## Actual Code
+
+
+# Step 11 (let the character collect the mushroom)
+
+## Pseudo Code
+
+
+## Actual Code
+
+
+# Step 12 (add points when the character collects the mushroom)
+
+## Pseudo Code
+
+
+## Actual Code
 
 
 
