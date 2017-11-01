@@ -124,9 +124,18 @@ In code, a number is just a number. You can do the same things with a number by 
 
 ### Definition
 
+Conditionals control whether something happens or not. 
+
+You're very familiar with using conditionals in your own life. You might say to yourself, "if it's not raining outside, I'll go to the store." You've just used the most common type of conditional: **if**.
+
+In code, we need conditionals all the time to check if certain things are true, so that we can cause other things to happen -- or pop up a warning if we bump into an error.
+
 ### Example uses
 
-- 
+- Ordering a package online. If you paid for an item online, you should receive that package in the mail. Behind the scenes, the store you're shopping at checks to see if you paid and if it has a valid address. If it does, it sends you the package.
+- Search suggestions. If you go to Google.com and type in an exclamation mark, you should notice that no search suggestions come up. That's because, somewhere, Google is checking to see if you've typed in a valid search phrase and if you haven't, it doesn't show you any suggestions.
+- Contoling a character in a game. A very common way to move a character in a game is to press the arrow keys on your keyboard. It's very easy to tell when *any* key is pressed, but in order to tell specifically *which* key was pressed, we need to check it with an `if` statement to make sure it's the right one. 
+- Making sure a password is secure. A lot of websites won't let you sign up for an account unless you have a password that's a certain length and passes certain requirements. They do this with a simple check -- and then say, "if this check passes, let them sign up, otherwise, show them an error."
 
 ## Comparisons
 
