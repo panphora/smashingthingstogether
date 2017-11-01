@@ -196,7 +196,56 @@ Variables, as their name implies, can change later. So, we might start off havin
 
 # Reviewing the Syntax
 
-Open up your browser console for this part.
+Open up your browser console for this part. I want you to try some of these as we go along.
+
+## Variables
+
+### Creating
+
+{{< highlight javascript >}}
+var speed = 50;
+{{< /highlight >}}
+
+### Accessing
+
+{{< highlight javascript >}}
+speed
+{{< /highlight >}}
+
+Adding it to other code
+{{< highlight javascript >}}
+alert(speed)
+{{< /highlight >}}
+
+### Changing
+
+{{< highlight javascript >}}
+speed = 60;
+{{< /highlight >}}
+
+### More examples
+
+{{< highlight javascript >}}
+var milesPerHour = 60;
+var hours = 2.4;
+var distanceTraveled = milesPerHour * hours; // calculate how many miles you'll travel
+{{< /highlight >}}
+
+
+## Strings
+
+### Creating
+
+{{< highlight javascript >}}
+var greeting = "Hello";
+var name = "David";
+var sentence = "The shopkeeper opened up her store at 6AM."
+{{< /highlight >}}
+
+### Combining
+
+var message = greeting + " " + name;
+alert(message);
 
 ## Functions
 
@@ -285,51 +334,132 @@ And here's how you access the `name` key with square brackets:
 person["name"]
 {{< /highlight >}}
 
-### More examples
 
 ## Arrays
 
 ### Creating
+
+{{< highlight javascript >}}
+var greetings = ["Hello ", "Hi ", "Welcome ", "What's up "];
+{{< /highlight >}}
+
 ### Accessing
-### More examples
 
-## Variables
+{{< highlight javascript >}}
+greeting[0]; // this accesses the first greeting
+{{< /highlight >}}
 
-### Creating
-### Accessing
-### Changing
-### More examples
+**Important:** Every list counts up from 0. The first item's position is at 0. The second item's position is at 1.
 
-## Strings
+### Advanced example
 
-### Creating
-### Accessing
-### Combining
-### More examples
+{{< highlight javascript >}}
+var workHistory = [
+  {
+    companyName: "Google",
+    from: "11/09/2008",
+    to: "08/16/2012"
+  },
+  {
+    companyName: "Tesla",
+    from: "12/22/2014",
+    to: "05/19/2017"
+  }
+];
+{{< /highlight >}}
 
 ## Numbers
 
-### Writing numbers in code
 ### Operations
+
+{{< highlight javascript >}}
+5 + 5  // will return 25
+6 - 7  // will return -1
+2 * 3  // will return 6
+4 / 2  // will return 2
+{{< /highlight >}}
+
 ### Special functions
-### More examples
+
+{{< highlight javascript >}}
+Math.floor(5.3);  // will round the number down to the nearest integer
+Math.random()     // will return a random number between 0 and 1
+{{< /highlight >}}
+
+There are other ones, but this is all we need to know for now. If you're doing something more advanced, you can find math functions for calculating cosines and exponent powers.
 
 ## Conditionals
 
 ### Writing a conditional in code
+
+{{< highlight javascript >}}
+if (store.hasASale) {
+  goToTheStore();
+}
+{{< /highlight >}}
+
 ### More examples
+
+{{< highlight javascript >}}
+if (person.lovesPizza) {
+  givePizzaTo(person);
+} else {
+  givePizzaTo(me);
+}
+{{< /highlight >}}
 
 ## Comparisons
 
 ### Writing a comparison in code
+
+{{< highlight javascript >}}
+1 > 2
+5 == 6
+4 > 3
+2 < 9
+5 != 4.999
+{{< /highlight >}}
+
 ### Using with a conditional
+
+{{< highlight javascript >}}
+if (store.salePercentage > .5) {
+  goToTheStore();
+}
+{{< /highlight >}}
+
 ### More examples
+
+{{< highlight javascript >}}
+if (player.score >= 9999) {
+  alert("You're in the top 1% of players!");
+}
+{{< /highlight >}}
 
 ## Booleans
 
 ### Writing a boolean in code
+
+{{< highlight javascript >}}
+var person.likesPizza = true;
+var spidersAreCute = false;
+{{< /highlight >}}
+
 ### Using with a conditional
+
+{{< highlight javascript >}}
+if (spidersAreCute) {
+  releaseTheSpiders();
+}
+{{< /highlight >}}
+
 ### More examples
+
+{{< highlight javascript >}}
+if (david.likesPepperoni && will.likesPepperoni) {
+  pizza.addPepperoni();
+}
+{{< /highlight >}}
 
 
 # Example Program #1

@@ -34,7 +34,7 @@ a {
   text-decoration: underline;
 }
 
-code {
+li > code, p > code, div > code {
   background-color: #dadada;
   font-weight: bold;
   color: #d6336c;
