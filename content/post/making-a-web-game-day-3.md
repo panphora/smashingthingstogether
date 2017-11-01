@@ -25,10 +25,6 @@ In this version, we have a point system and our alien sprite is able to collect 
 - If you want to see how the final version of the game works, you can view it here: https://collect-things-game.firebaseapp.com/
 - I plan on writing a thorough tutorial with very detailed step by step instructions for how to create this multiplayer game on your own, including a bunch of things we didn't have time to go over in class. If you want a copy of this tutorial when it's finished, write your name and email address on the exercise sheet I'll be passing around in a moment.
 
-## A gift
-
-- Also, for coming to the 3rd and final class of this series, I'm going to give you a gift that will greatly help you on your journey to understanding the JavaScript language.
-
 
 # The Basic Concepts
 
