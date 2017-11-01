@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Smashing Things Together</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Nov 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://smashingthingstogether.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Making a Web Game with JavaScript, Day 3</title>
+      <link>http://smashingthingstogether.com/making-a-web-game-day-3/</link>
+      <pubDate>Wed, 01 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://smashingthingstogether.com/making-a-web-game-day-3/</guid>
+      <description>What we&amp;rsquo;ll be going over today  Reviewing basic programming concepts Showing syntax for each piece of code Going over a small code example Writing pseudo code for Step 6 of the game (where we left off) Going through the actual code for Step 6 Going through steps 7-12 in pseudo code, followed by actual code  Here&amp;rsquo;s the version of the game we&amp;rsquo;ll get to today: https://codepen.io/panphora/pen/zPvzzY
+In this version, we have a point system and our alien sprite is able to collect mushrooms.</description>
+    </item>
     
     <item>
       <title>Making a Web Game with JavaScript, Day 1</title>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Making a Web Game with JavaScript, Day 3</title>
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://smashingthingstogether.com/css/main.css">
+</head>
+<body class="is-page">
+  <div class="site-wrapper container">
+    <div class="main-header show-if-is-page">
+      <h1 class="page-title center"><a href="http://smashingthingstogether.com/"><img class="site-logo" alt="Making a Web Game with JavaScript, Day 3 Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+    </div>
+    <div class="main-header hide-if-is-page">
+      <h1 class="page-title"><a href="http://smashingthingstogether.com/">Smashing Things Together<img class="site-logo" alt="Making a Web Game with JavaScript, Day 3 Logo" src="http://smashingthingstogether.com/svgs/logo.svg" /></a></h1>
+      <h2 class="page-description">Experiments, projects, and random ideas</h2>
+    </div>
+<main class="content" role="main">
+  <article class="post mb8">
+    <header class="post-header">
+      <h1 class="post-title">Making a Web Game with JavaScript, Day 3</h1>
+      <div class="mb3 extra-post-info">
+        <time class="post-date" datetime="2017-11-01">posted Wed, Nov 1, 2017</time> &middot; <a class="comment-link" href="http://smashingthingstogether.com/making-a-web-game-day-3/#disqus_thread" data-disqus-identifier="10">Comments</a>
+      </div>
+    </header>
+    <section class="post-content">
+      
+
+<h2 id="what-we-ll-be-going-over-today">What we&rsquo;ll be going over today</h2>
+
+<ol>
+<li>Reviewing basic programming concepts</li>
+<li>Showing syntax for each piece of code</li>
+<li>Going over a small code example</li>
+<li>Writing pseudo code for Step 6 of the game (where we left off)</li>
+<li>Going through the actual code for Step 6</li>
+<li>Going through steps 7-12 in pseudo code, followed by actual code</li>
+</ol>
+
+<p>Here&rsquo;s the version of the game we&rsquo;ll get to today: <a href="https://codepen.io/panphora/pen/zPvzzY">https://codepen.io/panphora/pen/zPvzzY</a></p>
+
+<p>In this version, we have a point system and our alien sprite is able to collect mushrooms.</p>
+
+<h2 id="what-we-won-t-get-to-today">What we won&rsquo;t get to today</h2>
+
+<ul>
+<li>Unfortuntely, we won&rsquo;t get to the multiplayer functionality today. However, I have a version of the code that you can review in your free time, here: <a href="https://github.com/panphora/MultiplayerCollectingGame">Code For Multiplayer Collecting Game</a> (in order to run this code yourself, you need to sign up for a <a href="http://firebase.com/">Firebase</a> account and create a project &ndash; then plug your own credentials into the code you downloaded in that link, specifically in the <code>main.js</code> file and the <code>.firebaserc</code> file)</li>
+<li>If you want to see how the final version of the game works, you can view it here: <a href="https://collect-things-game.firebaseapp.com/">https://collect-things-game.firebaseapp.com/</a></li>
+<li>I plan on writing a thorough tutorial with very detailed step by step instructions for how to create this multiplayer game on your own, including a bunch of things we didn&rsquo;t have time to go over in class. If you want a copy of this tutorial when it&rsquo;s finished, write your name and email address on the exercise sheet I&rsquo;ll be passing around in a moment.</li>
+</ul>
+
+<h2 id="a-gift">A gift</h2>
+
+<ul>
+<li>Also, for coming to the 3rd and final class of this series, I&rsquo;m going to give you a gift that will greatly help you on your journey to understanding the JavaScript language.</li>
+</ul>
+
+<h1 id="the-basic-concepts">The Basic Concepts</h1>
+
+<h2 id="functions">Functions</h2>
+
+<h3 id="definition">Definition</h3>
+
+<p>Functions do things. You can think of them as little robots that you can tell instructions to. The little robots will go off and do the thing you asked it to, as long as that&rsquo;s what it&rsquo;s programmed to do, and it will do it as many times as you want it to.</p>
+
+<h3 id="example-uses">Example uses</h3>
+
+<ul>
+<li><strong>Getting search results.</strong> Every time you type a key into a search bar, a function takes your search and sends it off into the internet and comes back with suggested search terms.</li>
+<li><strong>Formatting text.</strong> Each time you click the button to make text bold in a document, that key press is causing a function to go find your word and change its styling, so it looks bold.</li>
+<li><strong>Viewing a message.</strong> When you click on a message in your email client or your text messages, a function goes to find the contents of that message and bring it back to you.</li>
+<li><strong>Playing a video.</strong> When you click on a video and it pauses or plays, that&rsquo;s a function getting access to the video and telling it to pause or play for you.</li>
+</ul>
+
+<p>To sum up, any time you interact with a web page or piece of software, a function is the thing that responds. So, if you type a key and something happens or you press a button and something happens, chances are a function is what made that thing happen.</p>
+
+<h2 id="objects">Objects</h2>
+
+<h3 id="definition-1">Definition</h3>
+
+<p>Objects store information that you can look up later. They work as a series of key/value pairs. The key is the word you plug in to the object to get the value. So, you can also think of the key as a word in a dictionary and the value as its definition.</p>
+
+<p>That&rsquo;s why objects are also known as dictionaries.</p>
+
+<h3 id="example-uses-1">Example uses</h3>
+
+<p>If a function is the thing that goes and gets the information for you, then an object is that information. It&rsquo;s a simple a compact way of storing a bunch of information in a single place.</p>
+
+<ul>
+<li>Information about a person. If a website stores details about someone, like their name, their age, their address, and their preferences, they use objects to do this.</li>
+<li>Information about an event. When you save an event and plug in the date it&rsquo;s happening and where it is, that information will probably be store in an object. The keys might be <code>date</code> and <code>location</code> and the values would be the actual date and location of the event.</li>
+<li>Information about a company. If you want to look up the name of a company and the date it was founded, this information is probably being stored in some kind of object. The keys in this case might be <code>companyName</code> and <code>dateFounded</code>. In order to access them, a function might ask the object what&rsquo;s in the <code>companyName</code> key and the object would hand them back the value.</li>
+</ul>
+
+<h2 id="arrays">Arrays</h2>
+
+<h3 id="definition-2">Definition</h3>
+
+<p>Arrays are simply lists and they can store any type of information inside of them.</p>
+
+<h3 id="example-uses-2">Example uses</h3>
+
+<p>Arrays are a very common pattern and are used in some way in just about every interface.</p>
+
+<ul>
+<li>Image gallery. A list of images.</li>
+<li>High scores. A list of players coupled with a list of numbers.</li>
+<li>Todo list. A list of phrases marked done or undone.</li>
+<li>Articles. A list of a bunch of text and images grouped together.</li>
+<li>Search results. A list of titles and descriptions which you can click on.</li>
+<li>Work history. A list of places someone&rsquo;s worked.</li>
+</ul>
+
+<p><strong>Bonus fact:</strong></p>
+
+<p>A very common pattern is to group a bunch of objects inside a list.</p>
+
+<p>In the above examples, we have high scores. To display that, we need to know the name and the points for each player. Each player is probably represented by an object inside of a list, with a key of <code>name</code> and key of <code>points</code>.</p>
+
+<p>For the todo list, we use the same pattern, but the keys would probably be <code>todoText</code> to keep track of the todo and <code>todoDone</code> to keep track of if it&rsquo;s done or not.</p>
+
+<p>Think of any newsfeed in an app you&rsquo;ve used. All of these newsfeeds use this pattern too. Each one is simply a list of titles, descriptions, images, and comments. The data of each item in the newsfeed is put into an object, which is in turn put into a list.</p>
+
+<h2 id="strings">Strings</h2>
+
+<h3 id="definition-3">Definition</h3>
+
+<p>Strings are words or phrases that you don&rsquo;t want to be interpreted as computer code.</p>
+
+<p>One of the most common uses for strings are for when you want to display a message on the screen for someone to see.</p>
+
+<h3 id="example-uses-3">Example uses</h3>
+
+<ul>
+<li>Warning message. When you enter in a password that&rsquo;s too short or try to delete something that can&rsquo;t be deleted, a website might pop up a warning message. This message is usually created by giving a string to a function to display.</li>
+<li>Popup message. Have you ever gotten a popup message asking you for your name or payment information? The message itself was probably created from a string –– and when you put in your name or payment information that&rsquo;s converted into a string too.</li>
+<li>Displaying an image. If you want to add an image to a website using code, you have to let the computer know where the image is located. You need to give the computer this information by puttin the location inside of a string.</li>
+<li>Voice input. If you&rsquo;ve ever talked to Siri or Alexa or used a voice input command, the computer is taking your voice and converting it into a string of words behind the scenes. Then, it&rsquo;s giving this string to a function that interprets it and plays a song or turns up the temperature in your home.</li>
+</ul>
+
+<h2 id="numbers-and-math">Numbers and Math</h2>
+
+<h3 id="definition-4">Definition</h3>
+
+<p>In code, a number is just a number. You can do the same things with a number by writing out an equation by hand as you can with a computer &ndash; all you have to do is type it out and the computer will be able to calculate the result.</p>
+
+<h3 id="example-uses-4">Example uses</h3>
+
+<ul>
+<li>Physics in a game. If you&rsquo;ve ever played a video game, all of the visuals you&rsquo;re looking at have been very quickly calculated by mathematical equations. Every strand of hair, every movement, every ripple in the water. If your character is tired and moves slower, that&rsquo;s math. If you drive into a wall and the car stops, that&rsquo;s math.</li>
+<li>Calculating payment amounts. If you&rsquo;ve ever bought something online, your total balance due, minus your gift card amount and plus taxes and shipping, was calculated by multiplying, subtracting, and adding numbers together.</li>
+<li>Animations. If you&rsquo;ve ever seen a fancy animation on a website or in a game, chances are it was generated by code and some mathematical expressions behind the scenes.</li>
+</ul>
+
+<h2 id="conditionals">Conditionals</h2>
+
+<h3 id="definition-5">Definition</h3>
+
+<p>Conditionals control whether something happens or not.</p>
+
+<p>You&rsquo;re very familiar with using conditionals in your own life. You might say to yourself, &ldquo;if it&rsquo;s not raining outside, I&rsquo;ll go to the store.&rdquo; You&rsquo;ve just used the most common type of conditional: <strong>if</strong>.</p>
+
+<p>In code, we need conditionals all the time to check if certain things are true, so that we can cause other things to happen &ndash; or pop up a warning if we bump into an error.</p>
+
+<h3 id="example-uses-5">Example uses</h3>
+
+<ul>
+<li>Ordering a package online. If you paid for an item online, you should receive that package in the mail. Behind the scenes, the store you&rsquo;re shopping at checks to see if you paid and if it has a valid address. If it does, it sends you the package.</li>
+<li>Search suggestions. If you go to Google.com and type in an exclamation mark, you should notice that no search suggestions come up. That&rsquo;s because, somewhere, Google is checking to see if you&rsquo;ve typed in a valid search phrase and if you haven&rsquo;t, it doesn&rsquo;t show you any suggestions.</li>
+<li>Contoling a character in a game. A very common way to move a character in a game is to press the arrow keys on your keyboard. It&rsquo;s very easy to tell when <em>any</em> key is pressed, but in order to tell specifically <em>which</em> key was pressed, we need to check it with an <code>if</code> statement to make sure it&rsquo;s the right one.</li>
+<li>Making sure a password is secure. A lot of websites won&rsquo;t let you sign up for an account unless you have a password that&rsquo;s a certain length and passes certain requirements. They do this with a simple check &ndash; and then say, &ldquo;if this check passes, let them sign up, otherwise, show them an error.&rdquo;</li>
+</ul>
+
+<h2 id="comparisons">Comparisons</h2>
+
+<h3 id="definition-6">Definition</h3>
+
+<p>A comparison is used to see how two or more things measure up to each other. We can use comparisons to see if two or more things are equal to each other.</p>
+
+<p>We can also use them to see if a number is greater or less than another number. Or if one value is not equal to another value.</p>
+
+<p>Here are all the comparisons:
+- Greater than
+- Less than
+- Equal to
+- Not equal to</p>
+
+<h3 id="example-uses-6">Example uses</h3>
+
+<p>Comparisons are most commonly used with a conditional. We use comparisons inside a conditional to see if we should continue to the next step or not.</p>
+
+<ul>
+<li>Applying promo codes. When we enter a promo code on a website to get a discount or a special deal, the website checks to make sure the promo code matches a valid promo code that&rsquo;s active. The website says, &ldquo;if this promo code is equal to one of the valid promo codes I have on file, then give this person a discount, otherwise, tell them the promo code is invalid.&rdquo;</li>
+<li>Calculating free shipping. On some website stores, we get free shipping if our order is above a certain amount. After we add all our items to our cart and begin the checkout process, the website checks to make sure the total cost of our items is greater than the minimum required for free shipping. If it is, we get the discounted shipping.</li>
+<li>Respawning a character in a game. A lot of games give their characters a certain number of lives. If the character runs out of lives, then they have to start over from the beginning of the game. In the code, the game checks to see if the character&rsquo;s lives isn&rsquo;t equal to zero. If it&rsquo;s not, the player can try again, if it is, they have to start the game over again.</li>
+</ul>
+
+<h2 id="booleans">Booleans</h2>
+
+<h3 id="definition-7">Definition</h3>
+
+<p>True or false.</p>
+
+<p>We can use these values inside of conditionals to see if we can move onto the next stage or not.</p>
+
+<p><strong>Bonus fact:</strong> All of the comparisons (i.e. greater than, less than, equal to, not equal to) result a boolean value. So, saying &ldquo;if 2 is greater than 1, give them free shipping&rdquo; is the same as saying &ldquo;if true, give them free shipping&rdquo;.</p>
+
+<h3 id="example-uses-7">Example uses</h3>
+
+<ul>
+<li>Marking todos complete. Each todo in a todo list manager will probably be represented by an object. One of the keys on that object will control whether the todo has been completed or not by setting it to true or false.</li>
+<li>Unsubscribing from emails. If you&rsquo;ve ever clicked the unsubscribe link at the bottom of a newsletter, you&rsquo;ve been responsible for setting a value to false somewhere. Every time you do that, in some database, right next to your email address, a key gets flipped from true to false.</li>
+<li>Unlocking advanced features. Have you ever signed up for the free plan of a product only for them to keep bugging you to sign up for the Pro plan? The upgraded plan might give you more credits to spend in a game, more functionality, or increased limits. All of that is probably controlled by setting some key called <code>hasProPlan</code> to <code>true</code>;</li>
+</ul>
+
+<h2 id="variables">Variables</h2>
+
+<h3 id="definition-8">Definition</h3>
+
+<p>Variables are ways of labeling values.</p>
+
+<p>We can assign numbers, functions, lists, or objects to variables in order to give them a name that we can reference later.</p>
+
+<p>Variables, as their name implies, can change later. So, we might start off having a variable set equal to <code>1</code>, but later on decide to set that same variable equal to <code>2</code>.</p>
+
+<h3 id="example-uses-8">Example uses</h3>
+
+<ul>
+<li>Keeping track of a name. If you sign into you email account, sometimes it greets you by name. This is done by setting a variable equal to you name as soon as you load the website and then using this variable whenever they want to display it.</li>
+<li>Keeping track of a stock&rsquo;s value. If you&rsquo;ve ever looked up the value of a company&rsquo;s stock on the internet, it displays as a number, as well as a historical chart. In order to keep updating that number and the chart, the values have be stored somewhere. Variables would work well for this.</li>
+<li>Changing the difficulty mode. In a lot of games, there&rsquo;s an &ldquo;easy mode&rdquo; and a &ldquo;hard mode&rdquo;. When you master the easy mode, you might change a setting that makes the game a bit harder. The game would probably keep track of this difficulty setting inside a variable.</li>
+</ul>
+
+<h1 id="reviewing-the-syntax">Reviewing the Syntax</h1>
+
+<p>Open up your browser console for this part. I want you to try some of these as we go along.</p>
+
+<h2 id="variables-1">Variables</h2>
+
+<h3 id="creating">Creating</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">speed</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">50</span><span style="">;</span></code></pre>
+</div>
+
+<h3 id="accessing">Accessing</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">speed</span></code></pre>
+</div>
+
+<p>Adding it to other code
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#a6e22e">speed</span><span style="">)</span></code></pre>
+</div></p>
+
+<h3 id="changing">Changing</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">speed</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">60</span><span style="">;</span></code></pre>
+</div>
+
+<h3 id="more-examples">More examples</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">milesPerHour</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">60</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">hours</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#ae81ff">2.4</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">distanceTraveled</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">milesPerHour</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="color:#a6e22e">hours</span><span style="">;</span><span style=""> </span><span style="color:#960050;background-color:#1e0010">// calculate how many miles you&#39;ll travel</span></code></pre>
+</div>
+
+<h2 id="strings-1">Strings</h2>
+
+<h3 id="creating-1">Creating</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">greeting</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#e6db74">&#34;Hello&#34;</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">name</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#e6db74">&#34;David&#34;</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">sentence</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#e6db74">&#34;The shopkeeper opened up her store at 6AM.&#34;</span></code></pre>
+</div>
+
+<h3 id="combining">Combining</h3>
+
+<p>var message = greeting + &ldquo; &rdquo; + name;
+alert(message);</p>
+
+<h2 id="functions-1">Functions</h2>
+
+<h3 id="creating-2">Creating</h3>
+
+<p><strong>Unnamed function (i.e. an anonymous function)</strong></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span><span style=""> </span><span style="">()</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// code goes here
+</span><span style="color:#75715e"></span><span style="">}</span></code></pre>
+</div>
+
+<p><strong>Named function</strong></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span><span style=""> </span><span style="color:#a6e22e">sayHello</span><span style=""> </span><span style="">()</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#75715e">// code goes here
+</span><span style="color:#75715e"></span><span style="">}</span></code></pre>
+</div>
+
+<h3 id="calling-a-function">Calling a function</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">sayHello</span><span style="">();</span></code></pre>
+</div>
+
+<h3 id="more-examples-1">More examples</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span><span style=""> </span><span style="color:#a6e22e">sayHello</span><span style=""> </span><span style="">()</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#e6db74">&#34;Hello!&#34;</span><span style="">);</span><span style="">
+</span><span style=""></span><span style="">}</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="color:#a6e22e">sayHello</span><span style="">();</span></code></pre>
+</div>
+
+<h2 id="objects-1">Objects</h2>
+
+<h3 id="creating-an-object">Creating an object</h3>
+
+<p><strong>A simple object</strong></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">person</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#e6db74">&#34;David&#34;</span><span style="">,</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#ae81ff">31</span><span style="">
+</span><span style=""></span><span style="">};</span></code></pre>
+</div>
+
+<p><strong>An object inside an object</strong></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">person</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">name</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#e6db74">&#34;David&#34;</span><span style="">,</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">age</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#ae81ff">31</span><span style="">,</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">pizzaPrefs</span><span style="color:#f92672">:</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">extraCheese</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#66d9ef">true</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">extraSauce</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#66d9ef">true</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">favoriteToppings</span><span style="color:#f92672">:</span><span style=""> </span><span style="">[</span><span style="color:#e6db74">&#34;pepperoni&#34;</span><span style="">,</span><span style=""> </span><span style="color:#e6db74">&#34;mushrooms&#34;</span><span style="">,</span><span style=""> </span><span style="color:#e6db74">&#34;peppers&#34;</span><span style="">]</span><span style="">
+</span><span style="">  </span><span style="">}</span><span style="">
+</span><span style=""></span><span style="">};</span></code></pre>
+</div>
+
+<h3 id="accessing-1">Accessing</h3>
+
+<p><strong>There are two ways of accessing values in an object: with a period or with square brackets.</strong></p>
+
+<p>Accessing with a period:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">person</span><span style="">.</span><span style="color:#a6e22e">name</span></code></pre>
+</div></p>
+
+<p>Using this in code:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#e6db74">&#34;Hello &#34;</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#a6e22e">person</span><span style="">.</span><span style="color:#a6e22e">name</span><span style="">);</span></code></pre>
+</div></p>
+
+<p>This would be the same as writing:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#e6db74">&#34;Hello &#34;</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#e6db74">&#34;David&#34;</span><span style="">);</span></code></pre>
+</div></p>
+
+<p>And here&rsquo;s how you access the <code>name</code> key with square brackets:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">person</span><span style="">[</span><span style="color:#e6db74">&#34;name&#34;</span><span style="">]</span></code></pre>
+</div></p>
+
+<h2 id="arrays-1">Arrays</h2>
+
+<h3 id="creating-3">Creating</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">greetings</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">[</span><span style="color:#e6db74">&#34;Hello &#34;</span><span style="">,</span><span style=""> </span><span style="color:#e6db74">&#34;Hi &#34;</span><span style="">,</span><span style=""> </span><span style="color:#e6db74">&#34;Welcome &#34;</span><span style="">,</span><span style=""> </span><span style="color:#e6db74">&#34;What&#39;s up &#34;</span><span style="">];</span></code></pre>
+</div>
+
+<h3 id="accessing-2">Accessing</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">greeting</span><span style="">[</span><span style="color:#ae81ff">0</span><span style="">];</span><span style=""> </span><span style="color:#960050;background-color:#1e0010">// this accesses the first greeting</span></code></pre>
+</div>
+
+<p><strong>Important:</strong> Every list counts up from 0. The first item&rsquo;s position is at 0. The second item&rsquo;s position is at 1.</p>
+
+<h3 id="advanced-example">Advanced example</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">workHistory</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">[</span><span style="">
+</span><span style="">  </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">companyName</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#e6db74">&#34;Google&#34;</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">from</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#e6db74">&#34;11/09/2008&#34;</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">to</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#e6db74">&#34;08/16/2012&#34;</span><span style="">
+</span><span style="">  </span><span style="">},</span><span style="">
+</span><span style="">  </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">companyName</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#e6db74">&#34;Tesla&#34;</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">from</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#e6db74">&#34;12/22/2014&#34;</span><span style="">,</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">to</span><span style="color:#f92672">:</span><span style=""> </span><span style="color:#e6db74">&#34;05/19/2017&#34;</span><span style="">
+</span><span style="">  </span><span style="">}</span><span style="">
+</span><span style=""></span><span style="">];</span></code></pre>
+</div>
+
+<h2 id="numbers">Numbers</h2>
+
+<h3 id="operations">Operations</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ae81ff">5</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#ae81ff">5</span><span style="">  </span><span style="color:#75715e">// will return 25
+</span><span style="color:#75715e"></span><span style="color:#ae81ff">6</span><span style=""> </span><span style="color:#f92672">-</span><span style=""> </span><span style="color:#ae81ff">7</span><span style="">  </span><span style="color:#75715e">// will return -1
+</span><span style="color:#75715e"></span><span style="color:#ae81ff">2</span><span style=""> </span><span style="color:#f92672">*</span><span style=""> </span><span style="color:#ae81ff">3</span><span style="">  </span><span style="color:#75715e">// will return 6
+</span><span style="color:#75715e"></span><span style="color:#ae81ff">4</span><span style=""> </span><span style="color:#e6db74">/ 2  /</span><span style=""></span><span style="color:#960050;background-color:#1e0010">/ will return 2</span></code></pre>
+</div>
+
+<h3 id="special-functions">Special functions</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="">Math</span><span style="">.</span><span style="color:#a6e22e">floor</span><span style="">(</span><span style="color:#ae81ff">5.3</span><span style="">);</span><span style="">  </span><span style="color:#75715e">// will round the number down to the nearest integer
+</span><span style="color:#75715e"></span><span style="">Math</span><span style="">.</span><span style="color:#a6e22e">random</span><span style="">()</span><span style="">     </span><span style="color:#960050;background-color:#1e0010">// will return a random number between 0 and 1</span></code></pre>
+</div>
+
+<p>There are other ones, but this is all we need to know for now. If you&rsquo;re doing something more advanced, you can find math functions for calculating cosines and exponent powers.</p>
+
+<h2 id="conditionals-1">Conditionals</h2>
+
+<h3 id="writing-a-conditional-in-code">Writing a conditional in code</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">store</span><span style="">.</span><span style="color:#a6e22e">hasASale</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">goToTheStore</span><span style="">();</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+
+<h3 id="more-examples-2">More examples</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">person</span><span style="">.</span><span style="color:#a6e22e">lovesPizza</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">givePizzaTo</span><span style="">(</span><span style="color:#a6e22e">person</span><span style="">);</span><span style="">
+</span><span style=""></span><span style="">}</span><span style=""> </span><span style="color:#66d9ef">else</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">givePizzaTo</span><span style="">(</span><span style="color:#a6e22e">me</span><span style="">);</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+
+<h2 id="comparisons-1">Comparisons</h2>
+
+<h3 id="writing-a-comparison-in-code">Writing a comparison in code</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ae81ff">1</span><span style=""> </span><span style="color:#f92672">&gt;</span><span style=""> </span><span style="color:#ae81ff">2</span><span style="">
+</span><span style=""></span><span style="color:#ae81ff">5</span><span style=""> </span><span style="color:#f92672">==</span><span style=""> </span><span style="color:#ae81ff">6</span><span style="">
+</span><span style=""></span><span style="color:#ae81ff">4</span><span style=""> </span><span style="color:#f92672">&gt;</span><span style=""> </span><span style="color:#ae81ff">3</span><span style="">
+</span><span style=""></span><span style="color:#ae81ff">2</span><span style=""> </span><span style="color:#f92672">&lt;</span><span style=""> </span><span style="color:#ae81ff">9</span><span style="">
+</span><span style=""></span><span style="color:#ae81ff">5</span><span style=""> </span><span style="color:#f92672">!=</span><span style=""> </span><span style="color:#ae81ff">4.999</span></code></pre>
+</div>
+
+<h3 id="using-with-a-conditional">Using with a conditional</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">store</span><span style="">.</span><span style="color:#a6e22e">salePercentage</span><span style=""> </span><span style="color:#f92672">&gt;</span><span style=""> </span><span style="color:#ae81ff">.5</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">goToTheStore</span><span style="">();</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+
+<h3 id="more-examples-3">More examples</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">player</span><span style="">.</span><span style="color:#a6e22e">score</span><span style=""> </span><span style="color:#f92672">&gt;=</span><span style=""> </span><span style="color:#ae81ff">9999</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#e6db74">&#34;You&#39;re in the top 1% of players!&#34;</span><span style="">);</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+
+<h2 id="booleans-1">Booleans</h2>
+
+<h3 id="writing-a-boolean-in-code">Writing a boolean in code</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">person</span><span style="">.</span><span style="color:#a6e22e">likesPizza</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">true</span><span style="">;</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">spidersAreCute</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#66d9ef">false</span><span style="">;</span></code></pre>
+</div>
+
+<h3 id="using-with-a-conditional-1">Using with a conditional</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">spidersAreCute</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">releaseTheSpiders</span><span style="">();</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+
+<h3 id="more-examples-4">More examples</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">david</span><span style="">.</span><span style="color:#a6e22e">likesPepperoni</span><span style=""> </span><span style="color:#f92672">&amp;&amp;</span><span style=""> </span><span style="color:#a6e22e">will</span><span style="">.</span><span style="color:#a6e22e">likesPepperoni</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#a6e22e">pizza</span><span style="">.</span><span style="color:#a6e22e">addPepperoni</span><span style="">();</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+
+<h1 id="example-program-1">Example Program #1</h1>
+
+<h2 id="example">Example</h2>
+
+<h2 id="description">Description</h2>
+
+<p>Ask for someone&rsquo;s name and then tell them hello</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">name</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="color:#a6e22e">prompt</span><span style="">(</span><span style="color:#e6db74">&#34;What&#39;s your name?&#34;</span><span style="">);</span><span style="">
+</span><span style=""></span><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#e6db74">&#34;Hello &#34;</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#a6e22e">name</span><span style=""> </span><span style="color:#f92672">+</span><span style=""> </span><span style="color:#e6db74">&#34;, good to meet you!&#34;</span><span style="">);</span></code></pre>
+</div>
+
+<h1 id="example-program-2">Example Program #2</h1>
+
+<h2 id="example-1">Example</h2>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span><span style=""> </span><span style="color:#a6e22e">discountPerDay</span><span style=""> </span><span style="color:#f92672">=</span><span style=""> </span><span style="">[</span><span style="color:#ae81ff">.1</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">.2</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">.3</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">.3</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">,</span><span style=""> </span><span style="color:#ae81ff">0</span><span style="">];</span><span style="">
+</span><span style="">
+</span><span style=""></span><span style="color:#66d9ef">function</span><span style=""> </span><span style="color:#a6e22e">shouldIGoToTheMovies</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">dayOfWeekAsNumber</span><span style="">,</span><span style=""> </span><span style="color:#a6e22e">minimumAcceptableDiscount</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">  </span><span style="color:#66d9ef">if</span><span style=""> </span><span style="">(</span><span style="color:#a6e22e">discountPerDay</span><span style="">[</span><span style="color:#a6e22e">dayOfWeekAsNumber</span><span style="">]</span><span style=""> </span><span style="color:#f92672">&gt;=</span><span style=""> </span><span style="color:#a6e22e">minimumAcceptableDiscount</span><span style="">)</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#e6db74">&#34;Yes, you should go to the movies!&#34;</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">}</span><span style=""> </span><span style="color:#66d9ef">else</span><span style=""> </span><span style="">{</span><span style="">
+</span><span style="">    </span><span style="color:#a6e22e">alert</span><span style="">(</span><span style="color:#e6db74">&#34;No, you shouldn&#39;t go to the movies&#34;</span><span style="">);</span><span style="">
+</span><span style="">  </span><span style="">}</span><span style="">
+</span><span style=""></span><span style="">}</span></code></pre>
+</div>
+
+<p>Then try:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">shouldIGoToTheMovies</span><span style="">(</span><span style="color:#ae81ff">3</span><span style="">,</span><span style="color:#ae81ff">.2</span><span style="">)</span></code></pre>
+</div></p>
+
+<p>And also try:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">shouldIGoToTheMovies</span><span style="">(</span><span style="color:#ae81ff">7</span><span style="">,</span><span style="color:#ae81ff">.1</span><span style="">)</span></code></pre>
+</div></p>
+
+<h2 id="description-1">Description</h2>
+
+<p>Get the sale percentage from a store to figure out if we want to go there or not</p>
+
+<h1 id="continuing-where-we-left-off-in-the-mushroom-collecting-game">Continuing where we left off in the mushroom collecting game</h1>
+
+<h2 id="where-we-left-off">Where we left off</h2>
+
+<p>What we&rsquo;ve done so far:</p>
+
+<ul>
+<li></li>
+</ul>
+
+<h2 id="pseudo-code-for-step-6-animating-our-character-sprite">Pseudo Code for Step 6 (animating our character sprite)</h2>
+
+<h2 id="code-for-step-6">Code for Step 6</h2>
+
+<h1 id="step-7-random-position-for-character-sprite">Step 7 (random position for character sprite)</h1>
+
+<h2 id="pseudo-code">Pseudo Code</h2>
+
+<h2 id="actual-code">Actual Code</h2>
+
+<h1 id="step-8-create-character-sprite-within-boundaries-and-keep-it-there">Step 8 (create character sprite within boundaries and keep it there)</h1>
+
+<h2 id="pseudo-code-1">Pseudo Code</h2>
+
+<h2 id="actual-code-1">Actual Code</h2>
+
+<h1 id="step-9-add-mushroom-sprite">Step 9 (add mushroom sprite)</h1>
+
+<h2 id="pseudo-code-2">Pseudo Code</h2>
+
+<h2 id="actual-code-2">Actual Code</h2>
+
+<h1 id="step-10-mushroom-random-starting-position">Step 10 (mushroom random starting position)</h1>
+
+<h2 id="pseudo-code-3">Pseudo Code</h2>
+
+<h2 id="actual-code-3">Actual Code</h2>
+
+<h1 id="step-11-let-the-character-collect-the-mushroom">Step 11 (let the character collect the mushroom)</h1>
+
+<h2 id="pseudo-code-4">Pseudo Code</h2>
+
+<h2 id="actual-code-4">Actual Code</h2>
+
+<h1 id="step-12-add-points-when-the-character-collects-the-mushroom">Step 12 (add points when the character collects the mushroom)</h1>
+
+<h2 id="pseudo-code-5">Pseudo Code</h2>
+
+<h2 id="actual-code-5">Actual Code</h2>
+
+    </section>
+  </article>
+</main>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_shortname = 'smashingthings';
+if (disqus_shortname && disqus_shortname !== 'example') {
+  var disqus_identifier = '10';
+
+   
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+}
+</script>
+    <footer class="site-footer clearfix">
+      <section class="poweredby">Proudly published with <a href="http://gohugo.io/">Hugo</a></section>
+    </footer>
+  </div>
+  <script type="text/javascript" src="http://smashingthingstogether.com/js/main.js"></script>
+</body>
+</html>
