@@ -164,17 +164,34 @@ Comparisons are most commonly used with a conditional. We use comparisons inside
 
 ### Definition
 
+True or false. 
+
+We can use these values inside of conditionals to see if we can move onto the next stage or not. 
+
+**Bonus fact:** All of the comparisons (i.e. greater than, less than, equal to, not equal to) result a boolean value. So, saying "if 2 is greater than 1, give them free shipping" is the same as saying "if true, give them free shipping".
+
+
 ### Example uses
 
-- 
+- Marking todos complete. Each todo in a todo list manager will probably be represented by an object. One of the keys on that object will control whether the todo has been completed or not by setting it to true or false.
+- Unsubscribing from emails. If you've ever clicked the unsubscribe link at the bottom of a newsletter, you've been responsible for setting a value to false somewhere. Every time you do that, in some database, right next to your email address, a key gets flipped from true to false.
+- Unlocking advanced features. Have you ever signed up for the free plan of a product only for them to keep bugging you to sign up for the Pro plan? The upgraded plan might give you more credits to spend in a game, more functionality, or increased limits. All of that is probably controlled by setting some key called `hasProPlan` to `true`;
 
 ## Variables
 
 ### Definition
 
+Variables are ways of labeling values.
+
+We can assign numbers, functions, lists, or objects to variables in order to give them a name that we can reference later.
+
+Variables, as their name implies, can change later. So, we might start off having a variable set equal to `1`, but later on decide to set that same variable equal to `2`.
+
 ### Example uses
 
-- 
+- Keeping track of a name. If you sign into you email account, sometimes it greets you by name. This is done by setting a variable equal to you name as soon as you load the website and then using this variable whenever they want to display it.
+- Keeping track of a stock's value. If you've ever looked up the value of a company's stock on the internet, it displays as a number, as well as a historical chart. In order to keep updating that number and the chart, the values have be stored somewhere. Variables would work well for this.
+- Changing the difficulty mode. In a lot of games, there's an "easy mode" and a "hard mode". When you master the easy mode, you might change a setting that makes the game a bit harder. The game would probably keep track of this difficulty setting inside a variable.
 
 
 # Reviewing the Syntax

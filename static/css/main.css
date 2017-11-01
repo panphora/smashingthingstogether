@@ -34,6 +34,13 @@ a {
   text-decoration: underline;
 }
 
+code {
+  background-color: #dadada;
+  font-weight: bold;
+  color: #d6336c;
+  padding: 0 5px;
+}
+
 .tip {
 	background-color: #6E4480;
 	background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,.05) 20px, rgba(255,255,255,.05) 40px);
