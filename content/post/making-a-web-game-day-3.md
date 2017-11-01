@@ -25,12 +25,12 @@ In this version, we have a point system and our alien sprite is able to collect 
 - If you want to see how the final version of the game works, you can view it here: https://collect-things-game.firebaseapp.com/
 - I plan on writing a thorough tutorial with very detailed step by step instructions for how to create this multiplayer game on your own, including a bunch of things we didn't have time to go over in class. If you want a copy of this tutorial when it's finished, write your name and email address on the exercise sheet I'll be passing around in a moment.
 
-## Free gift
+## A gift
 
 - Also, for coming to the 3rd and final class of this series, I'm going to give you a gift that will greatly help you on your journey to understanding the JavaScript language.
 
 
-# Reviewing the Basic Concepts
+# The Basic Concepts
 
 ## Functions
 
@@ -51,15 +51,45 @@ To sum up, any time you interact with a web page or piece of software, a functio
 
 ### Definition
 
+Objects store information that you can look up later. They work as a series of key/value pairs. The key is the word you plug in to the object to get the value. So, you can also think of the key as a word in a dictionary and the value as its definition.
+
+That's why objects are also known as dictionaries.
+
 ### Example uses
 
-- 
+If a function is the thing that goes and gets the information for you, then an object is that information. It's a simple a compact way of storing a bunch of information in a single place.
+
+- Information about a person. If a website stores details about someone, like their name, their age, their address, and their preferences, they use objects to do this.
+- Information about an event. When you save an event and plug in the date it's happening and where it is, that information will probably be store in an object. The keys might be `date` and `location` and the values would be the actual date and location of the event.
+- Information about a company. If you want to look up the name of a company and the date it was founded, this information is probably being stored in some kind of object. The keys in this case might be `companyName` and `dateFounded`. In order to access them, a function might ask the object what's in the `companyName` key and the object would hand them back the value.
+
 
 ## Arrays
 
 ### Definition
 
+Arrays are simply lists and they can store any type of information inside of them. 
+
 ### Example uses
+
+Arrays are a very common pattern and are used in some way in just about every interface. 
+
+- Image gallery. A list of images.
+- High scores. A list of players coupled with a list of numbers.
+- Todo list. A list of phrases marked done or undone.
+- Articles. A list of a bunch of text and images grouped together.
+- Search results. A list of titles and descriptions which you can click on.
+- Work history. A list of places someone's worked.
+
+**Bonus fact:** 
+
+A very common pattern is to group a bunch of objects inside a list. 
+
+In the above examples, we have high scores. To display that, we need to know the name and the points for each player. Each player is probably represented by an object inside of a list, with a key of `name` and key of `points`. 
+
+For the todo list, we use the same pattern, but the keys would probably be `todoText` to keep track of the todo and `todoDone` to keep track of if it's done or not.
+
+Think of any newsfeed in an app you've used. All of these newsfeeds use this pattern too. Each one is simply a list of titles, descriptions, images, and comments. The data of each item in the newsfeed is put into an object, which is in turn put into a list.
 
 - 
 
