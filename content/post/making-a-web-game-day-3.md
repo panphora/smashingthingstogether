@@ -10,11 +10,22 @@ postid = 10
 
 ## What we'll be going over today
 
+1. Reviewing basic programming concepts
+2. Showing syntax for each piece of code
+3. Going over a small code example 
+4. Write pseudo code for Step 6 of the game (where we left off)
+5. Go through actual code for Step 6
+6. Go through steps 7-12, including adding a point system
+
 ## What we won't get to today
 
-## If you want to stay in touch
+- Unfortuntely, we won't get to the multiplayer functionality today. However, I have a version of the code that you can review in your free time, here: https://github.com/panphora/MultiplayerCollectingGame (in order to run this code yourself, you need to sign up for a Firebase account and plug your own credentials into the code)
+- If you want to see how the final version of the game works, you can view it here: https://collect-things-game.firebaseapp.com/
+- I plan on writing a thorough tutorial about how to build a multiplayer game, including a bunch of things we didn't get to in class. If you want a copy, write your name and email address on the exercise sheet I'm passing around now.
 
 ## Free gift
+
+- Also, for coming to the 3rd and final class, you get a gift that should help you on your journey to mastering JavaScript programming.
 
 
 # Reviewing the Basic Concepts
@@ -166,7 +177,7 @@ Ask for someone's name and then tell them hello
 
 ## Description
 
-Use arrow keys to make something move across the screen
+Get the sale percentage from a store to figure out if we want to go there or not
 
 
 # Continuing where we left off in the mushroom collecting game 
