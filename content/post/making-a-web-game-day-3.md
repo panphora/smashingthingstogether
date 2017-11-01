@@ -196,16 +196,95 @@ Variables, as their name implies, can change later. So, we might start off havin
 
 # Reviewing the Syntax
 
+Open up your browser console for this part.
+
 ## Functions
 
 ### Creating
-### Calling
+
+**Unnamed function (i.e. an anonymous function)**
+
+{{< highlight javascript >}}
+function () {
+  // code goes here
+}
+{{< /highlight >}}
+
+**Named function**
+
+{{< highlight javascript >}}
+function sayHello () {
+  // code goes here
+}
+{{< /highlight >}}
+
+### Calling a function
+
+{{< highlight javascript >}}
+sayHello();
+{{< /highlight >}}
+
 ### More examples
+
+{{< highlight javascript >}}
+function sayHello () {
+  alert("Hello!");
+}
+
+sayHello();
+{{< /highlight >}}
 
 ## Objects
 
-### Creating
+### Creating an object
+
+**A simple object**
+
+{{< highlight javascript >}}
+var person = {
+  name: "David",
+  age: 31
+};
+{{< /highlight >}}
+
+**An object inside an object**
+
+{{< highlight javascript >}}
+var person = {
+  name: "David",
+  age: 31,
+  pizzaPrefs: {
+    extraCheese: true,
+    extraSauce: true,
+    favoriteToppings: ["pepperoni", "mushrooms", "peppers"]
+  }
+};
+{{< /highlight >}}
+
 ### Accessing
+
+**There are two ways of accessing values in an object: with a period or with square brackets.**
+
+Accessing with a period:
+{{< highlight javascript >}}
+person.name
+{{< /highlight >}}
+
+Using this in code:
+{{< highlight javascript >}}
+alert("Hello " + person.name);
+{{< /highlight >}}
+
+This would be the same as writing:
+{{< highlight javascript >}}
+alert("Hello " + "David");
+{{< /highlight >}}
+
+And here's how you access the `name` key with square brackets:
+{{< highlight javascript >}}
+person["name"]
+{{< /highlight >}}
+
 ### More examples
 
 ## Arrays
@@ -261,10 +340,37 @@ Variables, as their name implies, can change later. So, we might start off havin
 
 Ask for someone's name and then tell them hello
 
+{{< highlight javascript >}}
+var name = prompt("What's your name?");
+alert("Hello " + name + ", good to meet you!");
+{{< /highlight >}}
+
 
 # Example Program #2
 
 ## Example
+
+{{< highlight javascript >}}
+var discountPerDay = [.1, .2, .3, .3, 0, 0, 0];
+
+function shouldIGoToTheMovies (dayOfWeekAsNumber, minimumAcceptableDiscount) {
+  if (discountPerDay[dayOfWeekAsNumber] >= minimumAcceptableDiscount) {
+    alert("Yes, you should go to the movies!");
+  } else {
+    alert("No, you shouldn't go to the movies");
+  }
+}
+{{< /highlight >}}
+
+Then try:
+{{< highlight javascript >}}
+shouldIGoToTheMovies(3,.2)
+{{< /highlight >}}
+
+And also try:
+{{< highlight javascript >}}
+shouldIGoToTheMovies(7,.1)
+{{< /highlight >}}
 
 ## Description
 
