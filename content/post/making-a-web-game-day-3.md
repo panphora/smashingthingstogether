@@ -141,9 +141,24 @@ In code, we need conditionals all the time to check if certain things are true, 
 
 ### Definition
 
+A comparison is used to see how two or more things measure up to each other. We can use comparisons to see if two or more things are equal to each other. 
+
+We can also use them to see if a number is greater or less than another number. Or if one value is not equal to another value.
+
+Here are all the comparisons:
+- Greater than
+- Less than
+- Equal to
+- Not equal to
+
 ### Example uses
 
-- 
+Comparisons are most commonly used with a conditional. We use comparisons inside a conditional to see if we should continue to the next step or not.
+
+- Applying promo codes. When we enter a promo code on a website to get a discount or a special deal, the website checks to make sure the promo code matches a valid promo code that's active. The website says, "if this promo code is equal to one of the valid promo codes I have on file, then give this person a discount, otherwise, tell them the promo code is invalid."
+- Calculating free shipping. On some website stores, we get free shipping if our order is above a certain amount. After we add all our items to our cart and begin the checkout process, the website checks to make sure the total cost of our items is greater than the minimum required for free shipping. If it is, we get the discounted shipping.
+- Respawning a character in a game. A lot of games give their characters a certain number of lives. If the character runs out of lives, then they have to start over from the beginning of the game. In the code, the game checks to see if the character's lives isn't equal to zero. If it's not, the player can try again, if it is, they have to start the game over again.
+
 
 ## Booleans
 
