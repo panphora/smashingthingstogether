@@ -513,69 +513,13 @@ Get the sale percentage from a store to figure out if we want to go there or not
 
 What we've done so far:
 
-- 
-
-## Pseudo Code for Step 6 (animating our character sprite)
-
-
-
-
-## Code for Step 6
-
-
-
-
-
-# Step 7 (random position for character sprite)
-
-## Pseudo Code
-
-
-## Actual Code
-
-
-
-# Step 8 (create character sprite within boundaries and keep it there)
-
-## Pseudo Code
-
-
-## Actual Code
-
-
-# Step 9 (add mushroom sprite)
-
-## Pseudo Code
-
-
-## Actual Code
-
-
-# Step 10 (mushroom random starting position)
-
-## Pseudo Code
-
-
-## Actual Code
-
-
-# Step 11 (let the character collect the mushroom)
-
-## Pseudo Code
-
-
-## Actual Code
-
-
-# Step 12 (add points when the character collects the mushroom)
-
-## Pseudo Code
-
-
-## Actual Code
-
-
-
+- initialized our game library
+- got the sprite moving around with arrow key controls
+- loaded up some images for our sprites and game board
+- set the initial positions of our sprites
+- created an island
+- added an animated walk
+- rendered all the sprites and tiles to the game board
 
 
 
