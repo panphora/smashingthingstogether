@@ -36,14 +36,14 @@ In this version, we have a point system and our alien sprite is able to collect 
 
 ### Definition
 
-Functions do things. You can think of them as little robots that you tell instructions to. The little robot will go off and do the thing you asked it to as many times as you want it to. 
+Functions do things. You can think of them as little robots that you can tell instructions to. The little robots will go off and do the thing you asked it to, as long as that's what it's programmed to do, and it will do it as many times as you want it to. 
 
 ### Example uses
 
-- Getting search results. Every time you type a key into a search bar, a function takes your search and sends it off into the internet and comes back with suggested search terms.
-- Formatting text. Each time you click the button to make text bold in a document, that key press is causing a function to go find your word and change its styling, so it looks bold.
-- Viewing a message. When you click on a message in your email client or your text messages, a function goes to find the contents of that message and bring it back to you.
-- Playing a video. When you click on a video and it pauses or plays, that's a function getting access to the video and telling it to pause or play for you.
+- **Getting search results.** Every time you type a key into a search bar, a function takes your search and sends it off into the internet and comes back with suggested search terms.
+- **Formatting text.** Each time you click the button to make text bold in a document, that key press is causing a function to go find your word and change its styling, so it looks bold.
+- **Viewing a message.** When you click on a message in your email client or your text messages, a function goes to find the contents of that message and bring it back to you.
+- **Playing a video.** When you click on a video and it pauses or plays, that's a function getting access to the video and telling it to pause or play for you.
 
 To sum up, any time you interact with a web page or piece of software, a function is the thing that responds. So, if you type a key and something happens or you press a button and something happens, chances are a function is what made that thing happen.
 
