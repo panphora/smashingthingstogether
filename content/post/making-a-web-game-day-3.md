@@ -6,26 +6,28 @@ postid = 10
 +++
 
 
-# Intro
-
 ## What we'll be going over today
 
 1. Reviewing basic programming concepts
 2. Showing syntax for each piece of code
 3. Going over a small code example 
-4. Write pseudo code for Step 6 of the game (where we left off)
-5. Go through actual code for Step 6
-6. Go through steps 7-12, including adding a point system
+4. Writing pseudo code for Step 6 of the game (where we left off)
+5. Going through the actual code for Step 6
+6. Going through steps 7-12 in pseudo code, followed by actual code
+
+Here's the version of the game we'll get to today: https://codepen.io/panphora/pen/zPvzzY
+
+In this version, we have a point system and our alien sprite is able to collect mushrooms.
 
 ## What we won't get to today
 
-- Unfortuntely, we won't get to the multiplayer functionality today. However, I have a version of the code that you can review in your free time, here: https://github.com/panphora/MultiplayerCollectingGame (in order to run this code yourself, you need to sign up for a Firebase account and plug your own credentials into the code)
+- Unfortuntely, we won't get to the multiplayer functionality today. However, I have a version of the code that you can review in your free time, here: [Code For Multiplayer Collecting Game](https://github.com/panphora/MultiplayerCollectingGame) (in order to run this code yourself, you need to sign up for a [Firebase](http://firebase.com/) account and create a project -- then plug your own credentials into the code you downloaded in that link, specifically in the `main.js` file and the `.firebaserc` file)
 - If you want to see how the final version of the game works, you can view it here: https://collect-things-game.firebaseapp.com/
-- I plan on writing a thorough tutorial about how to build a multiplayer game, including a bunch of things we didn't get to in class. If you want a copy, write your name and email address on the exercise sheet I'm passing around now.
+- I plan on writing a thorough tutorial with very detailed step by step instructions for how to create this multiplayer game on your own, including a bunch of things we didn't have time to go over in class. If you want a copy of this tutorial when it's finished, write your name and email address on the exercise sheet I'll be passing around in a moment.
 
 ## Free gift
 
-- Also, for coming to the 3rd and final class, you get a gift that should help you on your journey to mastering JavaScript programming.
+- Also, for coming to the 3rd and final class of this series, I'm going to give you a gift that will greatly help you on your journey to understanding the JavaScript language.
 
 
 # Reviewing the Basic Concepts
