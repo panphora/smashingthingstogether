@@ -91,15 +91,22 @@ For the todo list, we use the same pattern, but the keys would probably be `todo
 
 Think of any newsfeed in an app you've used. All of these newsfeeds use this pattern too. Each one is simply a list of titles, descriptions, images, and comments. The data of each item in the newsfeed is put into an object, which is in turn put into a list.
 
-- 
 
 ## Strings
 
 ### Definition
 
+Strings are words or phrases that you don't want to be interpreted as computer code. 
+
+One of the most common uses for strings are for when you want to display a message on the screen for someone to see.
+
 ### Example uses
 
-- 
+- Warning message. When you enter in a password that's too short or try to delete something that can't be deleted, a website might pop up a warning message. This message is usually created by giving a string to a function to display.
+- Popup message. Have you ever gotten a popup message asking you for your name or payment information? The message itself was probably created from a string –– and when you put in your name or payment information that's converted into a string too.
+- Displaying an image. If you want to add an image to a website using code, you have to let the computer know where the image is located. You need to give the computer this information by puttin the location inside of a string.
+- Voice input. If you've ever talked to Siri or Alexa or used a voice input command, the computer is taking your voice and converting it into a string of words behind the scenes. Then, it's giving this string to a function that interprets it and plays a song or turns up the temperature in your home.
+
 
 ## Numbers
 
