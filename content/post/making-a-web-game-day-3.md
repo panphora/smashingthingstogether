@@ -240,8 +240,10 @@ var sentence = "The shopkeeper opened up her store at 6AM."
 
 ### Combining
 
+{{< highlight javascript >}}
 var message = greeting + " " + name;
 alert(message);
+{{< /highlight >}}
 
 ## Functions
 
